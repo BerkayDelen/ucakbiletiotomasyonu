@@ -1,0 +1,197 @@
+/*#page-wrapper > .container-fluid {
+    float: right;
+    width: 100%;
+}*/
+
+.sidebar {
+    width: 220px;
+    position: absolute;
+    height: 100%;
+    top: 0px;
+    z-index: 100;
+    background: @sidebar;
+    padding-top: 70px;
+}
+
+.wp-side-menu {
+    margin: 0px;
+    padding: 0px 0 60px 0;
+    z-index: 100;
+    background: @sidebar;
+    position: relative;
+    li {
+        list-style: none;
+        position: relative;
+        a {
+            padding: 12px 15px;
+            color: @sidebar-text;
+            display: block;
+            &:hover {
+                color: @themecolor;
+            }
+        }
+        .label {
+            margin-right: 5px;
+        }
+    }
+    > li:hover,
+    > li.selected {
+        background: @extralight;
+        > a span.fa.arrow {
+            transform: rotate(-90deg);
+        }
+    }
+    > li.selected {
+        background: @themecolor;
+        > a span.fa.arrow {
+            display: none;
+        }
+        > a {
+            color: @white;
+        }
+        &:after {
+            right: 0;
+            border: 8px solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-right-color: @bodycolor;
+            top: 22px;
+            margin-top: -8px;
+        }
+    }
+}
+
+
+/*Second level*/
+
+.wp-side-menu {
+    li {
+        ul.nav-second-level {
+            position: absolute;
+            display: none;
+            margin: 0px;
+            padding: 0px;
+            width: 220px;
+            background: @extralight;
+            li > a.dwn span.fa.arrow {
+                transform: rotate(-90deg);
+            }
+            li > a.active {
+                font-weight: 500;
+            }
+        }
+        &:hover ul.nav-second-level {
+            display: block;
+            left: 220px;
+            top: 0px;
+            z-index: 100;
+        }
+        &.selected ul.nav-second-level,
+        &.selected:hover ul.nav-second-level {
+            position: relative;
+            display: block;
+            left: 0px;
+            background: @sidebar;
+            padding-left: 25px;
+            width: 220px;
+        }
+    }
+    >li {
+        margin: 10px 0px;
+    }
+}
+
+
+/*Third level*/
+
+.wp-side-menu ul.nav-second-level {
+    li {
+        ul.nav-third-level {
+            position: relative;
+            display: none;
+            margin: 0px;
+            padding: 0px;
+            width: 220px;
+            padding-left: 20px;
+        }
+        &:hover ul.nav-third-level {
+            /*display: block;*/
+        }
+        ul.nav-third-level.in {
+            display: block;
+        }
+        &.selected a span.fa.arrow {
+            transform: rotate(-90deg);
+        }
+    }
+}
+
+@media(min-width:768px) {
+    .content-wrapper .sidebar {
+        width: 60px;
+        .wp-side-menu {
+            li {
+                .hide-menu {
+                    display: none;
+                }
+                a > i {
+                    width: 30px!important;
+                    text-align: center!important;
+                }
+                &.selected ul.nav-second-level,
+                &.selected:hover ul.nav-second-level {
+                    position: absolute;
+                    display: none;
+                    left: 60px;
+                    top: 44px;
+                    padding-left: 0px;
+                    background: @extralight;
+                }
+                &.selected:hover ul.nav-second-level {
+                    display: block
+                }
+                &:hover ul.nav-second-level {
+                    left: 60px;
+                    top: 44px;
+                }
+            }
+            > li {
+                &:hover {
+                    width: 280px;
+                    .hide-menu {
+                        display: inline;
+                    }
+                }
+            }
+            .nav-small-cap {
+                display: none;
+            }
+        }
+    }
+}
+
+@media(max-width:767px) {
+    .content-wrapper .sidebar {
+        position: absolute;
+        z-index: 100;
+        left: -220px;
+        padding-top: 70px;
+        box-shadow: 3px 5px 20px rgba(0, 0, 0, 0.05);
+        .wp-side-menu {
+            li {
+                &:hover ul.nav-second-level {
+                    position: relative;
+                    padding-left: 25px;
+                    width: 220px;
+                    left: 0px;
+                }
+            }
+        }
+    }
+    .open-wp-navbar .sidebar {
+        left: 0px;
+    }
+}
