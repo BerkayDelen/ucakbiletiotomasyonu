@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <title>Uçak</title>
-   <title>Üye Girişi | Biletcim </title>
+  <title>Üye Girişi | Biletcim </title>
   
   <jsp:include page="/WEB-INF/view/include/header.jsp" />
   
@@ -42,62 +42,12 @@
 	<div class="col-md-4 col-md-offset-4 col-sm-12">
 		
 			<div class="center-in p-l-15 p-r-15 p-t-55 p-b-20">
-			<form:form action="" method="post" modelAttribute="user" cssClass="login100-form validate-form flex-sb flex-w">
-			
+				
 					<span class="login100-form-title p-b-32">
-						<center>Üye Girişi</center>
+						<center>Üye Girişi Başarılı</center>
 					</span>
 
-					<span class="txt1 p-b-11">
-						İsim
-					</span>
-					<div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
-						
-						<form:input path="Name" cssClass="input100"/>
-						<span class="focus-input100"></span>
-					</div>
 					
-					<span class="txt1 p-b-11">
-						Soyad
-					</span>
-					<div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
-						<form:input path="Surname" cssClass="input100"/>
-						<span class="focus-input100"></span>
-					</div>
-					
-					<span class="txt1 p-b-11">
-						Email
-					</span>
-					<div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
-						<form:input path="Email" cssClass="input100"/>
-						<span class="focus-input100"></span>
-					</div>
-					<span class="txt1 p-b-11">
-						Şifre
-					</span>
-					<div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
-						<form:password path="Password" cssClass="input100"/>
-						<span class="focus-input100"></span>
-					</div>
-					
-					<span class="txt1 p-b-11">
-						Şifre (Tekrar)
-					</span>
-					<div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
-						<input class="input100" type="text" name="username" >
-						<span class="focus-input100"></span>
-					</div>
-					
-										
-					
-
-					<div class="col-md-12 p-0">
-						<button class="login100-form-btn" type="submit">
-							Üye Ol
-						</button>
-					</div>
-
-				</form:form>
 			</div>
 			
 			</div>
@@ -107,7 +57,7 @@
 <div class="row">
 	
 	<span class="register-tittle p-b-32">
-						<center>Hasbın Varmı ? <a href="#">Giriş Yap</a></center>
+						<center>Hesabın yokmu hemen <a href="${pageContext.request.contextPath }/register">Üye Ol</a></center>
 					</span>
 </div>
 <div class="row">
@@ -116,7 +66,7 @@
     	   
 		        <a href="#" class="btn btn-lg btn-block omb_btn-facebook">
 			        
-			        <span ><i class="fab fa-facebook-square"></i>  Facebook ile Üye Ol</span>
+			        <span ><i class="fab fa-facebook-square"></i>  Facebook ile Giriş Yap</span>
 		        </a>
 	        
         	
@@ -128,7 +78,7 @@
     	   
 		        <a href="#" class="btn btn-lg btn-block omb_btn-facebook">
 			        
-			        <span ><i class="fab fa-twitter-square"></i>  Twitter ile Üye Ol</span>
+			        <span ><i class="fab fa-twitter-square"></i>  Twitter ile Giriş Yap</span>
 			        
 		        </a>
 	        
@@ -140,20 +90,23 @@
 		<div class="col-md-4 col-md-offset-4 google-btn-div">
     	   
 		        <a href="#" class="btn btn-lg btn-block omb_btn-facebook">
-			        <span ><i class="fab fa-google-plus-g"></i>  Google ile Üye Ol</span>
+			        <span ><i class="fab fa-google-plus-g"></i>  Google ile Giriş Yap</span>
 		        </a>
 	        
         	
 		</div>
 </div>
+ok
+<c:out value="${Login}"></c:out>
+ok
 </div>
+
 
 
 
 <jsp:include page="/WEB-INF/view/include/footer.jsp" />
 
 <jsp:include page="/WEB-INF/view/include/js.jsp" />
-
   
   <script src="${pageContext.request.contextPath }/resources/vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -36,15 +37,6 @@
 <jsp:include page="/WEB-INF/view/include/navbartop.jsp" />
 
 
-	
-		
-		
-		
-        	
-	
-
-
-	
 		
 	<div class="row">
 	<div class="col-md-4 col-md-offset-4 col-sm-12">
@@ -107,7 +99,7 @@
 <div class="row">
 	
 	<span class="register-tittle p-b-32">
-						<center>Hesabın yokmu hemen <a href="#">Üye Ol</a></center>
+						<center>Hesabın yokmu hemen <a href="${pageContext.request.contextPath }/register">Üye Ol</a></center>
 					</span>
 </div>
 <div class="row">
@@ -146,6 +138,9 @@
         	
 		</div>
 </div>
+ok
+<c:out value="${Login}"></c:out>
+ok
 </div>
 
 

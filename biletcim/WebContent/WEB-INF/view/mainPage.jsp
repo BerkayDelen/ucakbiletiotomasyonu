@@ -20,6 +20,7 @@
 
 
 <div class="w-full">
+
 	<div class="mh-0">
 		<div class=" col-md-12 main-top-view ">
         	<div class="container p-0-left p-0-right p-0-bottom">
@@ -41,7 +42,7 @@
  									 <label class="green">Nereden</label>
  									 
  									 <div id="bloodhound">
- 									 <input class="Text-plane-from typeahead " placeholder="Şehir veya Havalimanı" />
+ 									 <input class="Text-plane-from typeahead " placeholder="Şehir veya Havalimanı" id="airline-from-Tek"/>
                                 		
                                   	 </div>
  									 
@@ -52,7 +53,7 @@
                             	<div class="form-group">
  									 <label class="green">Nereye</label>
  									  <div id="bloodhound">
- 									 	<input class="Text-plane-to typeahead " placeholder="Şehir veya Havalimanı" />
+ 									 	<input class="Text-plane-to typeahead " placeholder="Şehir veya Havalimanı" id="airline-to-Tek"/>
                                   	  </div>
  									 
 								</div>
@@ -60,13 +61,13 @@
                             <div class="col-md-2">
                             	<div class="form-group">
  									 <label class="green">Yolculuk Tarihi</label>
- 									 <input class="Text-calender" placeholder="Tarih" id="date-depart-one" data-theme="calender-custom-style" data-lang="tr" data-large-mode="true" data-format="d.m.Y" data-jump="0" data-init-set="true" data-lock="from" onchange="control()"/>
+ 									 <input class="Text-calender " placeholder="Tarih" id="date-depart-one" data-theme="calender-custom-style" data-lang="tr" data-large-mode="true" data-format="d.m.Y" data-jump="0" data-init-set="true" data-lock="from" onchange="control()"/>
 								</div>
                             </div>
                             
                             
                             <div class="col-md-2 ">
-                           <button type="button" class="btn btn-success btn-block bilet-search" > Bilet Ara</button>
+                           <button type="button" class="btn btn-success btn-block bilet-search"  id="BiletAra-Tek"> Bilet Ara</button>
 								</div>
                             	</div>
                             	
@@ -430,8 +431,8 @@ var states = [
 	for(Port port : list) {
 	 
 		
-	 String Port_visibleName =  port.getPortName().substring(0,1).toUpperCase() + port.getPortName().substring(1).toLowerCase()
-+" "+"("+port.getCode()+") - "+port.getCity();
+	 String Port_visibleName =  port.getPortName().toLowerCase()+"Havalimanı"
++" - "+"("+port.getCode()+") - "+port.getCity().toLowerCase();
 	 out.println("\""+Port_visibleName+"\",");
 	}
 	
@@ -449,6 +450,40 @@ var states = [
   
   
   <script>
+  $(document).ready(function(){
+	    $("p").click(function(){
+	        $(this).hide();
+	    });
+	    
+	    $("#BiletAra-Tek").click(function(){
+	    	var url   =   $(location).attr('host'); 
+	    	var AirPortFromTek = "";
+	    	var AirlinetoTek = "";
+	    	var Datedepartone = "";
+	    	
+	    	AirPortFromTek = $("#airline-from-Tek").val();
+	    	AirlinetoTek = $("#airline-to-Tek").val();
+	    	Datedepartone = $("#date-depart-one").val();
+	    	
+	    	AirlineFromCode = AirPortFromTek.split(" - ");
+	    	AirlineToCode = AirlinetoTek.split(" - ");
+	    	
+	    	DateFormatURL = Datedepartone.replace(/\./g, "");
+	    	
+	    	var AirlineFromJustCode =  AirlineFromCode[1].replace(/\(/g, "").replace(/\)/g, "");
+	    	var AirlineToJustCode =  AirlineToCode[1].replace(/\(/g, "").replace(/\)/g, "");
+	    	
+	    	console.log("URL: "+url+"/ucuslar/"+AirlineFromJustCode+"-"+AirlineToJustCode+"/"+DateFormatURL);
+	    	$(location).attr('href', 'http://'+url+"/biletcim/ucuslar/"+AirlineFromJustCode+"-"+AirlineToJustCode+"/"+DateFormatURL)
+	    	
+	        
+	    	//alert($("#airline-from-Tek").val()+" - "+$("#airline-to-Tek").val()+" - "+$("#date-depart-one").val());
+	       
+	    });
+	    
+	});
+  
+  
 	 function control() {
 		
     var x = $("#date-depart").val;

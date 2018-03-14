@@ -1,6 +1,8 @@
 package com.biletcim.controllers;
 
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +40,11 @@ public class RegisterController {
     public ModelAndView register(@ModelAttribute User user) {
         if (user.getId() == 0) { // if employee id is 0 then creating the
             // employee other updating the employee
+        	String uniqueID = UUID.randomUUID().toString();
+        	user.setUniqID(uniqueID);
         	userService.addUser(user);
         	System.out.println("Yeni Kullanýcý Eklendi.");
+        	
         }
         
         return new ModelAndView("redirect:/");

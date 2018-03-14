@@ -38,6 +38,23 @@ public class ApiControllerTest {
 	private PortService portService;
 	
 	
+	/*
+	 * 
+	 *	Jan	January		Ocak
+		Feb	February	Þubat
+		Mar	March		Mart
+		Apr	April		Nisan
+		May	May			Mayýs
+		Jun	June		Haziran
+		Jul	July		Temmuz
+		Aug	August		Aðustos
+		Sep	September	Eylül
+		Oct	October		Ekim
+		Nov	November	Kasým
+		Dec	December	Aralýk
+	 * 
+	 * */
+	
 
 	@RequestMapping("/get")
 	public ModelAndView getDayOfTickets() {
@@ -49,7 +66,25 @@ public class ApiControllerTest {
         conn.setRequestProperty("apisecret", Config.apiKeySecret);
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("apikey",  Config.apiKeyPublic);
-        byte[] body = "{  \"ReducedDataIndicator\":false,  \"RoutingType\":\"o\",  \"PassengerTypeQuantity\":[    {      \"Code\":\"adult\",      \"Quantity\":1    },    {      \"Code\":\"child\",      \"Quantity\":1    },    {      \"Code\":\"infant\",      \"Quantity\":0    }  ],  \"OriginDestinationInformation\":[    {      \"DepartureDateTime\":{        \"WindowAfter\":\"P0D\",        \"WindowBefore\":\"P0D\",        \"Date\":\"26FEB\"      },      \"OriginLocation\":{        \"LocationCode\":\"IST\",        \"MultiAirportCityInd\":false      },      \"DestinationLocation\":{        \"LocationCode\":\"ESB\",        \"MultiAirportCityInd\":false      },      \"CabinPreferences\":[        {          \"Cabin\":\"ECONOMY\"        }      ]    }  ]}".getBytes();
+        byte[] body = ("{ "
+        		+ " \"ReducedDataIndicator\":false,"
+        		+ " \"RoutingType\":\"o\", "
+        		+ " \"PassengerTypeQuantity\":[    {      \"Code\":\"adult\",      \"Quantity\":1    },    {      \"Code\":\"child\",      \"Quantity\":1    },    {      \"Code\":\"infant\",      \"Quantity\":0    }  ], "
+        		+ " \"OriginDestinationInformation\":["
+        		+ "		    {     "
+        		+ "				 \"DepartureDateTime\":{     "
+        		+ "					   \"WindowAfter\":\"P0D\",  "
+        		+ "				      \"WindowBefore\":\"P0D\",     "
+        		+ "					   \"Date\":\"26FEB\"      }, "
+        		+ "			     \"OriginLocation\":{    "
+        		+ "					    \"LocationCode\":\"IST\",   "
+        		+ "					     \"MultiAirportCityInd\":false      }, "
+        		+ "			     \"DestinationLocation\":{  "
+        		+ "					      \"LocationCode\":\"ESB\",  "
+        		+ "					      \"MultiAirportCityInd\":false      }, "
+        		+ "			     \"CabinPreferences\":[        {          \"Cabin\":\"ECONOMY\"        }      ]    } "
+        		+ " ]"
+        		+ "}").getBytes();
         conn.setFixedLengthStreamingMode(body.length);
         conn.setDoOutput(true);
 
@@ -145,7 +180,7 @@ public class ApiControllerTest {
 		//JSONArray arr = obj.getJSONArray("post");
 		for (int i = 0; i < ports_arr.length(); i++)
 		{
-			String Port_Name = "";
+			 String Port_Name = "";
 			 String Port_Code = "";
 			 
 			 double Port_Cordinate_la = 0;

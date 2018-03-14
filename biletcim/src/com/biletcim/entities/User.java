@@ -33,6 +33,9 @@ public class User {
 	
 	@Column(name="User_Password")
 	private String Password;
+	
+	@Column(name="User_UniqID")
+	private String UniqID;
 
 	
 	public int getId() {
@@ -74,6 +77,16 @@ public class User {
 	public void setPassword(String password) {
 		Password = password;
 	}
+
+	public String getUniqID() {
+		return UniqID;
+	}
+
+	public void setUniqID(String uniqID) {
+		UniqID = uniqID;
+	}
+	
+	
 	
 	
 	
