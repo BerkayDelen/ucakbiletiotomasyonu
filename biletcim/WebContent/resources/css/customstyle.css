@@ -1004,4 +1004,129 @@ a:hover, a:visited, a:link, a:active
 }
 
 
+.TicketList
+	  {
+		 
+		  height: 100%;
+		  min-height: 570px;
+		   width: 100%;
+		  min-width: 100%;
+		  font-size: 16px;
+		  font: normal  Arial, Helvetica, sans-serif;
+	  }
+	  .Ticket{
+		   border-bottom: 1px solid #77bc1f;
+		  
+		  height: auto;
+		  width: 100%;
+	  }
+	  .m-0{
+		  margin: 0px !important;
+	  }
+	  .p-0{
+		  padding: 0px !important;
+	  }
+	  .TicketLDTInfo{
+		  padding-top: 35px;
+		  height: 120px;
+		  width: 100%;
+		  
+	  }
+	  .TicketLDTLogo{
+		  
+		 
+		  width: 100%;
+		
+		  
+	  }
+	  .TicketLDTName{
+		 
+		 
+		  width: 100%;
+		
+		  
+	  }
+	  
+	  .vertical-center {
+ 		 min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+ 		 min-height: 100vh; /* These two lines are counted as one :-)       */
+
+ 		 display: flex;
+ 		 align-items: center;
+		}
+	  
+	  .TicketTimeInfo{
+		  font-size: 25px;
+		  margin-top: 10px !important;
+		  padding: 8px !important;
+	  }
+	  .TicketDurationInfo{
+		  font-size: 15px;
+		  padding: 3px !important;
+	  }
+	  .TicketAirportsInfo{
+		  font-size: 17px;
+		  padding: 8px !important;
+	  }
+	  
+	  .TicketMoneyInfo{
+		  
+		  width:100%;
+		   margin-top: 35px !important;
+		  
+	  }
+	  .money-big{
+	  		width:100%;
+		 
+		  font: normal 26px/normal Arial, Helvetica, sans-serif;
+	  }
+	  .money-kuru{
+	  
+	  	line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+		 
+		  font: normal 18px/normal Arial, Helvetica, sans-serif;
+	  }
+	  
+	 @media (max-width: 991px) { 
+    	.TicketBuyButton{
+   		 width: 80%;
+   		 padding: 8px 5px !important;
+   	 	}
+	}
+	  
+	  .TicketBuyButton {
+	  clear:both;
+ 		 -webkit-box-sizing: content-box;
+ 		 -moz-box-sizing: content-box;
+ 		 box-sizing: content-box;
+ 		 
+ 		 cursor: pointer;
+ 		 padding: 10px 18px;
+ 		 border: none;
+ 		 -webkit-border-radius: 8px;
+ 		 border-radius: 8px;
+ 		 font: normal normal bold 15px/normal Arial, Helvetica, sans-serif ;
+ 		 color: rgb(255, 255, 255);
+ 		 text-align: center;
+ 		 text-transform: uppercase;
+ 		 -o-text-overflow: clip;
+ 		 text-overflow: clip;
+ 		 background: rgb(233, 58, 48);
+ 		 -webkit-transition: background 0.2s cubic-bezier(0.25, 0.25, 0.75, 0.75);
+ 		 -moz-transition: background 0.2s cubic-bezier(0.25, 0.25, 0.75, 0.75);
+ 		 -o-transition: background 0.2s cubic-bezier(0.25, 0.25, 0.75, 0.75);
+ 		 transition: background 0.2s cubic-bezier(0.25, 0.25, 0.75, 0.75);
+		}
+
+		.TicketBuyButton:hover {
+		  background: rgba(219,88,81,1);
+		}
+	  .TicketListHead{
+		  border-bottom: 1px solid #77bc1f;
+		  padding: 10px !important;
+	  }
+	  
+
 
