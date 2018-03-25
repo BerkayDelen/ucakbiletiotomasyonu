@@ -1,5 +1,7 @@
 package com.biletcim.entities;
 
+import org.springframework.lang.Nullable;
+
 public class Ticket {
 	
 	private int 	ticketID;
@@ -12,22 +14,64 @@ public class Ticket {
 	
 	private String ucakModelName;
 	private String ucakModelType;
+	
+	private String kalkisYeri;
+	private String varisYeri;
 
 	private double fiyat;
 	
 	
+	
+	
+	private Company company;
+	
+	
 
-	public Ticket(int ticketID, String ticketNumber, String kalkisZamani, String karisZamani, String sure,
-			String ucakModelName, String ucakModelType, double fiyat) {
+
+	
+
+	
+
+	public Ticket(
+			int ticketID,
+			String ticketNumber,
+			String kalkisZamani,
+			String varisZamani,
+			String sure,
+			String ucakModelName,
+			String ucakModelType,
+			String kalkisYeri,
+			String varisYeri,
+			double fiyat,
+			Company company) {
 		super();
 		this.ticketID = ticketID;
 		this.ticketNumber = ticketNumber;
 		this.kalkisZamani = kalkisZamani;
-		this.varisZamani = karisZamani;
+		this.varisZamani = varisZamani;
 		this.sure = sure;
 		this.ucakModelName = ucakModelName;
 		this.ucakModelType = ucakModelType;
+		this.kalkisYeri = kalkisYeri;
+		this.varisYeri = varisYeri;
 		this.fiyat = fiyat;
+		this.company = company;
+	}
+
+	public String getKalkisYeri() {
+		return kalkisYeri;
+	}
+
+	public void setKalkisYeri(String kalkisYeri) {
+		this.kalkisYeri = kalkisYeri;
+	}
+
+	public String getVarisYeri() {
+		return varisYeri;
+	}
+
+	public void setVarisYeri(String varisYeri) {
+		this.varisYeri = varisYeri;
 	}
 
 	public int getTicketID() {
@@ -96,6 +140,20 @@ public class Ticket {
 	public void setFiyat(double fiyat) {
 		this.fiyat = fiyat;
 	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	
+
+	
+	
+	
 	
 	
 	

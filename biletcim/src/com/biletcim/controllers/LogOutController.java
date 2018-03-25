@@ -67,7 +67,7 @@ public class LogOutController {
 			
 			
 		    
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/AnaSayfa");
 		
 	}
 

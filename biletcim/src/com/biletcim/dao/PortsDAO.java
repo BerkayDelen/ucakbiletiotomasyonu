@@ -6,4 +6,6 @@ import com.biletcim.entities.Port;
 
 public interface PortsDAO {
 	public Boolean addPortList(List<Port> port);
+	
+	public Port getPortByShortName(String ShortName);
 }

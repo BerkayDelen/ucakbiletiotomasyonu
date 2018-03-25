@@ -24,4 +24,12 @@ public class PortServiceImpl implements PortService {
 		return portsDAO.addPortList(ports);
 	}
 
+
+	@Override
+	@Transactional
+	public Port getPortByShortName(String ShortName) {
+		// TODO Auto-generated method stub
+		return portsDAO.getPortByShortName(ShortName);
+	}
+
 }

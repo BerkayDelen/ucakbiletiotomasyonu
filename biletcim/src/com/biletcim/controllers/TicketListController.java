@@ -8,45 +8,75 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.biletcim.configs.Config;
+import com.biletcim.entities.Company;
 import com.biletcim.entities.Port;
 import com.biletcim.entities.Ticket;
+import com.biletcim.helpers.WebUtils;
+import com.biletcim.services.AirlinesService;
+import com.biletcim.services.PortService;
+import com.biletcim.services.UserService;
 
 @RequestMapping("/ucuslar")
 @Controller
 public class TicketListController {
 	
+	@Autowired
+    private PortService portService;
+	
+	@Autowired
+	private WebUtils wu ;
+	
+	@Autowired
+    private AirlinesService airlinesService;
+	
+	@RequestMapping(value = ("/js"),method=RequestMethod.GET)
+	public ModelAndView getTicketsJS(ModelAndView  model) {
+		
+		model.setViewName("api");
+        return model;
+		
+	}
 	
 	
 	
 	@RequestMapping(value = ("/{ports}/{date}"),method=RequestMethod.GET)
-	public ModelAndView getTickets(@PathVariable(value="ports") String Ports,@PathVariable(value="date") String FlyDate,ModelAndView  model) {
+	public ModelAndView getTickets(
+			@PathVariable(value="ports") String Ports,
+			@PathVariable(value="date") String FlyDate,
+			ModelAndView  model,
+			Model modelVM) {
 		List<Ticket> Tickets = new ArrayList<Ticket>();
 		
-		 int ticketID;
-		 String ticketNumber;
+		 int ticketID = 0;
+		 String ticketNumber = null;
 		
-		 String KalkisZamani;
-		 String VarisZamani;
+		 String KalkisZamani = null;
+		 String VarisZamani = null;
 		
 		 String Sure;
 		
 		 String UcakModelName;
 		 String UcakModelType;
 
-		 double Fiyat;
+		 String KalkisYeri = null;
+		 String VarisYeri = null;
+		 double Fiyat = 0;
 		
 		//Ticket ticket FlyDate = 
 		
@@ -57,7 +87,11 @@ public class TicketListController {
 		String FromLocationCodes = LocationCodes[0];
 		String ToLocationCodes = LocationCodes[1];
 		
+		String LFromLocationCodes = portService.getPortByShortName(FromLocationCodes).getCity();
+		String LToLocationCodes = portService.getPortByShortName(ToLocationCodes).getCity();
+		
 		String date = convertDate(FlyDate);
+		
 		System.out.println("DateD:"+date);
 		if(date != "Error") {
 			
@@ -86,7 +120,7 @@ public class TicketListController {
 	        		+ "			     \"DestinationLocation\":{  "
 	        		+ "					      \"LocationCode\":\""+ToLocationCodes+"\",  "
 	        		+ "					      \"MultiAirportCityInd\":false      }, "
-	        		+ "			     \"CabinPreferences\":[        {          \"Cabin\":\"ECONOMY\"        }      ]    } "
+	        		+ "			     \"CabinPreferences\":[        {          \"Cabin\":\"ECONOMY\"        } ,{          \"Cabin\":\"BUSINESS\"        }     ]    } "
 	        		+ " ]"
 	        		+ "}").getBytes();
 	        conn.setFixedLengthStreamingMode(body.length);
@@ -94,6 +128,7 @@ public class TicketListController {
 
 	        OutputStream out = conn.getOutputStream();
 	        out.write(body);
+	        System.out.println(body);
 	        System.out.println("Response code: " + conn.getResponseCode());
 	        BufferedReader rd;
 	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
@@ -160,6 +195,13 @@ public class TicketListController {
 				String ArrivalDateTime = fly_real_FlightSegment.getString("ArrivalDateTime");
 				String JourneyDuration = fly_real_FlightSegment.getString("JourneyDuration");
 				
+				String[] TDate = DepartureDateTime.split("-");
+		        
+		        
+		        
+		        
+		        modelVM.addAttribute("Date",TDate[2].substring(0, 2)+" "+convertDateTR(TDate[1])+" "+TDate[0]);
+		        
 				KalkisZamani=DepartureDateTime.substring(DepartureDateTime.indexOf("T")+1, DepartureDateTime.indexOf("T")+6);
 				VarisZamani=ArrivalDateTime.substring(ArrivalDateTime.indexOf("T")+1, ArrivalDateTime.indexOf("T")+6);
 				String Sure_NW=JourneyDuration.substring(JourneyDuration.indexOf("T")+1, JourneyDuration.indexOf("M")+1);
@@ -177,7 +219,7 @@ public class TicketListController {
 				//End Get Fly Object Real
 				
 				
-				
+				Boolean isPureAnadoluJetFlight = fly.getBoolean("isPureAnadoluJetFlight");
 				JSONObject fly_bookingPriceInfoType = fly.getJSONObject("bookingPriceInfoType");
 				JSONObject fly_PTC_FareBreakdowns = fly_bookingPriceInfoType.getJSONObject("PTC_FareBreakdowns");
 				JSONObject PTC_FareBreakdown_item = null;
@@ -221,22 +263,56 @@ public class TicketListController {
 				
 				
 				
-				
-				
-				//out price 1
 				flightNumber = fly.getString("flightNumber");
 				ticketID=-1;
 				ticketNumber = flightNumber;
-				Fiyat = Double.parseDouble(Amount);;
+				
+				//out price 1
+				try {
+					
+					Fiyat = Double.parseDouble(Amount);;
+				}
+				catch (Exception e) {
+					System.out.print("Hata in FN = "+e.getMessage());
+				}
+				
 				
 				
 				System.out.println("flightNumber_	:"+flightNumber);
 				System.out.println("Amount_			:"+Amount);
 				System.out.println("");
 				
-				Ticket bilet = new Ticket(ticketID, ticketNumber, KalkisZamani, VarisZamani, Sure, UcakModelName, UcakModelType, Fiyat);
+				int havalimanýCompany = 0;
+				if(isPureAnadoluJetFlight) {
+					havalimanýCompany = 2;
+				}else {
+					havalimanýCompany = 1;
+				}
 				
-				Tickets.add(bilet);
+				Company company = airlinesService.getCompanyById(havalimanýCompany);
+				
+				
+				
+				Ticket bilet = new Ticket(
+						ticketID,
+						ticketNumber,
+						KalkisZamani,
+						VarisZamani,
+						Sure,
+						UcakModelName,
+						UcakModelType,
+						wu.FirstUpper(LFromLocationCodes)+" "+FromLocationCodes,
+						wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes,
+						Fiyat,
+						company);
+				
+				
+				KalkisYeri = LFromLocationCodes;
+				VarisYeri = LToLocationCodes;
+				if(Fiyat !=0 && Fiyat!=0.0) {
+					Tickets.add(bilet);
+				}
+				
 			}
 			}
 			catch (Exception e) {
@@ -259,6 +335,15 @@ public class TicketListController {
 		
 		
         model.setViewName("TicketListPage");
+        modelVM.addAttribute("KalkisYeri",KalkisYeri);
+        modelVM.addAttribute("VarisYeri",VarisYeri);
+        
+        
+        
+        
+        //+" "+convertDateTR(KalkisZamani.substring(beginIndex))
+        
+        
         return model;
 	}
 	
@@ -381,6 +466,57 @@ public class TicketListController {
 		}
 		else if(dateM.equals("12")) {
 			return dateD+"Dec".toUpperCase();
+		}else {
+			return "Error";
+		}
+		
+		//System.out.println("DateD:"+dateD);
+		//System.out.println("DateM:"+dateM);
+		
+		
+		
+	}
+	
+	private String convertDateTR(String date) {
+		
+		String dateM=date;
+		System.out.println(dateM);
+		
+		
+		if(dateM.equals("01")) {
+			return "Ocak".toUpperCase();
+		}else if(dateM.equals("02")) {
+			return "Þubat".toUpperCase();
+		}
+		else if(dateM.equals("03")) {
+			return "Mart".toUpperCase();
+		}
+		else if(dateM.equals("04")) {
+			return "Nisan".toUpperCase();
+		}
+		else if(dateM.equals("05")) {
+			return "Mayýs".toUpperCase();
+		}
+		else if(dateM.equals("06")) {
+			return "Haziran".toUpperCase();
+		}
+		else if(dateM.equals("07")) {
+			return "Temmuz".toUpperCase();
+		}
+		else if(dateM.equals("08")) {
+			return "Aðustos".toUpperCase();
+		}
+		else if(dateM.equals("09")) {
+			return "Eylül".toUpperCase();
+		}
+		else if(dateM.equals("10")) {
+			return "Ekim".toUpperCase();
+		}
+		else if(dateM.equals("11")) {
+			return "Kasým".toUpperCase();
+		}
+		else if(dateM.equals("12")) {
+			return "Aralýk".toUpperCase();
 		}else {
 			return "Error";
 		}

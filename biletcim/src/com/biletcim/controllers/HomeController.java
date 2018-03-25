@@ -22,7 +22,7 @@ import com.biletcim.entities.Port;
 
 
 
-@RequestMapping("/")
+@RequestMapping(value={"/", "/AnaSayfa"})
 @Controller
 public class HomeController {
 	

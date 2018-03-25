@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
+    
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -82,7 +84,11 @@
 							</a>
 						</div>
 					</div>
-
+					
+					<div clas="col-md-12">
+						<p class="error">${ LoginError }<p>
+					</div>
+					
 					<div class="col-md-12 p-0">
 						<button class="login100-form-btn">
 							Giriş Yap

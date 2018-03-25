@@ -1127,6 +1127,9 @@ a:hover, a:visited, a:link, a:active
 		  border-bottom: 1px solid #77bc1f;
 		  padding: 10px !important;
 	  }
-	  
+	 
+	 .error{
+  		color:#C70039
+	}
 
 

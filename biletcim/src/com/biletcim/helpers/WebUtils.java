@@ -28,5 +28,16 @@ public class WebUtils {
 
         return remoteAddr;
     }
+    
+    
+    
+    public String FirstUpper(String text) {
+    
+    	String textc  = text.substring(0,1).toUpperCase() + text.substring(1).toLowerCase();
+    	System.out.println(text);
+    
+    	return	textc;
+    
+    }
 
 }

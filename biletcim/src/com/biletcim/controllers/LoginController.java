@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,7 +71,8 @@ public class LoginController {
 			ModelAndView model,
 			HttpServletResponse httpServletResponse,
 			HttpSession session,
-			HttpServletRequest request) {
+			HttpServletRequest request,
+			Model modelV) {
 		
 		System.out.println(user.getEmail()+" "+user.getPassword()+" "+user.getRememberMe()+"");
 		
@@ -78,6 +80,7 @@ public class LoginController {
 		Boolean call = userService.login(user);
 		
         if (call) {
+        	
         	System.out.println("Login Baþarýlý.");
         	
         		String getSession = "Select count(*) as count ,User_UniqID as myUniqId from users  where User_Email = ?";
@@ -187,8 +190,11 @@ public class LoginController {
         	
         	Login_User login = new Login_User();
     		model.addObject("login", login);
+    		
     		System.out.println("LOG: Hata (Login Baþarýsýz.)");
+    		modelV.addAttribute("LoginError","Kullanýcý Adý veya Þifre Hatalý");
             model.setViewName("LoginPage");
+           
             session.setAttribute("Login", "false");
             return model;
             
@@ -200,6 +206,8 @@ public class LoginController {
     		System.out.println("Login Baþarýsýz!");
             model.setViewName("LoginPage");
             session.setAttribute("Login", "false");
+            
+            modelV.addAttribute("LoginError","Kullanýcý Adý veya Þifre Yanýþ");
             return model;
         	
         }

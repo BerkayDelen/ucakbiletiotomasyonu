@@ -45,11 +45,11 @@
 		<div class="TicketListHead row ">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="text-center">
-					<h3>Ankara ESB -  İstanbul IST </h3>
+					<h3> ${KalkisYeri} - ${VarisYeri} </h3>
 				
 				</div>
 				<div class="text-center">
-					<h4>16.03.2018</h4>
+					<h4>${Date}</h4>
 				</div>
 			</div>
 		</div>
@@ -62,12 +62,12 @@
 					<div class="col-md-4 col-sm-4 col-xs-3 ">
 						<div class="TicketLDTInfo ">
 							<div class="TicketLDTLogo ">
-								<img class="center-block" src="${pageContext.request.contextPath }/resources/img/airlineslogos/turkhavayollarilogo.png"  width="30" height="30"/>
+								<img class="center-block" src="${pageContext.request.contextPath }/resources/img/airlineslogos/${ticketItem.company.companyImg }"  width="30" height="30"/>
 							</div>
 							<div class="TicketLDTName">
 								<div class="center-block text-center">
 								
-									Türk Hava Yolları
+									${ticketItem.company.companyName }
 								
 									
 								</div>
@@ -89,9 +89,9 @@
 						</div>
 						<div class="TicketAirportsInfo row">
 							<div class="col-xs-12 text-center">
-								<span >Ankara </span><span class="hidden-xs">ESB</span>	
+								<span >${ticketItem.kalkisYeri} </span><span class="hidden-xs"></span>	
 								<i class="fas fa-angle-right"></i>
-								<span >İstanbul </span><span class="hidden-xs">IST</span>
+								<span >${ticketItem.varisYeri} </span><span class="hidden-xs"></span>
 							</div>
 						</div>
 					</div>

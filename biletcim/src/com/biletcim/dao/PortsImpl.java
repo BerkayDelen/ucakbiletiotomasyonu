@@ -2,12 +2,16 @@ package com.biletcim.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.biletcim.configs.Config;
 import com.biletcim.entities.Port;
+import com.biletcim.entities.User;
 
 @Repository
 public class PortsImpl implements PortsDAO {
@@ -58,4 +62,34 @@ public class PortsImpl implements PortsDAO {
 
 	}
 
+	public Port getPortByShortName(String ShortName) {
+		 Port port = null;
+		
+		String sql = "SELECT City  from ports where Code = ? ";
+		
+		try {
+			Config.OpenDB(sql);
+		Config.stmt.setString(1,ShortName);
+		
+		
+		ResultSet rs =	Config.stmt.executeQuery();
+   while(rs.next()){
+      //Retrieve by column name
+	  port = new Port("",ShortName,rs.getString("City"),"",0,0);
+     
+      System.out.println("Country : " + rs.getString("City"));
+     
+   }
+   rs.close();
+	
+   Config.CloseDB();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+
+		return port;
+	}
 }
