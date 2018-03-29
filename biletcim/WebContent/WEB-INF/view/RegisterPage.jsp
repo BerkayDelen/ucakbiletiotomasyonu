@@ -45,7 +45,7 @@
 			<form:form action="" method="post" modelAttribute="user" cssClass="login100-form validate-form flex-sb flex-w">
 			
 					<span class="login100-form-title p-b-32">
-						<center>Üye Girişi</center>
+						<center>Kayıt Ol</center>
 					</span>
 
 					<span class="txt1 p-b-11">

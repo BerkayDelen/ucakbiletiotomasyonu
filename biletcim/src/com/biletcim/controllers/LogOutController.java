@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,8 @@ public class LogOutController {
 	public ModelAndView LogOut(
 			ModelAndView  model,
 			HttpSession session,
-			HttpServletRequest request) {
+			HttpServletRequest request,
+			HttpServletResponse httpServletResponse) {
 		
 		if (session.getAttribute("Login_Session") != null) {
 		    session.invalidate();
@@ -38,7 +40,7 @@ public class LogOutController {
 					Cookie_ID = c.getValue();
 					System.out.println(c.getName() + "=" + c.getValue());
 					
-					String sql = "DELETE FROM dbbiletcim.logincookies where loginCookie_Key = ?;";
+					String sql = "DELETE FROM logincookies where loginCookie_Key = ?;";
 		     		
  					try {
  						
@@ -53,8 +55,14 @@ public class LogOutController {
  							
  							rs =	Config.stmt.executeUpdate();
  							System.out.println(rs+" UserUniqId Cookie Silindi.");
+ 							
 
  							Config.CloseDB();
+ 							
+ 							Cookie cookie = new Cookie("Login_ID", null);
+ 		                	 cookie.setMaxAge(0);
+ 		                	httpServletResponse.addCookie(cookie);
+ 		                	 
  					} catch (SQLException e) {
  						System.out.println("Hata: (After Login)"+e.getMessage());	
  					}

@@ -13,12 +13,19 @@ public class Config {
 	public static String apiKeyPublic = "l7xxc7cf29ae22e74bada8787d9f8240513e";
 	public static String apiKeySecret = "eb5d3e6148284a7b91c646afe8c433ae";
 	// JDBC driver name and database URL
-	  public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+	 /* public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	  public static final String DB_URL = "jdbc:mysql://localhost/dbbiletcim";
 
 	   //  Database credentials
 	  public  static final String USER = "root";
-	  public static final String PASS = "root";
+	  public static final String PASS = "root";*/
+	
+	 public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+	  public static final String DB_URL = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11229413";
+
+	   //  Database credentials
+	  public  static final String USER = "sql11229413";
+	  public static final String PASS = "1Zyy3lhi8A";
 	  
 	  public static Connection conn = null;
 	  public static PreparedStatement stmt = null;

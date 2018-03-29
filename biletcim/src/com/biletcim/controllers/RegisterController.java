@@ -3,6 +3,9 @@ package com.biletcim.controllers;
 
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +20,7 @@ import com.biletcim.services.UserService;
 
 
 @Controller
-@RequestMapping("/register")
+@RequestMapping(value= {"/register","/Register"})
 public class RegisterController {
 	
 	
@@ -26,7 +29,27 @@ public class RegisterController {
     private UserService userService;
 	
 	@GetMapping()
-	public ModelAndView register(ModelAndView  model) {
+	public ModelAndView register(ModelAndView  model,
+			HttpServletRequest request) {
+		
+			String Cookie_ID = "";
+	     
+	    
+		Cookie[] cookies = request.getCookies();
+			
+			for (Cookie c : cookies) {
+				if(c.getName().equals("Login_ID")){
+					Cookie_ID = c.getValue();
+					System.out.println(c.getName() + "=" + c.getValue());
+					break;
+				}
+				
+				}
+			if(!Cookie_ID.isEmpty()) {
+				return new ModelAndView("redirect:/");
+			}
+		
+		
 		User user = new User();
 		model.addObject("user", user);
         model.setViewName("RegisterPage");

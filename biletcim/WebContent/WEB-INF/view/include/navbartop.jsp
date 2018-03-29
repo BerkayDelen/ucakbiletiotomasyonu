@@ -41,7 +41,7 @@
 			
 			}
 		if(!Cookie_ID.equals("")){
-			String getCookies = "Select count(*) as count from users  Inner JOIN logincookies  ON users.Id = logincookies.loginCookie_User_ID where loginCookies.loginCookie_Key = ?";
+			String getCookies = "Select count(*) as count from users  Inner JOIN logincookies  ON users.Id = logincookies.loginCookie_User_ID where loginCookie_Key = ?";
 			
 			try {
 				Config.OpenDB(getCookies);
@@ -151,6 +151,7 @@
 			*/
 			
 		}else{
+			
 			
 			 out.println("<li><a href='http://localhost:8080/biletcim/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
 	    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");

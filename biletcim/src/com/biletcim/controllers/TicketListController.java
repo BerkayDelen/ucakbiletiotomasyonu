@@ -94,6 +94,10 @@ public class TicketListController {
 		
 		System.out.println("DateD:"+date);
 		if(date != "Error") {
+			List<Company> companies = new ArrayList<Company>();
+			companies = airlinesService.getCompanyies();
+			
+			
 			
 			 String json = "";
 			try {
@@ -288,8 +292,13 @@ public class TicketListController {
 				}else {
 					havalimanýCompany = 1;
 				}
+				Company company =null;
+				for (int company_id = 0; company_id < companies.size(); company_id++) {
+					if(companies.get(company_id).getCompanyID() == havalimanýCompany){
+						company = companies.get(company_id);
+					}
+				}
 				
-				Company company = airlinesService.getCompanyById(havalimanýCompany);
 				
 				
 				

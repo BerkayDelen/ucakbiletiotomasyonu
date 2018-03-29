@@ -2,6 +2,8 @@ package com.biletcim.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -42,6 +44,38 @@ public class AirlinesImpl implements AirlinesDAO {
 		}
 		
 		return company;
+	}
+
+	@Override
+	public List<Company> getCompanyies() {
+		List<Company> companies = new ArrayList<Company>();
+		 
+		
+		String sql = "SELECT  * from company";
+	
+	try {
+		Config.OpenDB(sql);
+	
+		ResultSet rs =	Config.stmt.executeQuery();
+			while(rs.next()){
+				//Retrieve by column name
+				Company company = new Company(rs.getInt("companyID"), rs.getString("companyName"), rs.getString("companyImg"));
+   
+					companies.add(company);
+ 
+					System.out.println("Company : " + rs.getString("companyName"));
+ 
+			}
+			rs.close();
+
+			Config.CloseDB();
+		} catch (SQLException e) {
+		
+		e.printStackTrace();
+		
+		}
+	
+		return companies;
 	}
 
 }

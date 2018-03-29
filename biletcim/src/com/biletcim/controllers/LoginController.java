@@ -57,7 +57,26 @@ public class LoginController {
     private WebUtils webUtils;
 	
 	@GetMapping()
-	public ModelAndView login(ModelAndView  model) {
+	public ModelAndView login(ModelAndView  model
+			,HttpServletRequest request) {
+		
+		 String Cookie_ID = "";
+	     
+	    
+		Cookie[] cookies = request.getCookies();
+			
+			for (Cookie c : cookies) {
+				if(c.getName().equals("Login_ID")){
+					Cookie_ID = c.getValue();
+					System.out.println(c.getName() + "=" + c.getValue());
+					break;
+				}
+				
+				}
+			if(!Cookie_ID.isEmpty()) {
+				return new ModelAndView("redirect:/");
+			}
+			
 		
 		Login_User login = new Login_User();
 		model.addObject("login", login);
@@ -145,7 +164,7 @@ public class LoginController {
                 	 
                 	 /*Cookie Ekleme*/
                 	 
-                	 String sql_Cookie_add = "INSERT INTO `dbbiletcim`.`logincookies` (`loginCookie_Key`, `loginCookie_User_ID`, `loginCookie_IP`) Select ?,  Id ,? from users where User_Email = ?";
+                	 String sql_Cookie_add = "INSERT INTO sql11229413.`logincookies` (`loginCookie_Key`, `loginCookie_User_ID`, `loginCookie_IP`) Select ?,  Id ,? from sql11229413.users where User_Email = ?";
               		
   					try {
   						
@@ -207,7 +226,7 @@ public class LoginController {
             model.setViewName("LoginPage");
             session.setAttribute("Login", "false");
             
-            modelV.addAttribute("LoginError","Kullanýcý Adý veya Þifre Yanýþ");
+            modelV.addAttribute("LoginError","Kullanýcý Adý veya Þifre Hatalý");
             return model;
         	
         }
