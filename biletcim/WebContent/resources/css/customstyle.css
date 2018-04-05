@@ -1131,5 +1131,11 @@ a:hover, a:visited, a:link, a:active
 	 .error{
   		color:#C70039
 	}
+	
+	 .panel1{
+  		background-color: #39434e !important;
+  		color:white !important;
+  		padding: 5px 10px 5px 10px !important;
+  	}
 
 

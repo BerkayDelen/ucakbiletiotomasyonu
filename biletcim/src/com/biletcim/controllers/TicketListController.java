@@ -7,12 +7,16 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +29,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.biletcim.configs.Config;
 import com.biletcim.entities.Company;
+import com.biletcim.entities.Data_Company;
+import com.biletcim.entities.Data_Plane;
+import com.biletcim.entities.Data_Ticket;
+import com.biletcim.entities.Data_TicketsSaveDate;
+import com.biletcim.entities.Plane;
 import com.biletcim.entities.Port;
 import com.biletcim.entities.Ticket;
 import com.biletcim.helpers.WebUtils;
 import com.biletcim.services.AirlinesService;
 import com.biletcim.services.PortService;
+import com.biletcim.services.TicketService;
 import com.biletcim.services.UserService;
 
 @RequestMapping("/ucuslar")
@@ -44,6 +54,16 @@ public class TicketListController {
 	
 	@Autowired
     private AirlinesService airlinesService;
+	
+	@Autowired
+	private TicketService ticketService;
+	
+	
+	  
+	  public static Connection conn = null;
+	  public static Statement stmt = null;
+	
+	
 	
 	@RequestMapping(value = ("/js"),method=RequestMethod.GET)
 	public ModelAndView getTicketsJS(ModelAndView  model) {
@@ -61,6 +81,20 @@ public class TicketListController {
 			@PathVariable(value="date") String FlyDate,
 			ModelAndView  model,
 			Model modelVM) {
+		
+		
+		   
+		  
+		  
+		  
+		      //STEP 2: Register JDBC driver
+		      
+		      
+				
+
+		   
+		
+		
 		List<Ticket> Tickets = new ArrayList<Ticket>();
 		
 		 int ticketID = 0;
@@ -89,6 +123,10 @@ public class TicketListController {
 		
 		String LFromLocationCodes = portService.getPortByShortName(FromLocationCodes).getCity();
 		String LToLocationCodes = portService.getPortByShortName(ToLocationCodes).getCity();
+		Data_TicketsSaveDate data_TicketsSaveDate = new Data_TicketsSaveDate(FromLocationCodes, ToLocationCodes);
+		ticketService.AddTicketSaveDate(data_TicketsSaveDate);
+		
+		System.out.println("data_TicketsSaveDate ID :"+data_TicketsSaveDate.getId());
 		
 		String date = convertDate(FlyDate);
 		
@@ -101,6 +139,22 @@ public class TicketListController {
 			
 			 String json = "";
 			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				
+
+			      //STEP 3: Open a connection
+			      System.out.println("Connecting to a selected database...");
+			      
+					conn = DriverManager.getConnection(Config.DB_URL, Config.USER, Config.PASS);
+				
+			      System.out.println("Connected database successfully...");
+			      
+			      //STEP 4: Execute a query
+			      System.out.println("Inserting records into the table...");
+			     
+					stmt = conn.createStatement();
+					
+					
 			StringBuilder urlBuilder = new StringBuilder("https://api.turkishairlines.com/test/getAvailability");
 	        URL url = new URL(urlBuilder.toString());
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -153,6 +207,12 @@ public class TicketListController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -318,8 +378,68 @@ public class TicketListController {
 				
 				KalkisYeri = LFromLocationCodes;
 				VarisYeri = LToLocationCodes;
+				
 				if(Fiyat !=0 && Fiyat!=0.0) {
+					Data_Company data_Company = new Data_Company(company.getCompanyID(),company.getCompanyName(),company.getCompanyImg());
+					
+					Data_Plane data_Plane = new Data_Plane(UcakModelName, UcakModelType);
+					//Data_Plane data_Plane_c = ticketService.getPlaneControl(data_Plane);
+					
+					//System.out.println(" data_Plane id:"+data_Plane_c.getId());
+					
+					/*if(data_Plane_c.getId() == 0) {
+						ticketService.addPlane(data_Plane);
+						
+					}else {
+						data_Plane = data_Plane_c;
+					}*/
+					
+					
+					
+					
+					Data_Ticket data_Ticket = new Data_Ticket(
+							ticketNumber,
+							KalkisZamani,
+							VarisZamani,
+							Sure,
+							data_Plane,
+							wu.FirstUpper(LFromLocationCodes)+" "+FromLocationCodes,
+							wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes,
+							Fiyat,
+							data_TicketsSaveDate,
+							data_Company);
+					
+					
+					
+					String sql = "INSERT INTO `tickets` "+
+								"( `ticketNumber`, `kalkisZamani`, `varisZamani`, `sure`,  `Plane_Name`, `Plane_Model`, `kalkisYeri`, `varisYeri`, `fiyat`, `companyID`, `save_date`)"+
+							" VALUES ( '"+ticketNumber+"', '"+KalkisZamani+"', '"+VarisZamani+"', '"+Sure+"',  '"+data_Plane.getPlane_Name()+"', '"+data_Plane.getPlane_Model()+"', '"+wu.FirstUpper(LFromLocationCodes)+" "+FromLocationCodes+"', '"+wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes+"', '"+Fiyat+"', '"+data_Company.getCompanyID()+"' , '"+data_TicketsSaveDate.getId()+"');";
+					System.out.println(sql);
+							stmt.executeUpdate(sql);
+							
+					      System.out.println("Inserted records into the table...");
+					      
+					      
+					try {
+						
+						ticketService.AddTicket(data_Ticket);
+						
+						
+					}catch (Exception e) {
+						System.out.println("Hata: "+e.getMessage());
+					}
+					
+					
+					
+					
+					
+					
+					// bilet.setPlane(new Plane(UcakModelName,UcakModelType));
+					 //ticketService.AddTicket(bilet);
+					
+					//ticketService
 					Tickets.add(bilet);
+					
 				}
 				
 			}
@@ -327,7 +447,22 @@ public class TicketListController {
 			catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
-			}
+			}finally{
+			      //finally block used to close resources
+			      try{
+			         if(stmt!=null)
+			            conn.close();
+			      }catch(SQLException se){
+			      }// do nothing
+			      try{
+			         if(conn!=null)
+			            conn.close();
+			      }catch(SQLException se){
+			         se.printStackTrace();
+			      }//end finally try
+			   }//end try
+			   System.out.println("Goodbye!");
+			
 			
 			
 			//model.addObject("FlyList", "deneme");
@@ -536,5 +671,7 @@ public class TicketListController {
 		
 		
 	}
+	
+	
 
 }

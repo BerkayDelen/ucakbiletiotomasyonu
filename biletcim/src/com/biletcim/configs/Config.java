@@ -2,11 +2,13 @@ package com.biletcim.configs;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import java.sql.Statement;
 
-import java.sql.PreparedStatement;
+
 
 public class Config {
 	//Api Keys
@@ -20,12 +22,12 @@ public class Config {
 	  public  static final String USER = "root";
 	  public static final String PASS = "root";*/
 	
-	 public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	  public static final String DB_URL = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11229413";
+	  public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+	  public static final String DB_URL = "jdbc:mysql://localhost:3306/dbbiletcim?useUnicode=true&characterEncoding=utf-8";
 
 	   //  Database credentials
-	  public  static final String USER = "sql11229413";
-	  public static final String PASS = "1Zyy3lhi8A";
+	  public  static final String USER = "JavaSBErkay";
+	  public static final String PASS = "root";
 	  
 	  public static Connection conn = null;
 	  public static PreparedStatement stmt = null;

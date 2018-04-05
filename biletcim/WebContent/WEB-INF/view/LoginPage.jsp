@@ -80,7 +80,7 @@
 
 						<div>
 							<a href="#" class="txt3">
-								Şifremi unuttum.
+								<!-- Şifremi unuttum. -->
 							</a>
 						</div>
 					</div>
@@ -169,6 +169,7 @@ ok
 	<script src="${pageContext.request.contextPath }/resources/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="${pageContext.request.contextPath }/resources/js/main.js"></script>
+  
   
   
   

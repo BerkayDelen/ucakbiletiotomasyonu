@@ -164,7 +164,7 @@ public class LoginController {
                 	 
                 	 /*Cookie Ekleme*/
                 	 
-                	 String sql_Cookie_add = "INSERT INTO sql11229413.`logincookies` (`loginCookie_Key`, `loginCookie_User_ID`, `loginCookie_IP`) Select ?,  Id ,? from sql11229413.users where User_Email = ?";
+                	 String sql_Cookie_add = "INSERT INTO `logincookies` (`loginCookie_Key`, `loginCookie_User_ID`, `loginCookie_IP`) Select ?,  Id ,? from users where User_Email = ?";
               		
   					try {
   						

@@ -44,11 +44,7 @@
   
   
   
-  .panel1{
-  background-color: #39434e !important;
-  color:white !important;
-  padding: 5px 10px 5px 10px !important;
-  }
+ 
   </style>
 </head>
 <body class="container-fluid">
@@ -59,10 +55,11 @@
 
 		
 <div class="container p-0 m-t-15">
-<form action="">
+<form action="" method="post">
+<input type="hidden" name="ticketNumber" value="${biletim.ticketNumber }">
 <div class="row">
 
-		<div class="col-md-12 m-0 p-0">
+		<div class="col-md-12 ">
 						<div class="panel panel-default block1">
                             <div class="panel-heading panel1"><b><h4>Seçilen Bilet</h4></b></div>
                             <div class="panel-wrapper collapse in">
@@ -135,9 +132,9 @@
 	
 				
 	<div class="row">
-		<div class="col-md-8 p-r-15">
+		<div class="col-md-8 p-0">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 p-0">
 				<div class="row">
 					<div class="col-md-12">
 					<div class="panel panel-default block1">
@@ -193,7 +190,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-12 ">
 					<div class="panel panel-default block1">
                             <div class="panel-heading panel1"><b><h4>Bilet Kişi Bilgileri</h4></b></div>
                             <div class="panel-wrapper collapse in">
@@ -207,14 +204,14 @@
                  			<div class="col-md-6 p-l-10 p-r-10">
                  				<div class="form-group">
 				  					<label for="JName">Ad</label>
-				  					<input placeholder="" type="text" name="Jname" class="form-control p-l-10 p-r-10" id="JName">
+				  					<input placeholder="" type="text" name="name" class="form-control p-l-10 p-r-10" id="JName" required="required">
 				 					
 								</div>
                  			</div>
                  			<div class="col-md-6 p-l-10 p-r-10">
                  				<div class="form-group">
 				  					<label for="Surname">Soyad</label>
-				  					<input placeholder="" type="text" name="surname" class="form-control p-l-10 p-r-10" id="Surname">
+				  					<input placeholder="" type="text" name="surname" class="form-control p-l-10 p-r-10" id="Surname" required="required">
 				 					
 								</div>
                  			</div>
@@ -225,7 +222,7 @@
 	                 			<div class="col-md-6 p-l-10 p-r-10" >
 	                 				<div class="form-group">
 					  					<label for="tcNo">TC Kimlik No</label>
-					  					<input placeholder="" type="text" name="tcNo" class="form-control " id="tcNo">
+					  					<input placeholder="" type="text" name="tcNo" class="form-control " id="tcNo" >
 					 					
 									</div>
 	                 			</div>
@@ -233,7 +230,7 @@
 	                 			<div class="col-md-6  p-l-10 p-r-10">
 	                 				<div class="form-group">
 					  					<label for="bdate">Doğum Tarihi</label>
-					  					<input placeholder="" type="date" name="bdate" class="form-control" id="bdate">
+					  					<input placeholder="" type="date" name="bdate" class="form-control" id="bdate" >
 					 					
 									</div>
 	                 			</div>
@@ -248,7 +245,7 @@
                  			<div class="col-md-12 p-l-10 p-r-10">
                  				<div class="form-group">
 				  					<label for="JName">E-Mail</label>
-				  					<input placeholder="" type="text" name="Jname" class="form-control p-l-10 p-r-10" id="JName">
+				  					<input placeholder="" type="text" name="Email" class="form-control p-l-10 p-r-10" id="Email" required="required">
 				 					
 								</div>
                  			</div>
@@ -264,12 +261,12 @@
 					  					<div class="row">
 					  						<div class="col-md-4 m-l-r-auto">
 					  					<label class="radio-inline  sizefull p-t-7">
-					      					<input type="radio" name="optradio">Erkek
+					      					<input type="radio" name="optradio" value="1">Erkek
 					    				</label>
 					  						</div>
 					  						<div class="col-md-4 m-l-r-auto">
 					  					<label class="radio-inline sizefull p-t-7">
-									      <input type="radio" name="optradio">Kadın
+									      <input type="radio" name="optradio" value="0">Kadın
 									    </label>
 					  						</div>
 					  					</div>
@@ -315,7 +312,7 @@
 						
 		</div>
 	
-		<div class="col-md-4 p-0">
+		<div class="col-md-4">
 		<div class="panel panel-default block1">
                             <div class="panel-heading panel1"><b><h4>Ödeme Bilgileri</h4></b></div>
                             <div class="panel-wrapper collapse in">
@@ -327,21 +324,21 @@
             
             	<div class="form-group">
   					<label for="cardnumber">Kart Numarası :</label>
-  					<input placeholder="**** **** **** ****" type="tel" name="Cardnumber" class="form-control" id="cardnumber">
+  					<input placeholder="**** **** **** ****" type="tel" name="Cardnumber" class="form-control" id="cardnumber" required="required"> 
  					
 				</div>
 				<div class="form-group">
   					<label for="fullname">Ad Soyad :</label>
-  					<input placeholder="" type="text" name="Cardname" class="form-control" id="fullname">
+  					<input placeholder="" type="text" name="Cardname" class="form-control" id="fullname" required="required">
  					
 				</div>
 			
 				<div class="row">
-					<div class="col-md-7  col-sm-7 p-r-5">
+					<div class="col-md-7  col-sm-7 p-0">
 				
 						<div class="form-group">
 		  					<label for="validthru">Son Kullanma Tarihi :</label>
-		  					<input placeholder="__ /__ " type="tel" name="Cardexpiry" class="form-control" id="validthru" maxlength="7" style="width: 70px !important">
+		  					<input placeholder="__ /__ " type="tel" name="Cardexpiry" class="form-control" id="validthru" maxlength="7" style="width: 70px !important" required="required">
 		 					
 						</div>
 				
@@ -351,7 +348,7 @@
 					
 						<div class="form-group">
 		  					<label for="cvc">CVC :</label>
-		  					<input placeholder="" type="number" name="Cardcvc" class="form-control" id="cvc" maxlength="3" style="width: 70px !important">
+		  					<input placeholder="" type="number" name="Cardcvc" class="form-control" id="cvc" maxlength="3" style="width: 70px !important" required="required">
 		 					
 						</div>
 					
@@ -359,7 +356,7 @@
 					
 				</div>
 				<div class="form-group">
-  					<input type="submit" value="Satın Al" class="login100-form-btn form-control">
+  					<input type="submit" value="Satın Al" class="login100-form-btn form-control" id="btn_Buy">
  					<!--<button class="login100-form-btn form-control">
 							<div clas="row">
 							<div class="col-md-3">
@@ -457,6 +454,88 @@
             },
             debug:true
         });
+        
+       
+        $(document).ready(function(){
+        	
+        	
+        	
+        	function validationControler($elementInputName){
+        		$("input[name="+$elementInputName+"]").focusout(function(e){
+            		if($(this).val().trim() == ""){
+            			$(this).css("border","red solid 1px");
+            			//$("#btn_Buy").attr("disabled", true);
+                	}else{
+                		$(this).css("border","#ccc solid 1px");
+                		//$("#btn_Buy").attr("disabled", false);
+                	}
+            	});
+        		
+        	}
+        	
+        	
+        	validationControler("name");
+        	validationControler("surname");
+        	validationControler("tcNo");
+        	validationControler("Email");
+        	validationControler("optradio");
+        	validationControler("Cardnumber");
+        	validationControler("Cardname");
+        	validationControler("Cardexpiry");
+        	validationControler("Cardcvc");
+        	
+        	$("input[name=name]").val(  "Berkay");
+        	$("input[name=surname]").val( "Delen");
+        	$("input[name=tcNo]").val( "18581279012");
+        	$("input[name=bdate]").val( "08091997");
+        	$("input[name=Email]").val( "delenberkay@gmail.com");
+        	//$("input[name=optradio]").val( "1");
+        	$("input[name=Cardnumber]").val( "3551513513513513");
+        	$("input[name=Cardname]").val( "Berkay DELEN");
+        	$("input[name=Cardexpiry]").val( "0809");
+        	$("input[name=Cardcvc]").val( "123");
+        	
+        	$( "form" ).submit(function( event ) {
+        		if($("input[name=tcNo]").val().trim() != ""){
+        			$("input[name=tcNo]").css("border","red solid 1px");
+            		return;
+        			
+            	}
+        		event.preventDefault();
+            		
+            	
+        		 
+        		});
+        	
+        	
+        	
+            $("#btn_Buy").click(function(){
+            	$("#btn_Buy").submit();
+            	if($("input[name=tcNo]").val().trim() == ""){
+            		$("input[name=tcNo]").css("border","red solid 1px");
+            	}else{
+            		
+            	}
+            	
+                /*$.post("http://localhost:8080/biletcim/Buy/",
+                {
+                	name: 		$("input[name=name]").val(),
+                	surname: 	$("input[name=surname]").val(),
+                	tcNo: 		$("input[name=tcNo]").val(),
+                	bdate: 		$("input[name=bdate]").val(),
+                	Email: 		$("input[name=Email]").val(),
+                	optradio: 	$("input[name=optradio]").val(),
+                	Cardnumber: $("input[name=Cardnumber]").val(),
+                	Cardname: 	$("input[name=Cardname]").val(),
+                	Cardexpiry: $("input[name=Cardexpiry]").val(),
+                	Cardcvc: 	$("input[name=Cardcvc]").val()
+                },
+                function(data,status){
+                    alert("Data: " + data + "\nStatus: " + status);
+                });*/
+            });
+        });
+        
     </script>
   
   

@@ -84,11 +84,13 @@
 						Şifre (Tekrar)
 					</span>
 					<div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
-						<input class="input100" type="text" name="username" >
+						<input id="Password" name="rePassword" class="input100" type="password" value="">
 						<span class="focus-input100"></span>
 					</div>
 					
-										
+					<div clas="col-md-12">
+						<p class="error">${ RegisterError }<p>
+					</div>			
 					
 
 					<div class="col-md-12 p-0">

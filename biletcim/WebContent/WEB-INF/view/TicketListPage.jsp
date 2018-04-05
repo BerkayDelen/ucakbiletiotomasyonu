@@ -108,7 +108,7 @@
 							</div>
 							<div class="col-md-7 p-0">
 								
-									<button type="button" class="TicketBuyButton float-r ">
+									<button type="button" class="TicketBuyButton float-r " data-ticket-number="${ticketItem.ticketNumber}">
 								
 										<i class="fas fa-shopping-cart hidden-md hidden-sm hidden-md  hidden-lg "></i>
 										<div class="hidden-xs"><span>Satın Al</span></div>
@@ -148,7 +148,19 @@
 <!--===============================================================================================-->
 	<script src="${pageContext.request.contextPath }/resources/js/main.js"></script>
   
+  <script type="text/javascript">
   
+  $(function() {
+	$(".TicketBuyButton").click(function() {
+		
+		  
+		  window.location.replace("http://localhost:8080/biletcim/Buy/"+$(this).data('ticket-number'));
+	});
+	
+	
+	});
+  
+  </script>
   
   
 </body>

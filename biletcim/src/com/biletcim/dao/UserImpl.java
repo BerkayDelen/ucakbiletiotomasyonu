@@ -36,7 +36,7 @@ public class UserImpl implements UserDAO {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
-		Query<User> query = session.createQuery("from Users",User.class);
+		Query<User> query = session.createQuery("from users",User.class);
 		
 		List<User> users = query.getResultList();
 		
