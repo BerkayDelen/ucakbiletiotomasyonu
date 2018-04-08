@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.biletcim.entities.BuyTicket;
 import com.biletcim.entities.Data_Plane;
+import com.biletcim.entities.Data_Sale;
 import com.biletcim.entities.Data_Ticket;
 import com.biletcim.entities.Data_TicketsSaveDate;
 import com.biletcim.entities.Ticket;
@@ -22,5 +23,7 @@ public interface TicketDAO {
 	public Data_Plane getPlaneControl(Data_Plane data_Plane);
 
 	public Ticket getLastTicketByTicketNumber(String ticketNumber);
+
+	public Data_Sale getTicketByNumberANDFullName(String ticketNumber, String name, String surname);
 
 }

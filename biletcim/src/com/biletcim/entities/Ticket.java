@@ -2,11 +2,14 @@ package com.biletcim.entities;
 
 import org.springframework.lang.Nullable;
 
+import com.biletcim.helpers.WebUtils;
+
 public class Ticket {
 	
 	private int 	ticketID;
 	private String ticketNumber;
 	
+	private String ticketDate;
 	private String kalkisZamani;
 	private String varisZamani;
 	
@@ -32,9 +35,32 @@ public class Ticket {
 
 	
 
+	public String getTicketDate() {
+		
+		
+		String dateD=ticketDate.substring(8, 10);
+    	String dateM=ticketDate.substring(5, 7);
+    	String dateY=ticketDate.substring(0, 4);
+    	return dateD+ " "+dateM+" "+dateY;
+	}
+		public String getTicketDateMMMMTR() {
+		WebUtils utils = new WebUtils();
+		
+		
+		String dateD=ticketDate.substring(8, 10);
+    	String dateM=utils.convertDateTR(ticketDate.substring(5, 7));
+    	String dateY=ticketDate.substring(0, 4);
+    	return dateD+ " "+dateM+" "+dateY;
+	}
+
+	public void setTicketDate(String ticketDate) {
+		this.ticketDate = ticketDate;
+	}
+
 	public Ticket(
 			int ticketID,
 			String ticketNumber,
+			String ticketDate,
 			String kalkisZamani,
 			String varisZamani,
 			String sure,
@@ -47,6 +73,7 @@ public class Ticket {
 		super();
 		this.ticketID = ticketID;
 		this.ticketNumber = ticketNumber;
+		this.ticketDate = ticketDate;
 		this.kalkisZamani = kalkisZamani;
 		this.varisZamani = varisZamani;
 		this.sure = sure;

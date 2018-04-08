@@ -15,6 +15,8 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.biletcim.entities.Ticket;
+
 import javax.servlet.http.HttpServletRequest;
 
 @Component
@@ -52,7 +54,7 @@ public class WebUtils {
     
     }
     
-    public  void MailSender() {
+    public  void MailSender(Ticket bilet, String userFullName, String email) {
     	final String username = "biletcim.berkaydelen@gmail.com";
 	final String password = "Biletcim.123";
 
@@ -74,7 +76,7 @@ public class WebUtils {
 		MimeMessage  message = new MimeMessage(session);
 		message.setFrom(new InternetAddress("biletcim.berkaydelen@gmail.com"));
 		message.setRecipients(Message.RecipientType.TO,
-			InternetAddress.parse("berkaydelen@hotmail.com"));
+			InternetAddress.parse(email	));
 		
 		message.setSubject("Biletcim Uçak Bileti Satýn Alým");
 		message.setText("<head>\r\n" + 
@@ -485,6 +487,33 @@ public class WebUtils {
 				"}\r\n" + 
 				"\r\n" + 
 				"/* ]]> */\r\n" + 
+				".btn_checkin {\r\n" + 
+				"  display: inline-block;\r\n" + 
+				"  -webkit-box-sizing: content-box;\r\n" + 
+				"  -moz-box-sizing: content-box;\r\n" + 
+				"  box-sizing: content-box;\r\n" + 
+				"  cursor: pointer;\r\n" + 
+				"  padding: 10px 20px;\r\n" + 
+				"  border: 1px solid #ffffff;\r\n" + 
+				"  -webkit-border-radius: 8px;\r\n" + 
+				"  border-radius: 8px;\r\n" + 
+				"  font: normal 16px/normal Arial, Helvetica, sans-serif;\r\n" + 
+				"  color: rgba(255,255,255,0.9);\r\n" + 
+				"  -o-text-overflow: clip;\r\n" + 
+				"  text-overflow: clip;\r\n" + 
+				"  background: #0061AB;\r\n" + 
+				"  text-shadow: -1px -1px 0 rgba(15,73,168,0.66) ;\r\n" + 
+				"  -webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);\r\n" + 
+				"  -moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);\r\n" + 
+				"  -o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);\r\n" + 
+				"  transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);\r\n" + 
+				"}\r\n" + 
+				"\r\n" + 
+				".btn_checkin:hover {\r\n" + 
+				"  border: 1px solid #0061AB;\r\n" + 
+				"  color: #0061AB;\r\n" + 
+				"  background: #ffffff;\r\n" + 
+				"}"+
 				"</style>\r\n" + 
 				"</head>\r\n" + 
 				"\r\n" + 
@@ -522,7 +551,7 @@ public class WebUtils {
 				"                          <tbody><tr align=\"left\">\r\n" + 
 				"                            <td bgcolor=\"#ffffff\"><table class=\"resize140px\" width=\"325\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" align=\"left\" bgcolor=\"#ffffff\">\r\n" + 
 				"                                <tbody><tr>\r\n" + 
-				"                                  <td class=\"Resizefontto13\" bgcolor=\"#ffffff\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#36495A;\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">Merhaba Berkay DELEN,</span></td>\r\n" + 
+				"                                  <td class=\"Resizefontto13\" bgcolor=\"#ffffff\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#36495A;\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">Merhaba "+userFullName+",</span></td>\r\n" + 
 				"                                </tr>\r\n" + 
 				"                              </tbody></table>\r\n" + 
 				"                               \r\n" + 
@@ -540,7 +569,7 @@ public class WebUtils {
 				"            </tbody></table>\r\n" + 
 				"            <table align=\"center\" class=\"nomob\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"600\" bgcolor=\"#ffffff\">\r\n" + 
 				"              <tbody><tr>\r\n" + 
-				"                <td class=\"resizeimageto320\" align=\"center\" width=\"600\"><a href=\"#\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_600_desktop.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" class=\"nomob\" width=\"600\" height=\"166\"></a></td>\r\n" + 
+				"                <td class=\"resizeimageto320\" align=\"center\" width=\"600\"><a href=\"http://localhost:8080/biletcim/plane/check-in/control\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_600_desktop.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" class=\"nomob\" width=\"600\" height=\"166\"></a></td>\r\n" + 
 				"              </tr>\r\n" + 
 				"            </tbody></table>\r\n" + 
 				"            \r\n" + 
@@ -549,7 +578,7 @@ public class WebUtils {
 				"            <div align=\"center\" style=\"display:none; width:0px; max-height:0px; overflow:hidden;\" class=\"showmobile320\">\r\n" + 
 				"              <table align=\"center\" class=\"showmobile320\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"320\" bgcolor=\"#ffffff\">\r\n" + 
 				"                <tbody><tr>\r\n" + 
-				"                  <td align=\"center\" width=\"320\"><a href=\"#\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_320_mobile.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" width=\"320\" height=\"135\"></a></td>\r\n" + 
+				"                  <td align=\"center\" width=\"320\"><a href=\"http://localhost:8080/biletcim/plane/check-in/control\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_320_mobile.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" width=\"320\" height=\"135\"></a></td>\r\n" + 
 				"                </tr>\r\n" + 
 				"              </tbody></table>\r\n" + 
 				"            </div>\r\n" + 
@@ -562,13 +591,13 @@ public class WebUtils {
 				"            </tbody></table>\r\n" + 
 				"            \r\n" + 
 				"            \r\n" + 
-				"            <table class=\"emailphoneresize\" align=\"center\" width=\"600\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+				"            <table bgcolor=\"#ffffff\" class=\"emailphoneresize\" align=\"center\" width=\"600\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
 				"              <tbody><tr>\r\n" + 
-				"              <td style=\"padding: 0 112px 0 113px;\" class=\"mobpad0\">\r\n" + 
+				"              <td style=\"padding: 0 112px 0 113px;\" class=\"mobpad0\" bgcolor=\"#ffffff\">\r\n" + 
 				"            <table align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"375\" bgcolor=\"#ffffff\" class=\"nomob\">\r\n" + 
 				"              <tbody><tr>\r\n" + 
 				"                <td width=\"375\" height=\"86\" align=\"center\" bgcolor=\"#ffffff\" style=\"padding:0 0 36px 0;\" class=\"paddingB30px\">\r\n" + 
-				"                 <a href=\"#\" class=\"\" target=\"_blank\"><img src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/desktopCTA.png\" border=\"0\" style=\"display:block;\" alt=\"Check In Now\" title=\"Check In Now\" width=\"375\" height=\"50\" class=\"nomob\"></a>\r\n" + 
+				"                 <a href=\"http://localhost:8080/biletcim/plane/check-in/control\" class=\"\" target=\"_blank\"><input type=\"button\" class=\"btn_checkin\" value=\"Check-in Yap\" /></a>\r\n" + 
 				"\r\n" + 
 				"                </td>\r\n" + 
 				"              </tr>\r\n" + 
@@ -576,10 +605,10 @@ public class WebUtils {
 				"            \r\n" + 
 				"            <!--[if !mso]><!-->\r\n" + 
 				"<div style=\"display:none; width:0px; max-height:0px; overflow:hidden;\" class=\"showmobile280\">\r\n" + 
-				"            <table align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"280\" bgcolor=\"#ffffff\" class=\"showmobile280\">\r\n" + 
+				"            <table align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"280\"  class=\"showmobile280\">\r\n" + 
 				"              <tbody><tr>\r\n" + 
-				"                <td width=\"280\" height=\"65\" align=\"center\" bgcolor=\"#ffffff\" style=\"padding:0 20px 30px 20px;\">\r\n" + 
-				"                 <a href=\"#\" class=\"\" target=\"_blank\"><img src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/mobileCTA.png\" border=\"0\" style=\"display:block;\" alt=\"Check In Now\" title=\"Check In Now\" width=\"280\" height=\"35\" class=\"showmobile280\"></a>\r\n" + 
+				"                <td width=\"280\" height=\"65\" align=\"center\" style=\"padding:0 20px 30px 20px;\">\r\n" + 
+				"                 <a href=\"http://localhost:8080/biletcim/plane/check-in/control\" class=\"\" target=\"_blank\"><input type=\"button\" class=\"btn_checkin\" value=\"Check-in Yap\" /></a>\r\n" + 
 				"\r\n" + 
 				"                </td>\r\n" + 
 				"              </tr>\r\n" + 
@@ -595,33 +624,35 @@ public class WebUtils {
 				"                <td height=\"1\" style=\"padding:0px; background-color:#bfbfbf; font-size:0px; line-height:0px; border-collapse:collapse;\"><img src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/spacer50.gif\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" style=\"display:block;\"></td>\r\n" + 
 				"              </tr>\r\n" + 
 				"            </tbody></table>\r\n" + 
-				"            <table class=\"emailphoneresize\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"600\" align=\"center\">\r\n" + 
+				"            <table style=\"\r\n" + 
+				"    background-color:  #ffffff;\r\n" + 
+				"\" bgcolor=\"#ffffff\" class=\"emailphoneresize\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"600\" align=\"center\">\r\n" + 
 				"  <tbody><tr>\r\n" + 
-				"    <td class=\"paddingB30pxLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; line-height:18px; color:#36495A; font-weight:bold;padding:30px 30px 34px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\"><!--Begin SPOTLIGHT HEADING--> Bilet Numarasý : TK2093</span></td>\r\n" + 
+				"    <td bgcolor=\"#ffffff\" class=\"paddingB30pxLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; line-height:18px; color:#36495A; font-weight:bold;padding:30px 30px 34px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\"><!--Begin SPOTLIGHT HEADING--> Bilet Numarasý : TK2093</span></td>\r\n" + 
 				"  </tr>\r\n" + 
 				"  <tr>\r\n" + 
-				"    <td class=\"paddingLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:30px; line-height:30px; color:#0061AB; padding:0 30px 3px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">IST <span style=\"font-size:18px;\">to</span> ESB</span></td>\r\n" + 
+				"    <td bgcolor=\"#ffffff\" class=\"paddingLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:30px; line-height:30px; color:#0061AB; padding:0 30px 3px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">"+bilet.getTicketDateMMMMTR()+"</span></td>\r\n" + 
 				"  </tr>\r\n" + 
 				"  <tr>\r\n" + 
-				"    <td class=\"paddingLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:16px; color:#0061AB; padding:0 30px 36px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;color: #0061AB !important; text-decoration: none;\" class=\"appleLinksBlue\">Thursday, March 16, 2017</span></td>\r\n" + 
+				"    <td bgcolor=\"#ffffff\" class=\"paddingLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:16px; color:#0061AB; padding:0 30px 36px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;color: #0061AB !important; text-decoration: none;\" class=\"appleLinksBlue\">"+bilet.getKalkisYeri()+" <span style=\"font-size:18px;\">></span> "+bilet.getVarisYeri()+"</span></td>\r\n" + 
 				"  </tr>\r\n" + 
 				"  <tr>\r\n" + 
-				"    <td style=\"padding: 0 30px 15px 30px;\" align=\"left\" class=\"paddingLR20px\">\r\n" + 
+				"    <td bgcolor=\"#ffffff\" style=\"padding: 0 30px 15px 30px;\" align=\"left\" class=\"paddingLR20px\">\r\n" + 
 				"    \r\n" + 
 				"    \r\n" + 
 				"    <table class=\"email280resize\" cellspacing=\"0\" cellpadding=\"0\" width=\"306\" style=\"border-collapse:collapse;\">\r\n" + 
 				"        <tbody><tr>\r\n" + 
-				"          <td class=\"resize140px\" width=\"166\" align=\"left\" valign=\"top\">\r\n" + 
+				"          <td bgcolor=\"#ffffff\" class=\"resize140px\" width=\"166\" align=\"left\" valign=\"top\">\r\n" + 
 				"          <table class=\"resize140px\" cellspacing=\"0\" cellpadding=\"0\" width=\"156\" style=\"border-collapse:collapse;\">\r\n" + 
 				"        <tbody><tr>\r\n" + 
-				"          <td class=\"resize114px\" width=\"130\" align=\"left\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:27px; color:#36495A; text-align:left; text-decoration: none; line-height:27px; padding: 0 10px 7px 0; text-transform:uppercase;\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;color: #36495A !important; text-decoration: none;\" class=\"appleLinksGrey\">10:01 am</span></td>\r\n" + 
+				"          <td bgcolor=\"#ffffff\" class=\"resize114px\" width=\"130\" align=\"left\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:27px; color:#36495A; text-align:left; text-decoration: none; line-height:27px; padding: 0 10px 7px 0; text-transform:uppercase;\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;color: #36495A !important; text-decoration: none;\" class=\"appleLinksGrey\">"+bilet.getKalkisZamani()+"</span></td>\r\n" + 
 				"          \r\n" + 
 				"          <td width=\"26\" align=\"left\" style=\"padding: 0 0 7px 0;\"><img src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/grey_arrow.png\" border=\"0\" alt=\"\" title=\"\" width=\"26\" height=\"20\"></td>\r\n" + 
 				"        </tr>\r\n" + 
 				"      </tbody></table>\r\n" + 
 				"      <table class=\"resize140px\" cellspacing=\"0\" cellpadding=\"0\" width=\"166\" style=\"border-collapse:collapse;\">\r\n" + 
 				"        <tbody><tr>\r\n" + 
-				"          <td class=\"resize140px\" width=\"166\" align=\"left\" style=\"font-family: Arial, Helvetica, sans-serif; font-size:14px; line-height:14px; color:#36495A; text-align:left; text-decoration: none; padding: 0 0 0 0; border-collapse:collapse;\"><span class=\"Resizefontto12\" style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">CHICAGO ILLINOIS</span></td>\r\n" + 
+				"          <td bgcolor=\"#ffffff\" class=\"resize140px\" width=\"166\" align=\"left\" style=\"font-family: Arial, Helvetica, sans-serif; font-size:14px; line-height:14px; color:#36495A; text-align:left; text-decoration: none; padding: 0 0 0 0; border-collapse:collapse;\"><span class=\"Resizefontto12\" style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">"+bilet.getKalkisYeri()+"</span></td>\r\n" + 
 				"          \r\n" + 
 				"          \r\n" + 
 				"        </tr>\r\n" + 
@@ -629,15 +660,15 @@ public class WebUtils {
 				"          \r\n" + 
 				"          </td>\r\n" + 
 				"          \r\n" + 
-				"          <td class=\"resize140px\" width=\"140\" align=\"left\" valign=\"top\">\r\n" + 
+				"          <td bgcolor=\"#ffffff\" class=\"resize140px\" width=\"140\" align=\"left\" valign=\"top\">\r\n" + 
 				"          <table class=\"resize140px\" cellspacing=\"0\" cellpadding=\"0\" width=\"166\" style=\"border-collapse:collapse;\">\r\n" + 
 				"        <tbody><tr>\r\n" + 
-				"          <td class=\"resize140pxPadL10px\" width=\"140\" align=\"left\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:27px; color:#36495A;text-align:left; text-decoration: none; line-height:27px; padding: 0 0 7px 20px; text-transform:uppercase;\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;color: #36495A !important; text-decoration: none;\" class=\"appleLinksGrey\">12:31 pm</span></td>\r\n" + 
+				"          <td bgcolor=\"#ffffff\" class=\"resize140pxPadL10px\" width=\"140\" align=\"left\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:27px; color:#36495A;text-align:left; text-decoration: none; line-height:27px; padding: 0 0 7px 20px; text-transform:uppercase;\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;color: #36495A !important; text-decoration: none;\" class=\"appleLinksGrey\">"+bilet.getVarisZamani()+"</span></td>\r\n" + 
 				"          \r\n" + 
 				"          \r\n" + 
 				"        </tr>\r\n" + 
 				"                <tr>\r\n" + 
-				"          <td class=\"resize140pxPadL10px\" width=\"140\" align=\"left\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:14px; color:#36495A; text-align:left; text-decoration: none; padding: 0 0 0 20px;\"><span class=\"Resizefontto12\" style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">San Francisco, CA</span></td>\r\n" + 
+				"          <td bgcolor=\"#ffffff\" class=\"resize140pxPadL10px\" width=\"140\" align=\"left\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:14px; color:#36495A; text-align:left; text-decoration: none; padding: 0 0 0 20px;\"><span class=\"Resizefontto12\" style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">"+bilet.getVarisYeri()+"</span></td>\r\n" + 
 				"          \r\n" + 
 				"          \r\n" + 
 				"        </tr>\r\n" + 
@@ -651,7 +682,7 @@ public class WebUtils {
 				"      </td>\r\n" + 
 				"  </tr>\r\n" + 
 				"  <tr>\r\n" + 
-				"    <td class=\"paddingLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:14px; color:#36495A; padding:0 30px 0 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\" class=\"appleLinksGrey\">AA 6500</span></td>\r\n" + 
+				"    <td bgcolor=\"#ffffff\" class=\"paddingLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:14px; color:#36495A; padding:0 30px 0 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\" class=\"appleLinksGrey\">Detay </span></td>\r\n" + 
 				"  </tr>\r\n" + 
 				"\r\n" + 
 				"    \r\n" + 
@@ -688,7 +719,7 @@ public class WebUtils {
 				"            \r\n" + 
 				"            <table class=\"emailphoneresize\" align=\"center\" width=\"600\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
 				"              <tbody><tr>\r\n" + 
-				"                <td style=\"font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#0078D2; padding:36px 0 36px 0;\" align=\"center\" bgcolor=\"#ffffff\"><a href=\"https://www.aa.com/i18n/customer-service/contact-american/american-customer-service.jsp\" style=\"color:#137acf; text-decoration:underline;\" target=\"_blank\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">Destek</span></a> &nbsp;&nbsp;<span style=\"color:#36495A; text-decoration:none;\">|</span>&nbsp;&nbsp; <a href=\"https://www.aa.com/i18n/customer-service/support/privacy-policy.jsp\" style=\"color:#0078D2; text-decoration:underline;\" target=\"_blank\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">Gizlilik&nbsp;Politikasý</span></a></td>\r\n" + 
+				"                <td style=\"font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#0078D2; padding:36px 0 36px 0;\" align=\"center\" bgcolor=\"#ffffff\"><a href=\"http://localhost:8080/biletcim/\" style=\"color:#137acf; text-decoration:underline;\" target=\"_blank\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">Destek</span></a> &nbsp;&nbsp;<span style=\"color:#36495A; text-decoration:none;\">|</span>&nbsp;&nbsp; <a href=\"http://localhost:8080/biletcim/\" style=\"color:#0078D2; text-decoration:underline;\" target=\"_blank\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">Gizlilik&nbsp;Politikasý</span></a></td>\r\n" + 
 				"              </tr>\r\n" + 
 				"            </tbody></table>\r\n" + 
 				"            <table class=\"emailphoneresize\" align=\"center\" width=\"600\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
@@ -731,5 +762,85 @@ public class WebUtils {
 		throw new RuntimeException(e);
 	}
      }
+    
+public String convertDateTR(String date) {
+		
+		String dateM=date;
+		System.out.println("Date : "+dateM);
+		
+		
+		if(dateM.equals("01")) {
+			return "Ocak".toUpperCase();
+		}else if(dateM.equals("02")) {
+			return "Þubat".toUpperCase();
+		}
+		else if(dateM.equals("03")) {
+			return "Mart".toUpperCase();
+		}
+		else if(dateM.equals("04")) {
+			return "Nisan".toUpperCase();
+		}
+		else if(dateM.equals("05")) {
+			return "Mayýs".toUpperCase();
+		}
+		else if(dateM.equals("06")) {
+			return "Haziran".toUpperCase();
+		}
+		else if(dateM.equals("07")) {
+			return "Temmuz".toUpperCase();
+		}
+		else if(dateM.equals("08")) {
+			return "Aðustos".toUpperCase();
+		}
+		else if(dateM.equals("09")) {
+			return "Eylül".toUpperCase();
+		}
+		else if(dateM.equals("10")) {
+			return "Ekim".toUpperCase();
+		}
+		else if(dateM.equals("11")) {
+			return "Kasým".toUpperCase();
+		}
+		else if(dateM.equals("12")) {
+			return "Aralýk".toUpperCase();
+		}else {
+			return "Error";
+		}
+		
+		//System.out.println("DateD:"+dateD);
+		//System.out.println("DateM:"+dateM);
+		
+		
+		
+	}
+
+	public String PlaneGetImgUrl(String PlaneName,String PlaneModel) {
+		
+		if(PlaneName.equals("A320-200")) {
+			return "https://www.seatguru.com/airlines/Turkish_Airlines/Turkish_Airlines_Airbus_A330-200_C.php";
+		}
+		else if(PlaneName.equals("AIRBUS A321-200")) {
+			return "https://www.seatguru.com/airlines/Turkish_Airlines/Turkish_Airlines_Airbus_A321_C_new.php";
+		}
+		else if(PlaneName.equals("AIRBUS A320")) {
+			return "https://www.seatguru.com/airlines/Turkish_Airlines/Turkish_Airlines_Airbus_A320.php";
+		}
+		else if(PlaneName.equals("AIRBUS A321-231")) {
+			return "https://www.seatguru.com/airlines/Turkish_Airlines/Turkish_Airlines_Airbus_A321_D.php";
+		}
+		else if(PlaneName.equals("BOEING B737-900ER")) {
+			return "https://www.seatguru.com/airlines/Turkish_Airlines/Turkish_Airlines_Boeing_737-900ER_B.php";
+		}
+		else if(PlaneName.equals("BOEING 737-800")) {
+			return "https://www.seatguru.com/airlines/Turkish_Airlines/Turkish_Airlines_Boeing_737-800_A.php";
+		}
+		else if(PlaneName.equals("UNKNOWN_PLANE")) {
+			return "https://www.seatguru.com/airlines/Turkish_Airlines/Turkish_Airlines_Boeing_737-900ER_B.php";
+		}else {
+			return "https://www.seatguru.com/airlines/Turkish_Airlines/Turkish_Airlines_Boeing_737-900ER_B.php";
+		}
+		
+		
+	}
 
 }

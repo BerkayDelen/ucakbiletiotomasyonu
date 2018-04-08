@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+    
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <title>Üye Girişi | Biletcim </title>
+  <title>Üye Giriri | Biletcim </title>
   
   <jsp:include page="/WEB-INF/view/include/header.jsp" />
   
@@ -157,6 +157,42 @@
   		color:white !important;
   		padding: 5px 10px 5px 10px !important;
   	}
+  	
+  	.btn_checkin {
+ 
+  cursor: pointer;
+ 
+  border: 1px solid #ffffff;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  
+  color: rgba(255,255,255,0.9);
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: #77bc1f;
+  
+  -webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  -moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  -o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.btn_checkin:hover {
+  border: 1px solid rgba(119,188,31,1);
+  color: rgba(119,188,31,1);
+  background: #ffffff;
+}
+.check-in-text{
+-webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+  -moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+  -o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+  transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+  }
+.ckeck-in-text:active{
+border: 1px solid rgba(119,188,31,1) !important;
+  color: rgba(119,188,31,1) !important;
+  background: #ffffff !important;
+}
 </style>
   
 </head>
@@ -167,17 +203,18 @@
 
 		
 <div class="container p-0 ">
-		 	<div class="row ">
+<form action="./" method="post">
+			<div class="row ">
 					<div class="col-md-12  m-t-15">
 						<div class="white-box">
                            
                             <div class="row thin-steps">
-                                <div class="col-md-6 column-step ">
+                                <div class="col-md-6 column-step active">
                                     <div class="step-number">1</div>
                                     <div class="step-title">Kontrol</div>
                                     <div class="step-info">Yolcu Bilgilerini Doğrulama</div>
                                 </div>
-                                <div class="col-md-6 column-step active">
+                                <div class="col-md-6 column-step">
                                     <div class="step-number">2</div>
                                     <div class="step-title">Check-in</div>
                                     <div class="step-info">Koltuk Seçimi</div>
@@ -186,9 +223,7 @@
                             </div>
                         </div>
 					</div>
-			</div>
-			
-			<!--		
+			</div>		
 				<div class="row ">
 					<div class="col-md-12  m-t-15">
 					<div class="panel panel-default block1">
@@ -204,14 +239,14 @@
                  			<div class="col-md-6 p-l-10 p-r-10">
                  				<div class="form-group">
 				  					<label for="JName">Ad</label>
-				  					<input placeholder="" type="text" name="Jname" class="form-control p-l-10 p-r-10" id="JName">
+				  					<input placeholder="" type="text" name="name" class="form-control p-l-10 p-r-10 ckeck-in-text" id="JName" required>
 				 					
 								</div>
                  			</div>
                  			<div class="col-md-6 p-l-10 p-r-10">
                  				<div class="form-group">
 				  					<label for="Surname">Soyad</label>
-				  					<input placeholder="" type="text" name="surname" class="form-control p-l-10 p-r-10" id="Surname">
+				  					<input placeholder="" type="text" name="surname" class="form-control p-l-10 p-r-10 ckeck-in-text" id="Surname" required>
 				 					
 								</div>
                  			</div>
@@ -219,21 +254,19 @@
                  	</div>
                  	<div class="col-md-6">
 	                 		<div class="row">
-	                 			<div class="col-md-5 p-l-10 p-r-10" >
+	                 			<div class="col-md-6 p-l-10 p-r-10" >
 	                 				<div class="form-group">
 					  					<label for="tcNo">Bilet Numarası</label>
-					  					<input placeholder="" type="text" name="tcNo" class="form-control " id="tcNo" >
+					  					<input placeholder="" type="text" name="ticketNumber" class="form-control ckeck-in-text" id="tcNo" required>
 					 					
 									</div>
 	                 			</div>
-	                 			<div class="col-md-2 p-l-2 p-r-2" >
-	                 				<p class="m-t-25 text-center" >Veya</p>
-	                 			</div>
 	                 			
-	                 			<div class="col-md-5  p-l-10 p-r-10">
+	                 			
+	                 			<div class="col-md-6  p-l-10 p-r-10">
 	                 				<div class="form-group">
-					  					<label for="bdate">Rezervasyon No(PNR)</label>
-					  					<input placeholder="" type="text" name="bdate" class="form-control" id="bdate" >
+					  					<label for="bdate">&nbsp</label>
+					  					<input  type="submit" name="btn_checkinControl" class="form-control btn_checkin" id="btn_checkinControl"  value="Check-in Yap" >
 					 					
 									</div>
 	                 			</div>
@@ -263,54 +296,9 @@
                         </div>
 					</div>
 			</div>
- -->
+
 	
-	<div class="row">
-		<div class="col-md-12 col-sm-12">
-		<div class="main-content boxTop17">
-			<div>
-
-				<map id="seatmap" name="seatmap">
-				
-					<c:forEach var="item" items="${SeatsList}">
-					<c:if test="${item.id %2 == 0 }">
-						<area class="area" data-info-data="${ item.description}" title="${ item.description}" id="${item.seat_number } ${item.seat_character} N"  shape="rect" coords="${item.coords }" alt="" data-maphilight='{"stroke":false,"fillColor":"545454","fillOpacity":1,"alwaysOn":true}'>
-					</c:if>
-					<c:if test="${item.id %2 != 0 }">
-						<area class="area" data-info-data="${ item.description}" title="${ item.description}" id="${item.seat_number } ${item.seat_character} E"  shape="rect" coords="${item.coords }" alt="" >
-					</c:if>
-						
-					</c:forEach>
-				</map>
-			</div>
-                
-            <div class="seat-wrapper">
-            
-                                <img  class="plane" src="${data}" usemap="#seatmap">
-
-
-
-                    </div>
-                    
-                </div>
-                
-                
-                
-                <div class="alert" role="alert">
-				  <div class="alert-container is-visible">
-				    <p id="select_question"> </p>
-				    <footer class="buttons">
-				      <a href="#" class="alert-cancel">Hayır</a>
-				      <a href="#" class="alert-confirm">Evet</a>
-				    </footer>
-				    <a href="#" class="alert-close img-replace">&times;</a>
-				  </div>
-				</div>
-               
-               
-               
-		</div>
-	</div>
+	</form>
 </div>
 
 
@@ -336,90 +324,7 @@
   
   
   <script src="${pageContext.request.contextPath }/resources/js/jquery.maphilight.min.js"></script>
-               <script type="text/javascript">$(function() {
-		
-		
-					$('.plane').maphilight({
-			            fillColor: '008800',
-			            strokeColor: '009e0a',
-			        });
-					
-					
-					
-				});
                
-               
-               $(document).ready(function() {
-            	    $("area").click(function(e) {
-            	        
-            	        var item_id = (event.target.id).split(" ");
-            	        var seat_info = item_id[2];
-            	       
-            	        var seat_name = item_id[1];
-            	        var seat_number = item_id[0];
-            	        console.log(seat_info+" "+ seat_name+ " "+seat_number);
-            	        
-            	        if(seat_info == "E"){
-            	        	 $(".alert").addClass("is-visible");
-                       	   $(".alert .alert-confirm")
-                       	     .attr("data-action", $(this).attr("data-action"))
-                       	     .attr("data-item", $(this).attr("data-item"));
-                       	$("#select_question").html("<h4>Seçilen Koltuk Numarası : <b>"+seat_number +""+seat_name +"</b> </h4></br> <h4>Kolduğu Seçmek istediğinize eminmisiniz ?</h4>");
-            	        }else if(seat_info == "N"){
-            	        	
-            	        }
-            	        e.preventDefault();
-                 	  
-            	    });
-            	});
-               
-               
-               $(".alert-trigger").on("click", function(e) {
-            	   e.preventDefault();
-            	   $(".alert").addClass("is-visible");
-            	   $(".alert .alert-confirm")
-            	     .attr("data-action", $(this).attr("data-action"))
-            	     .attr("data-item", $(this).attr("data-item"));
-            	 });
-               
-            	 $(".alert-confirm").on("click", function(e) {
-            	   e.preventDefault();
-            	   var d = $(this).attr("data-item");
-            	   $(`.item-list a[data-item='${d}']`)
-            	     .parent()
-            	     .remove();
-            	   $(".alert").removeClass("is-visible");
-            	   console.log("OK");
-            	   
-            	 });
-            	 $(".alert-close, .alert-cancel , .alert").on("click", e => {
-            	   e.preventDefault();
-            	   $(".alert").removeClass("is-visible");
-            	   console.log("NO");
-            	 });
-
-            	 //press ESC
-            	 $(document).keyup(event => {
-            	   if (event.which == "27") $(".alert").removeClass("is-visible");
-            	 });
-            	 
-            	 
-            	 $(".area").qtip({
-            	        style: {
-            	            classes: 'qtip-dark'
-            	        },
-            	        events: {
-            	            show: function(event, api) {
-            	                api.set({
-            	                    'content.text': api.elements.target.attr('title')
-            	                });
-            	            }
-            	        }
-            	    });
-
-            	
-            	
-               </script>
               
               <jsp:include page="/WEB-INF/view/include/Loader.jsp" />
   

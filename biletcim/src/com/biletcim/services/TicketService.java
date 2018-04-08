@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.biletcim.entities.BuyTicket;
 import com.biletcim.entities.Data_Plane;
+import com.biletcim.entities.Data_Sale;
 import com.biletcim.entities.Data_Ticket;
 import com.biletcim.entities.Data_TicketsSaveDate;
 import com.biletcim.entities.Ticket;
@@ -22,6 +23,8 @@ public interface TicketService {
 	public Ticket getLastTicketByTicketNumber(String TicketNumber);
 	
 	public void AddBuyTicket(BuyTicket buyTicket);
+
+	public Data_Sale getTicketByNumberANDFullName(String ticketNumber, String name, String surname);
 	
 	
 }

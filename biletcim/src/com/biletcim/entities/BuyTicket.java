@@ -51,8 +51,8 @@ public class BuyTicket {
 	@Column(name = "sales_user_Birthday")
 	private Date User_ticket_Birthday;
 	
-	@Column(name = "sales_user_sex")
-	private Boolean User_ticket_sex;
+	@Column(name = "sales_user_gender")
+	private Boolean User_ticket_gender;
 
 	public int getId() {
 		return Id;
@@ -126,12 +126,12 @@ public class BuyTicket {
 		User_ticket_Birthday = user_ticket_Birthday;
 	}
 
-	public Boolean getUser_ticket_sex() {
-		return User_ticket_sex;
+	public Boolean getUser_ticket_gender() {
+		return User_ticket_gender;
 	}
 
-	public void setUser_ticket_sex(Boolean user_ticket_sex) {
-		User_ticket_sex = user_ticket_sex;
+	public void setUser_ticket_gender(Boolean user_ticket_gender) {
+		User_ticket_gender = user_ticket_gender;
 	}
 
 	

@@ -51,16 +51,18 @@
 				while(rs.next()){
 					int action  = rs.getInt("count");
 					try{
-		    			     if(action >= 1){
-		    			    	 out.println("<li><a href='http://localhost:8080/biletcim/Logout'><i class='fas fa-times-circle'></i> Çıkış</a></li>");
-		    			    	 out.println("<li><a href='/'><i class='fas fa-ticket-alt'></i> Biletlerim</a></li>");
-		    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
-		    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
-		    			     }else{
-		    					 out.println("<li><a href='http://localhost:8080/biletcim/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
-		    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
-		    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
-		    				}
+						if(action >= 1){
+	    			    	 out.println("<li><a href='http://localhost:8080/biletcim/Logout'><i class='fas fa-times-circle'></i> Çıkış</a></li>");
+	    			    	 out.println("<li><a href='/'><i class='fas fa-ticket-alt'></i> Biletlerim</a></li>");
+	    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
+	    			    	 out.println("<li><a href='http://localhost:8080/biletcim/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
+	    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
+	    			     }else{
+	    					 out.println("<li><a href='http://localhost:8080/biletcim/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
+	    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
+	    			    	 out.println("<li><a href='http://localhost:8080/biletcim/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
+	    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
+	    				}
 		    			    		
 		    		}
 		    		catch (Exception e){
@@ -98,10 +100,12 @@
 		    			    	 out.println("<li><a href='http://localhost:8080/biletcim/Logout'><i class='fas fa-times-circle'></i> Çıkış</a></li>");
 		    			    	 out.println("<li><a href='/'><i class='fas fa-ticket-alt'></i> Biletlerim</a></li>");
 		    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
+		    			    	 out.println("<li><a href='http://localhost:8080/biletcim/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 		    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 		    			     }else{
 		    					 out.println("<li><a href='http://localhost:8080/biletcim/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
 		    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
+		    			    	 out.println("<li><a href='http://localhost:8080/biletcim/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 		    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 		    				}
 		    			    		
@@ -154,7 +158,8 @@
 			
 			
 			 out.println("<li><a href='http://localhost:8080/biletcim/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
-	    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
+			 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
+	    	 out.println("<li><a href='http://localhost:8080/biletcim/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 	    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 		}
      

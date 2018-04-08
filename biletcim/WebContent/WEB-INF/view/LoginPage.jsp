@@ -101,13 +101,14 @@
 			</div>
 		</div>
 	
-<div class="social-networks">
+<div class="social-networks  m-b-50">
 <div class="row">
 	
-	<span class="register-tittle p-b-32">
+	<span class="register-tittle p-b-50">
 						<center>Hesabın yokmu hemen <a href="${pageContext.request.contextPath }/register">Üye Ol</a></center>
 					</span>
 </div>
+<!-- 
 <div class="row">
 	
 		<div class="col-md-4 col-md-offset-4 facebook-btn-div">
@@ -143,10 +144,12 @@
 	        
         	
 		</div>
+		 -->
 </div>
-ok
+
+
 <c:out value="${Login}"></c:out>
-ok
+
 </div>
 
 
@@ -172,7 +175,7 @@ ok
   
   
   
-  
+  <jsp:include page="/WEB-INF/view/include/Loader.jsp" />
   
 </body>
 </html>

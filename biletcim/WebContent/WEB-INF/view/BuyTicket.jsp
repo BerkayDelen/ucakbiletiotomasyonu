@@ -153,7 +153,7 @@
 											<span class="hidden-xs"></span>	
 											<i class="fas fa-angle-right"></i>
 											<span >${biletim.varisYeri} </span><span class="hidden-xs"></span></p>
-											
+											<p>Uçuş Günü : ${biletim.ticketDate}</p>
 											<p>Kalkış Saati : ${biletim.kalkisZamani}</p>
 											<p>Varış Saati : ${biletim.varisZamani}</p>
 											
@@ -458,22 +458,221 @@
        
         $(document).ready(function(){
         	
+        	var b_name 		= false;
+        	var b_surname	= false;
+        	//var b_tcNo		= false;
+        	var b_Email		= false;
+        	var b_optradio	= false;//aa
+        	var b_Cardnumber= false;
+        	var b_Cardname	= false;
+        	var b_Cardexpiry= false;
+        	var b_Cardcvc	= false;
+        	var b_bdate	= false;
+        	
+        	function controlAll(){
+        		if(b_name && b_surname 
+        				
+        				&& b_Email
+        				&& b_Cardnumber
+        				&& b_Cardname
+        				&& b_Cardexpiry
+        				&& b_Cardcvc
+        				&& b_bdate
+        				&& b_optradio){
+        			console.log("YES")
+        			return true;
+        		}else{
+        			
+        			console.log("no")
+        			return false;
+        		}
+        	}
         	
         	
         	function validationControler($elementInputName){
+        		if($("input[name="+$elementInputName+"]").val().trim() == ""){
+        		
+        			$(this).css("border","red solid 1px");
+        		}
+        		/*
         		$("input[name="+$elementInputName+"]").focusout(function(e){
             		if($(this).val().trim() == ""){
             			$(this).css("border","red solid 1px");
-            			//$("#btn_Buy").attr("disabled", true);
+            			$("#btn_Buy").attr("disabled", true);
                 	}else{
                 		$(this).css("border","#ccc solid 1px");
-                		//$("#btn_Buy").attr("disabled", false);
+                		$("#btn_Buy").attr("disabled", false);
+                	}
+            	});*/
+        		
+        	}
+        	
+        	function validationControlers(){
+        		$("input[name=name]").focusout(function(e){
+            		if($(this).val().trim() == ""){
+            			$(this).css("border","red solid 1px");
+            			$("#btn_Buy").attr("disabled", true);
+            			b_name=false;
+                	}else{
+                		$(this).css("border","#ccc solid 1px");
+                		b_name=true;
+                		if(controlAll()){
+                			$("#btn_Buy").attr("disabled", false);
+                		}
+                		
                 	}
             	});
+        		
+        		$("input[name=surname]").focusout(function(e){
+            		if($(this).val().trim() == ""){
+            			$(this).css("border","red solid 1px");
+            			$("#btn_Buy").attr("disabled", true);
+            			b_surname=false;
+                	}else{
+                		$(this).css("border","#ccc solid 1px");
+                		b_surname=true;
+                		if(controlAll()){
+                			$("#btn_Buy").attr("disabled", false);
+                		}
+                		
+                	}
+            	});
+        		
+        		/*$("input[name=tcNo]").focusout(function(e){
+            		if($(this).val().trim() == ""){
+            			$(this).css("border","red solid 1px");
+            			$("#btn_Buy").attr("disabled", true);
+            			b_tcNo=false;
+                	}else{
+                		$(this).css("border","#ccc solid 1px");
+                		b_tcNo=true;
+                		if(controlAll()){
+                			$("#btn_Buy").attr("disabled", false);
+                		}
+                		
+                	}
+            	});*/
+        		
+        		$("input[name=Email]").focusout(function(e){
+            		if($(this).val().trim() == ""){
+            			$(this).css("border","red solid 1px");
+            			$("#btn_Buy").attr("disabled", true);
+            			b_Email=false;
+                	}else{
+                		$(this).css("border","#ccc solid 1px");
+                		b_Email=true;
+                		if(controlAll()){
+                			$("#btn_Buy").attr("disabled", false);
+                		}
+                		
+                	}
+            	});
+        		
+        		$("input[name=Cardnumber]").focusout(function(e){
+            		if($(this).val().trim() == ""){
+            			$(this).css("border","red solid 1px");
+            			$("#btn_Buy").attr("disabled", true);
+            			b_Cardnumber=false;
+                	}else{
+                		$(this).css("border","#ccc solid 1px");
+                		b_Cardnumber=true;
+                		if(controlAll()){
+                			$("#btn_Buy").attr("disabled", false);
+                		}
+                		
+                	}
+            	});
+        		
+        		$("input[name=Cardname]").focusout(function(e){
+            		if($(this).val().trim() == ""){
+            			$(this).css("border","red solid 1px");
+            			$("#btn_Buy").attr("disabled", true);
+            			b_Cardname=false;
+                	}else{
+                		$(this).css("border","#ccc solid 1px");
+                		b_Cardname=true;
+                		if(controlAll()){
+                			$("#btn_Buy").attr("disabled", false);
+                		}
+                		
+                	}
+            	});
+        		$("input[name=Cardexpiry]").focusout(function(e){
+            		if($(this).val().trim() == ""){
+            			$(this).css("border","red solid 1px");
+            			$("#btn_Buy").attr("disabled", true);
+            			b_Cardexpiry=false;
+                	}else{
+                		$(this).css("border","#ccc solid 1px");
+                		b_Cardexpiry=true;
+                		if(controlAll()){
+                			$("#btn_Buy").attr("disabled", false);
+                		}
+                		
+                	}
+            	});
+        		$("input[name=Cardcvc]").focusout(function(e){
+            		if($(this).val().trim() == ""){
+            			$(this).css("border","red solid 1px");
+            			$("#btn_Buy").attr("disabled", true);
+            			b_Cardcvc=false;
+                	}else{
+                		$(this).css("border","#ccc solid 1px");
+                		b_Cardcvc=true;
+                		if(controlAll()){
+                			$("#btn_Buy").attr("disabled", false);
+                		}
+                		
+                	}
+            	});
+        		$("input[name=bdate]").focusout(function(e){
+            		if($(this).val().trim() == ""){
+            			$(this).css("border","red solid 1px");
+            			$("#btn_Buy").attr("disabled", true);
+            			b_bdate=false;
+                	}else{
+                		$(this).css("border","#ccc solid 1px");
+                		b_bdate=true;
+                		if(controlAll()){
+                			$("#btn_Buy").attr("disabled", false);
+                		}
+                		
+                	}
+            	});
+        		
+        		
+        		$("input[name=bdate]").focusout(function(e){
+            		if($(this).val().trim() == ""){
+            			$(this).css("border","red solid 1px");
+            			$("#btn_Buy").attr("disabled", true);
+            			b_bdate=false;
+                	}else{
+                		$(this).css("border","#ccc solid 1px");
+                		b_bdate=true;
+                		if(controlAll()){
+                			$("#btn_Buy").attr("disabled", false);
+                		}
+                		
+                	}
+            	});
+        		
+        		$( "input[name=optradio]" ).on( "click", function() {
+        			b_optradio=true;
+           		 console.log($( "input:checked" ).val() + " is checked!" );
+           		if(controlAll()){
+        			$("#btn_Buy").attr("disabled", false);
+        		}
+           		});
+        		
         		
         	}
         	
         	
+        	console.log($( "input:checked" ).val() + " is checked!" );
+        	console.log($("input[name=optradio]").val());
+        	console.log($("input[name=bdate]").val());
+        	validationControlers();
+        	/*
         	validationControler("name");
         	validationControler("surname");
         	validationControler("tcNo");
@@ -487,14 +686,14 @@
         	$("input[name=name]").val(  "Berkay");
         	$("input[name=surname]").val( "Delen");
         	$("input[name=tcNo]").val( "18581279012");
-        	$("input[name=bdate]").val( "08091997");
-        	$("input[name=Email]").val( "delenberkay@gmail.com");
+        	$("input[name=bdate]").val( "1997-09-08");
+        	$("input[name=Email]").val( "berkaydelen@hotmail.com");
         	//$("input[name=optradio]").val( "1");
         	$("input[name=Cardnumber]").val( "3551513513513513");
         	$("input[name=Cardname]").val( "Berkay DELEN");
         	$("input[name=Cardexpiry]").val( "0809");
         	$("input[name=Cardcvc]").val( "123");
-        	
+        	*/
         	$( "form" ).submit(function( event ) {
         		if($("input[name=tcNo]").val().trim() != ""){
         			$("input[name=tcNo]").css("border","red solid 1px");
@@ -510,12 +709,24 @@
         	
         	
             $("#btn_Buy").click(function(){
-            	$("#btn_Buy").submit();
-            	if($("input[name=tcNo]").val().trim() == ""){
-            		$("input[name=tcNo]").css("border","red solid 1px");
-            	}else{
-            		
-            	}
+            	
+            	validationControlers();
+            	
+            	validationControler("name");
+            	validationControler("surname");
+            	//validationControler("tcNo");
+            	validationControler("Email");
+            	validationControler("optradio");
+            	validationControler("Cardnumber");
+            	validationControler("Cardname");
+            	validationControler("Cardexpiry");
+            	validationControler("Cardcvc");
+            	
+            	if(controlAll()){
+            		$("#btn_Buy").submit();
+        		}
+            	
+            	
             	
                 /*$.post("http://localhost:8080/biletcim/Buy/",
                 {
@@ -540,6 +751,6 @@
   
   
   
-  
+  <jsp:include page="/WEB-INF/view/include/Loader.jsp" />
 </body>
 </html>

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.biletcim.dao.TicketDAO;
 import com.biletcim.entities.BuyTicket;
 import com.biletcim.entities.Data_Plane;
+import com.biletcim.entities.Data_Sale;
 import com.biletcim.entities.Data_Ticket;
 import com.biletcim.entities.Data_TicketsSaveDate;
 import com.biletcim.entities.Ticket;
@@ -65,6 +66,16 @@ public class TicketServiceImpl implements TicketService {
 	public Ticket getLastTicketByTicketNumber(String TicketNumber) {
 		
 		return ticketDAO.getLastTicketByTicketNumber(TicketNumber);
+	}
+
+
+
+
+	@Override
+	@Transactional
+	public Data_Sale getTicketByNumberANDFullName(String ticketNumber, String name, String surname) {
+		return ticketDAO.getTicketByNumberANDFullName(ticketNumber,name,surname);
+		
 	}
 
 }

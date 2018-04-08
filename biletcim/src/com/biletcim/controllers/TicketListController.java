@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
@@ -131,6 +132,16 @@ public class TicketListController {
 		String date = convertDate(FlyDate);
 		
 		System.out.println("DateD:"+date);
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		
+		String dateD=FlyDate.substring(0, 2);
+    	String dateM=FlyDate.substring(2, 4);
+    	String dateY=FlyDate.substring(4, 8);
+		
+        String dateInString = dateY+"-"+dateM+"-"+dateD;
+        
+        
 		if(date != "Error") {
 			List<Company> companies = new ArrayList<Company>();
 			companies = airlinesService.getCompanyies();
@@ -365,6 +376,7 @@ public class TicketListController {
 				Ticket bilet = new Ticket(
 						ticketID,
 						ticketNumber,
+						dateInString,
 						KalkisZamani,
 						VarisZamani,
 						Sure,
@@ -395,10 +407,28 @@ public class TicketListController {
 					}*/
 					
 					
-					
-					
+
+			        /*
+			        SimpleDateFormat sdf = 
+			                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			        
+
+			            Date ticketDate = (Date) formatter.parse(dateInString);
+			            System.out.println(date);
+			            System.out.println(formatter.format(date));
+
+			        
+			            java.util.Date dt = new java.util.Date();
+
+			            java.text.
+
+			            String currentTime = sdf.format(dt);*/
+			        	
+			      
+			        
 					Data_Ticket data_Ticket = new Data_Ticket(
 							ticketNumber,
+							dateInString,
 							KalkisZamani,
 							VarisZamani,
 							Sure,
@@ -412,13 +442,13 @@ public class TicketListController {
 					
 					
 					String sql = "INSERT INTO `tickets` "+
-								"( `ticketNumber`, `kalkisZamani`, `varisZamani`, `sure`,  `Plane_Name`, `Plane_Model`, `kalkisYeri`, `varisYeri`, `fiyat`, `companyID`, `save_date`)"+
-							" VALUES ( '"+ticketNumber+"', '"+KalkisZamani+"', '"+VarisZamani+"', '"+Sure+"',  '"+data_Plane.getPlane_Name()+"', '"+data_Plane.getPlane_Model()+"', '"+wu.FirstUpper(LFromLocationCodes)+" "+FromLocationCodes+"', '"+wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes+"', '"+Fiyat+"', '"+data_Company.getCompanyID()+"' , '"+data_TicketsSaveDate.getId()+"');";
+								"( `ticketNumber`,`ticketDate`, `kalkisZamani`, `varisZamani`, `sure`,  `Plane_Name`, `Plane_Model`, `kalkisYeri`, `varisYeri`, `fiyat`, `companyID`, `save_date`)"+
+							" VALUES ( '"+ticketNumber+"','"+dateInString+"', '"+KalkisZamani+"', '"+VarisZamani+"', '"+Sure+"',  '"+data_Plane.getPlane_Name()+"', '"+data_Plane.getPlane_Model()+"', '"+wu.FirstUpper(LFromLocationCodes)+" "+FromLocationCodes+"', '"+wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes+"', '"+Fiyat+"', '"+data_Company.getCompanyID()+"' , '"+data_TicketsSaveDate.getId()+"');";
 					System.out.println(sql);
 							stmt.executeUpdate(sql);
 							
 					      System.out.println("Inserted records into the table...");
-					      
+					   
 					      
 					try {
 						
@@ -569,6 +599,9 @@ public class TicketListController {
 		Nov	November	Kasým
 		Dec	December	Aralýk
 		*/
+	
+	
+	
 	
 	private String convertDate(String date) {
 		String dateD=date.substring(0, 2);

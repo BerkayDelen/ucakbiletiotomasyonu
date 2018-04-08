@@ -104,14 +104,15 @@
 			
 			</div>
 		</div>
-	
-<div class="social-networks">
+	 
+<div class="social-networks m-b-50">
 <div class="row">
 	
-	<span class="register-tittle p-b-32">
-						<center>Hasbın Varmı ? <a href="#">Giriş Yap</a></center>
+	<span class="register-tittle p-b-50">
+						<center>Hesabınız Varmı ? <a href="./Login">Giriş Yap</a></center>
 					</span>
 </div>
+<!--
 <div class="row">
 	
 		<div class="col-md-4 col-md-offset-4 facebook-btn-div">
@@ -148,8 +149,9 @@
         	
 		</div>
 </div>
-</div>
 
+</div>
+-->
 
 
 <jsp:include page="/WEB-INF/view/include/footer.jsp" />
@@ -173,6 +175,6 @@
   
   
   
-  
+  <jsp:include page="/WEB-INF/view/include/Loader.jsp" />
 </body>
 </html>

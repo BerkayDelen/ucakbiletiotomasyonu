@@ -1,5 +1,6 @@
 package com.biletcim.entities;
 
+import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -23,12 +24,28 @@ public class Data_Ticket {
 	
 	private String ticketNumber;
 	
+	private String ticketDate;
 	
 	private String kalkisZamani;
 	
 	
 	
 	
+	public String getTicketDate() {
+		return ticketDate;
+	}
+
+
+
+	public void setTicketDate(String ticketDate) {
+		this.ticketDate = ticketDate;
+	}
+
+
+
+
+
+
 	private String varisZamani;
 	
 	
@@ -118,6 +135,7 @@ public class Data_Ticket {
 
 	public Data_Ticket( 
 			String ticketNumber,
+			String ticketDate,
 			String kalkisZamani,
 			String varisZamani,
 			String sure,
@@ -130,6 +148,7 @@ public class Data_Ticket {
 		
 		
 		this.ticketNumber = ticketNumber;
+		this.ticketDate = ticketDate;
 		this.kalkisZamani = kalkisZamani;
 		this.varisZamani = varisZamani;
 		this.sure = sure;

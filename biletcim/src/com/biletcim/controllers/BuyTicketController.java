@@ -21,6 +21,7 @@ import com.biletcim.entities.BuyTicket;
 import com.biletcim.entities.Company;
 import com.biletcim.entities.Login_User;
 import com.biletcim.entities.Ticket;
+import com.biletcim.helpers.WebUtils;
 import com.biletcim.services.TicketService;
 
 @RequestMapping(value={"/BuyTicket", "/Buy","/Buyticket"})
@@ -42,6 +43,7 @@ public class BuyTicketController {
 		
 		
 		Ticket bilet = ticketService.getLastTicketByTicketNumber(ticketNumber);
+		
 		/*Ticket bilet = new Ticket(
 				10,
 				"a5253",
@@ -123,6 +125,7 @@ public class BuyTicketController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
+		
 	    
 		BuyTicket buyTicket = new BuyTicket();
 		buyTicket.setAmount(bilet.getFiyat());
@@ -134,10 +137,13 @@ public class BuyTicketController {
 		buyTicket.setUser_ticket_Birthday(date1);
 		buyTicket.setUser_ticket_Email(Email);
 		
-		buyTicket.setUser_ticket_sex(true);
+		buyTicket.setUser_ticket_gender(true);//düzenlt
 		buyTicket.setUser_ticket_TC(tcNo);
 		
 		ticketService.AddBuyTicket(buyTicket);
+		
+		WebUtils utils = new WebUtils();
+		  utils.MailSender(bilet,"Berkay Delen",Email);
 		
 		model.addObject("biletim",bilet);
 				model.setViewName("BuyTicket");
