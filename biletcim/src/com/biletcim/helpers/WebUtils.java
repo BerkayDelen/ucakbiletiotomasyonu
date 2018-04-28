@@ -14,6 +14,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.biletcim.entities.Ticket;
 
@@ -628,7 +629,7 @@ public class WebUtils {
 				"    background-color:  #ffffff;\r\n" + 
 				"\" bgcolor=\"#ffffff\" class=\"emailphoneresize\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"600\" align=\"center\">\r\n" + 
 				"  <tbody><tr>\r\n" + 
-				"    <td bgcolor=\"#ffffff\" class=\"paddingB30pxLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; line-height:18px; color:#36495A; font-weight:bold;padding:30px 30px 34px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\"><!--Begin SPOTLIGHT HEADING--> Bilet Numarasý : TK2093</span></td>\r\n" + 
+				"    <td bgcolor=\"#ffffff\" class=\"paddingB30pxLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; line-height:18px; color:#36495A; font-weight:bold;padding:30px 30px 34px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\"><!--Begin SPOTLIGHT HEADING--> Bilet Numarasý : "+bilet.getTicketNumber()+"</span></td>\r\n" + 
 				"  </tr>\r\n" + 
 				"  <tr>\r\n" + 
 				"    <td bgcolor=\"#ffffff\" class=\"paddingLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:30px; line-height:30px; color:#0061AB; padding:0 30px 3px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">"+bilet.getTicketDateMMMMTR()+"</span></td>\r\n" + 
@@ -841,6 +842,32 @@ public String convertDateTR(String date) {
 		}
 		
 		
+	}
+	
+	public ModelAndView  FailureControl(ModelAndView model,String ErrorCode) {
+		String Hata = "";
+		
+		
+		
+		if(ErrorCode.equals("TK-BWS-25016")) {
+			Hata = "Lütfen Geçerli Bir Tarih Aralýðý Giriniz.";
+			System.err.println(Hata);
+			model.addObject("Error", Hata);
+		}else if(ErrorCode.equals("TK-BWS-25015")) {
+			Hata = "Lütfen Kalkýþ ve Varýþ Havalimanlarýný Farklý Seçiniz.";
+			System.err.println(Hata);
+			model.addObject("Error", Hata);
+		}else if(ErrorCode.equals("TK-BWS-10000")) {
+			Hata = "Lütfen Kalkýþ veya Varýþ Havalimanýný Kontol Edip Düzgün Giriniz.";
+			System.err.println(Hata);
+			model.addObject("Error", Hata);
+		}else {
+			Hata = "Bilinmeyen Bir Hata Oluþtu  (JP04)";
+			System.err.println(Hata);
+			model.addObject("Error", Hata);
+		}
+		
+		return model;
 	}
 
 }

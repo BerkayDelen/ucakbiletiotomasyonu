@@ -143,6 +143,7 @@ public class TicketImpl implements TicketDAO {
 				String kalkisYeri  = rs.getString("kalkisYeri");
 				String varisYeri  = rs.getString("varisYeri");
 				double fiyat  = rs.getDouble("fiyat");
+				String sinif  = rs.getString("sinif");
 				int companyID  = rs.getInt("companyID");
 				int save_date  = rs.getInt("save_date");
 				Company company = new Company(rs.getInt("companyID"), rs.getString("companyName"), rs.getString("companyImg"));
@@ -159,6 +160,7 @@ public class TicketImpl implements TicketDAO {
 						kalkisYeri,
 						varisYeri,
 						fiyat,
+						sinif,
 						company);
    
 			}
@@ -219,6 +221,7 @@ public class TicketImpl implements TicketDAO {
 				String kalkisYeri  = rs.getString("kalkisYeri");
 				String varisYeri  = rs.getString("varisYeri");
 				double fiyat  = rs.getDouble("fiyat");
+				String sinif  = rs.getString("sinif");
 				int companyID  = rs.getInt("companyID");
 				int save_date  = rs.getInt("save_date");
 				Company company = new Company(rs.getInt("companyID"), rs.getString("companyName"), rs.getString("companyImg"));
@@ -235,6 +238,7 @@ public class TicketImpl implements TicketDAO {
 						kalkisYeri,
 						varisYeri,
 						fiyat,
+						sinif,
 						company);
 				 
 				 Boolean sales_user_isLogin  = false; //rs.getBoolean("sales_user_isLogin");

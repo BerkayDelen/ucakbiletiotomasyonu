@@ -45,7 +45,15 @@
 		<div class="TicketListHead row ">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="text-center">
-					<h3> ${KalkisYeri} - ${VarisYeri} </h3>
+					<c:choose>
+    <c:when test="${empty Error}">
+       <h3>${KalkisYeri} - ${VarisYeri} </h3>
+    </c:when>
+    <c:otherwise>
+        <h3>${Error}</h3>
+    </c:otherwise>
+</c:choose>
+					
 				
 				</div>
 				<div class="text-center">

@@ -23,9 +23,12 @@ public class Ticket {
 
 	private double fiyat;
 	
+	private String sinif;
 	
 	
 	
+	
+
 	private Company company;
 	
 	
@@ -69,6 +72,7 @@ public class Ticket {
 			String kalkisYeri,
 			String varisYeri,
 			double fiyat,
+			String sinif,
 			Company company) {
 		super();
 		this.ticketID = ticketID;
@@ -82,7 +86,15 @@ public class Ticket {
 		this.kalkisYeri = kalkisYeri;
 		this.varisYeri = varisYeri;
 		this.fiyat = fiyat;
+		this.sinif = sinif;
 		this.company = company;
+	}
+	
+	public String getSinif() {
+		return sinif;
+	}
+	public void setSinif(String sinif) {
+		this.sinif = sinif;
 	}
 
 	public String getKalkisYeri() {

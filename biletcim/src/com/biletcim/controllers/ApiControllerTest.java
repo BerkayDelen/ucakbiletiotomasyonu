@@ -12,8 +12,15 @@ import com.biletcim.entities.Coordinate;
 import com.biletcim.entities.Country;
 import com.biletcim.entities.Language;
 import com.biletcim.entities.Port;
+import com.biletcim.entities.json.OriginDestinationOption;
+import com.biletcim.entities.json.ta.TRAirline;
+import com.biletcim.entities.test.TestVal;
 import com.biletcim.helpers.ApiService;
+import com.biletcim.helpers.OriginDestinationOptionDeserializer;
 import com.biletcim.services.PortService;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,6 +45,22 @@ public class ApiControllerTest {
 	private PortService portService;
 	
 	
+	
+	@RequestMapping("/Gson")
+	public ModelAndView getGson() {
+		
+		String jsonInput = "{\"one\":\"two\",\"key\":\"value\"}";
+				         
+		TRAirline trAirline = new Gson().fromJson(jsonInput, TRAirline.class);
+			/*
+			System.out.println(outputMovie.getKey());
+			 
+			System.out.println(outputMovie.getOne());
+			*/
+        return new ModelAndView("EmptyPage");
+	}
+
+	
 	/*
 	 * 
 	 *	Jan	January		Ocak
@@ -54,8 +77,6 @@ public class ApiControllerTest {
 		Dec	December	Aralýk
 	 * 
 	 * */
-	
-
 	@RequestMapping("/get")
 	public ModelAndView getDayOfTickets() {
 		try {
@@ -75,9 +96,9 @@ public class ApiControllerTest {
         		+ "				 \"DepartureDateTime\":{     "
         		+ "					   \"WindowAfter\":\"P0D\",  "
         		+ "				      \"WindowBefore\":\"P0D\",     "
-        		+ "					   \"Date\":\"26FEB\"      }, "
+        		+ "					   \"Date\":\"19APR\"      }, "
         		+ "			     \"OriginLocation\":{    "
-        		+ "					    \"LocationCode\":\"IST\",   "
+        		+ "					    \"LocationCode\":\"ESB\",   "
         		+ "					     \"MultiAirportCityInd\":false      }, "
         		+ "			     \"DestinationLocation\":{  "
         		+ "					      \"LocationCode\":\"ESB\",  "
@@ -101,10 +122,44 @@ public class ApiControllerTest {
         String line;
         while ((line = rd.readLine()) != null) {
             sb.append(line);
+            
+            
+           
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
+        
+       
+		
+		try {
+			final GsonBuilder gsonBuilder = new GsonBuilder();
+		    gsonBuilder.registerTypeAdapter(OriginDestinationOption.class, new OriginDestinationOptionDeserializer());
+		    
+		    final Gson gson = gsonBuilder.setPrettyPrinting().serializeNulls().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+		    
+		 com.biletcim.entities.json.TRAirline trAirline = gson.fromJson(sb.toString(), com.biletcim.entities.json.TRAirline.class);
+    	 
+    	 System.out.println("Status:->"+trAirline.getStatus().toString());
+         System.out.println("requestId:->"+trAirline.getRequestId().toString());
+         System.out.println("message:->");
+         System.out.println("|->getDescription:->"+trAirline.getMessage().getDescription().toString());
+         System.out.println("|->getCode:->"+trAirline.getMessage().getCode().toString());
+    	 System.out.println(gson.toJson(trAirline));
+		}catch (Exception e2) {
+			// TODO: handle exception
+			System.err.println("level 1->"+e2.getMessage());
+		}
+		
+       
+        
+        /*
+        System.out.println("Status:->"+trAirline.getStatus().toString());
+        System.out.println("requestId:->"+trAirline.getRequestId().toString());
+        System.out.println("message:->");
+        System.out.println("|->getDescription:->"+trAirline.getMessage().getDescription().toString());
+        System.out.println("|->getCode:->"+trAirline.getMessage().getCode().toString());
+        */
+        
         
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -114,7 +169,7 @@ public class ApiControllerTest {
 			e.printStackTrace();
 		}
         
-        return new ModelAndView("api");
+        return new ModelAndView("EmptyPage");
 	}
 	
 	
@@ -373,7 +428,7 @@ public class ApiControllerTest {
 		
 		
 		
-		return new ModelAndView("api");
+		return new ModelAndView("EmptyPage");
 		
 	}
 	
