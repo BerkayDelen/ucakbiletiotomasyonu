@@ -3,6 +3,7 @@ package com.biletcim.dao;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -17,9 +18,11 @@ import com.biletcim.entities.BuyTicket;
 import com.biletcim.entities.Company;
 import com.biletcim.entities.Data_Plane;
 import com.biletcim.entities.Data_Sale;
+import com.biletcim.entities.Data_Seat;
 import com.biletcim.entities.Data_Ticket;
 import com.biletcim.entities.Data_TicketsSaveDate;
 import com.biletcim.entities.Sale_User;
+import com.biletcim.entities.Seats;
 import com.biletcim.entities.Ticket;
 import com.biletcim.entities.User;
 
@@ -244,6 +247,8 @@ public class TicketImpl implements TicketDAO {
 				 Boolean sales_user_isLogin  = false; //rs.getBoolean("sales_user_isLogin");
 				 int sales_user_id  = 0;//rs.getInt("sales_user_id");
 				 
+				 String sales_uuid  = rs.getString("sales_uuid");
+				 String sales_salt  = rs.getString("sales_salt");
 				 
 				 String sales_user_Name  = rs.getString("sales_user_Name");
 				 String sales_user_Surname  = rs.getString("sales_user_Surname");
@@ -253,7 +258,7 @@ public class TicketImpl implements TicketDAO {
 				 
 				
 				 Boolean sales_user_gender  = rs.getBoolean("sales_user_gender");
-				 user = new Sale_User(sales_user_isLogin, sales_user_id, sales_user_Name, sales_user_Surname, sales_user_TC, sales_user_Email, sales_user_gender);
+				 user = new Sale_User(sales_uuid,sales_salt,sales_user_isLogin, sales_user_id, sales_user_Name, sales_user_Surname, sales_user_TC, sales_user_Email, sales_user_gender);
 				 
 				 System.out.println("Name: "+sales_user_Name);
 				 System.out.println("Surname: "+sales_user_Surname);
@@ -277,6 +282,240 @@ public class TicketImpl implements TicketDAO {
 		}
 		
 		Data_Sale data_Sale = new Data_Sale(ticket, user);
+		
+		return data_Sale;
+	}
+
+	@Override
+	public List<Data_Seat> getTicketSeats(String ticketNumber) {
+	
+		
+		List<Data_Seat> seats = new ArrayList<Data_Seat>();
+		
+	
+	String getSession = "SELECT `seats`.* ,`sales`.* , `tickets`.*  FROM  `seats` " + 
+			"INNER JOIN `sales` ON seats.sales_id  = sales.sales_id " + 
+			"INNER JOIN `tickets` ON sales.sales_ticket_id = tickets.ticketID  " + 
+			"where tickets.ticketNumber =  ? ";
+	
+	try {
+		
+			System.out.println(getSession);
+		Config.OpenDB(getSession);
+	
+		Config.stmt.setString(1, ticketNumber);
+		
+		ResultSet rs =	Config.stmt.executeQuery();
+		while(rs.next()){
+			
+			 String seat_Number  = rs.getString("seat_Number");
+			 Data_Seat data_Seat = new Data_Seat();
+			 data_Seat.setSeat_Number(seat_Number);
+			 seats.add(data_Seat);
+			 
+		}
+		rs.close();
+
+		Config.CloseDB();
+
+
+
+		
+		
+	} catch (Exception e) {
+		
+		System.out.println("HATA : getTicketSeats :  Read Data in:"+e.getMessage());
+		
+	}
+	
+	
+	
+	return seats;
+	}
+
+	@Override
+	public Boolean TicketSeatSave(String TicketUniqNumber,String Seat) {
+		Boolean status = false;
+		
+		
+		
+		String getSession = "SELECT `sales`.`sales_id` FROM sales " + 
+				"INNER JOIN `tickets` ON sales.sales_ticket_id = tickets.ticketID " + 
+				"where sales.sales_uuid = ?";
+		
+		try {
+			
+				System.out.println(getSession);
+			Config.OpenDB(getSession);
+		
+			Config.stmt.setString(1, TicketUniqNumber);
+			
+			ResultSet rs =	Config.stmt.executeQuery();
+			int sales_id = 0;
+			int counter = 0;
+			while(rs.next()){
+				
+				sales_id = rs.getInt("sales_id");
+				counter++;
+				 
+			}
+			String counsession = "SELECT count(*) as countdata FROM seats "+
+			"INNER JOIN `sales` ON sales.sales_id = seats.sales_id"+
+					" where sales.sales_id = ?";
+			
+			
+				
+					
+				Config.OpenDB(counsession);
+			
+				Config.stmt.setInt(1, sales_id);
+				
+				ResultSet rss =	Config.stmt.executeQuery();
+				int countdata = 0;
+				while(rss.next()){
+					countdata = rss.getInt("countdata");
+				}
+				System.out.println("Count Data : "+countdata);
+				System.out.println("Sales_id : "+sales_id);
+				if(sales_id != 0 && countdata == 0) {
+					
+					Seats seatsave = new Seats();
+					seatsave.setSales_id(sales_id);
+					seatsave.setSeat_Number(Seat);
+					
+					Session session = sessionFactory.getCurrentSession();
+					int id = (int) session.save(seatsave);
+					if(id!=0) {
+						status =  true;
+					}
+				}
+				
+				rss.close();
+
+				
+				
+				
+			
+			
+			rs.close();
+
+			Config.CloseDB();
+
+
+
+			
+			
+		} catch (Exception e) {
+			status =  false;
+			System.out.println("HATA : TicketSeatSave :  Read Data in:"+e.getMessage());
+			
+		}
+		
+		
+		
+		return status;
+	}
+
+	@Override
+	public Data_Seat getTicketByTicketKey(String TicketKey) {
+		
+		Sale_User user = null;
+			Ticket ticket = null;
+			String Seat = "";
+			
+			
+		
+		String getSession = "SELECT seats.*, company.*,tickets.*,sales.* FROM `sales` " + 
+				"INNER JOIN tickets ON tickets.ticketID = sales.sales_ticket_id " + 
+				"INNER JOIN company ON company.companyId = tickets.companyID " + 
+				"INNER JOIN seats ON seats.sales_id = sales.sales_id " + 
+				"where sales.sales_uuid = ?";
+		
+		try {
+			
+    			System.out.println(getSession);
+			Config.OpenDB(getSession);
+		
+			Config.stmt.setString(1,TicketKey);
+		ResultSet rs =	Config.stmt.executeQuery();
+			while(rs.next()){
+				System.out.print("Read:");
+				Seat = rs.getString("seat_Number");
+				int ticketID  = rs.getInt("ticketID");
+				String ticketNumber = rs.getString("ticketNumber");
+				//String ticketNumber  = rs.getString("ticketNumber");
+				String ticketDate  = rs.getString("ticketDate");
+				String kalkisZamani  = rs.getString("kalkisZamani");
+				String varisZamani  = rs.getString("varisZamani");
+				
+				String sure  = rs.getString("sure");
+				String Plane_Name  = rs.getString("Plane_Name");
+				String Plane_Model  = rs.getString("Plane_Model");
+				String kalkisYeri  = rs.getString("kalkisYeri");
+				String varisYeri  = rs.getString("varisYeri");
+				double fiyat  = rs.getDouble("fiyat");
+				String sinif  = rs.getString("sinif");
+				int companyID  = rs.getInt("companyID");
+				int save_date  = rs.getInt("save_date");
+				Company company = new Company(rs.getInt("companyID"), rs.getString("companyName"), rs.getString("companyImg"));
+				
+				 ticket = new Ticket(
+						ticketID,
+						ticketNumber,
+						ticketDate,
+						kalkisZamani,
+						varisZamani,
+						sure,
+						Plane_Name,
+						Plane_Model,
+						kalkisYeri,
+						varisYeri,
+						fiyat,
+						sinif,
+						company);
+				 
+				 Boolean sales_user_isLogin  = false; //rs.getBoolean("sales_user_isLogin");
+				 int sales_user_id  = 0;//rs.getInt("sales_user_id");
+				 
+				 String sales_uuid  = rs.getString("sales_uuid");
+				 String sales_salt  = rs.getString("sales_salt");
+				 
+				 String sales_user_Name  = rs.getString("sales_user_Name");
+				 String sales_user_Surname  = rs.getString("sales_user_Surname");
+				 String sales_user_TC  = rs.getString("sales_user_TC");
+				 String sales_user_Email  = rs.getString("sales_user_Email");
+				 Date sales_user_Birthday  = rs.getDate("sales_user_Birthday");
+				 
+				
+				 Boolean sales_user_gender  = rs.getBoolean("sales_user_gender");
+				 user = new Sale_User(sales_uuid,sales_salt,sales_user_isLogin, sales_user_id, sales_user_Name, sales_user_Surname, sales_user_TC, sales_user_Email, sales_user_gender);
+				 
+				 System.out.println("Name: "+sales_user_Name);
+				 System.out.println("Surname: "+sales_user_Surname);
+				 System.out.println("Email: "+sales_user_Email);
+				 System.out.println("Number : "+ticket.getTicketNumber());
+				 System.out.println("Number : "+ticket.getTicketNumber());
+				 System.out.println("Seat : "+Seat);
+				 
+			}
+			rs.close();
+	
+			Config.CloseDB();
+
+
+
+			
+			
+		} catch (Exception e) {
+			
+			System.out.println("HATA : getTicketByNumberANDFullName :  Read Data in:"+e.getMessage());
+			
+		}
+		
+		Data_Seat data_Sale = new Data_Seat();
+		data_Sale.setTicket(ticket);
+		data_Sale.setUser(user);
+		data_Sale.setSeat_Number(Seat);
 		
 		return data_Sale;
 	}

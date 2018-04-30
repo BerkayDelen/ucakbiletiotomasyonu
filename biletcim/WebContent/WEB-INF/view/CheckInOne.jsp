@@ -326,7 +326,7 @@ border: 1px solid rgba(119,188,31,1) !important;
   <script src="${pageContext.request.contextPath }/resources/js/jquery.maphilight.min.js"></script>
                
               
-              <jsp:include page="/WEB-INF/view/include/Loader.jsp" />
+             <!--  <jsp:include page="/WEB-INF/view/include/Loader.jsp" /> -->
   
 </body>
 </html>

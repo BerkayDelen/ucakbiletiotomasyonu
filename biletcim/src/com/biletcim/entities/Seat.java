@@ -9,9 +9,12 @@ public class Seat {
 	private String coords;
 	private String description;
 	private String _class;
+	private Boolean isNAvailable;
+	
+	
 	
 	public Seat(int id, int item_id, String seat_character, String seat_number, String coords, String description,
-			String _class) {
+			String _class, Boolean isNAvailable) {
 		super();
 		this.id = id;
 		this.item_id = item_id;
@@ -20,8 +23,8 @@ public class Seat {
 		this.coords = coords;
 		this.description = description;
 		this._class = _class;
+		this.isNAvailable = isNAvailable;
 	}
-	
 	public int getId() {
 		return id;
 	}
@@ -63,6 +66,14 @@ public class Seat {
 	}
 	public void set_class(String _class) {
 		this._class = _class;
+	}
+
+	public Boolean getIsNAvailable() {
+		return isNAvailable;
+	}
+
+	public void setIsAvailable(Boolean isNAvailable) {
+		this.isNAvailable = isNAvailable;
 	}
 	
 	

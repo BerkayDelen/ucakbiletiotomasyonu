@@ -28,6 +28,7 @@
       
       <ul class="nav navbar-nav navbar-right">
      <%
+     String contextPath = request.getContextPath();
     String Cookie_ID = "";
      
      Cookie[] cookies = request.getCookies();
@@ -52,15 +53,15 @@
 					int action  = rs.getInt("count");
 					try{
 						if(action >= 1){
-	    			    	 out.println("<li><a href='http://localhost:8080/biletcim/Logout'><i class='fas fa-times-circle'></i> Çıkış</a></li>");
+	    			    	 out.println("<li><a href='"+contextPath+"/Logout'><i class='fas fa-times-circle'></i> Çıkış</a></li>");
 	    			    	 out.println("<li><a href='/'><i class='fas fa-ticket-alt'></i> Biletlerim</a></li>");
 	    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
-	    			    	 out.println("<li><a href='http://localhost:8080/biletcim/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
+	    			    	 out.println("<li><a href='"+contextPath+"/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 	    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 	    			     }else{
-	    					 out.println("<li><a href='http://localhost:8080/biletcim/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
+	    					 out.println("<li><a href='"+contextPath+"/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
 	    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
-	    			    	 out.println("<li><a href='http://localhost:8080/biletcim/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
+	    			    	 out.println("<li><a href='"+contextPath+"/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 	    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 	    				}
 		    			    		
@@ -97,15 +98,15 @@
 					int action  = rs.getInt("count");
 					try{
 		    			     if(action >= 1){
-		    			    	 out.println("<li><a href='http://localhost:8080/biletcim/Logout'><i class='fas fa-times-circle'></i> Çıkış</a></li>");
+		    			    	 out.println("<li><a href='"+contextPath+"/Logout'><i class='fas fa-times-circle'></i> Çıkış</a></li>");
 		    			    	 out.println("<li><a href='/'><i class='fas fa-ticket-alt'></i> Biletlerim</a></li>");
 		    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
-		    			    	 out.println("<li><a href='http://localhost:8080/biletcim/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
+		    			    	 out.println("<li><a href='"+contextPath+"/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 		    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 		    			     }else{
-		    					 out.println("<li><a href='http://localhost:8080/biletcim/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
+		    					 out.println("<li><a href='"+contextPath+"/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
 		    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
-		    			    	 out.println("<li><a href='http://localhost:8080/biletcim/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
+		    			    	 out.println("<li><a href='"+contextPath+"/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 		    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 		    				}
 		    			    		
@@ -134,17 +135,17 @@
         			out.println(session.getAttribute("Login"));
     	    		
     			     if(session.getAttribute("Login")=="true"){
-    			    	 out.println("<li><a href='http://localhost:8080/biletcim/Logout'><i class='fas fa-times-circle'></i> Çıkış</a></li>");
+    			    	 out.println("<li><a href='http://localhost:8080/Logout'><i class='fas fa-times-circle'></i> Çıkış</a></li>");
     			    	 out.println("<li><a href='/'><i class='fas fa-ticket-alt'></i> Biletlerim</a></li>");
     			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
     			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
     			     }else{
-    					 out.println("<li><a href='http://localhost:8080/biletcim/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
+    					 out.println("<li><a href='http://localhost:8080/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
     			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
     			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
     				}
     			    		}else{
-    			    			 out.println("<li><a href='http://localhost:8080/biletcim/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
+    			    			 out.println("<li><a href='http://localhost:8080/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
     			    	    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
     			    	    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
     			    		}
@@ -157,9 +158,9 @@
 		}else{
 			
 			
-			 out.println("<li><a href='http://localhost:8080/biletcim/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
+			 out.println("<li><a href='"+contextPath+"/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
 			 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
-	    	 out.println("<li><a href='http://localhost:8080/biletcim/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
+	    	 out.println("<li><a href='"+contextPath+"/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 	    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 		}
      

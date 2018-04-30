@@ -175,7 +175,7 @@
   
   
   
-  <jsp:include page="/WEB-INF/view/include/Loader.jsp" />
+   <!--  <jsp:include page="/WEB-INF/view/include/Loader.jsp" /> -->
   
 </body>
 </html>

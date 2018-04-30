@@ -1,7 +1,9 @@
+<%@page import="com.biletcim.entities.Data_Sale"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@page import="com.biletcim.entities.Seats"%>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -187,6 +189,10 @@
                         </div>
 					</div>
 			</div>
+			<div class="row">
+			
+			
+			</div>
 			
 			<!--		
 				<div class="row ">
@@ -273,13 +279,21 @@
 				<map id="seatmap" name="seatmap">
 				
 					<c:forEach var="item" items="${SeatsList}">
-					<c:if test="${item.id %2 == 0 }">
-						<area class="area" data-info-data="${ item.description}" title="${ item.description}" id="${item.seat_number } ${item.seat_character} N"  shape="rect" coords="${item.coords }" alt="" data-maphilight='{"stroke":false,"fillColor":"545454","fillOpacity":1,"alwaysOn":true}'>
+					
+					
+					
+					<c:if test="${item.isNAvailable == true }">
+					
+						<area class="area" data-info-data="${ item.description}" title="${ item.description}" id="${item.seat_number } ${item.seat_character} N ${item._class}"  shape="rect" coords="${item.coords }" alt="" data-maphilight='{"stroke":false,"fillColor":"BD2031","fillOpacity":1,"alwaysOn":true}'>
 					</c:if>
-					<c:if test="${item.id %2 != 0 }">
-						<area class="area" data-info-data="${ item.description}" title="${ item.description}" id="${item.seat_number } ${item.seat_character} E"  shape="rect" coords="${item.coords }" alt="" >
+					<c:if test="${item.isNAvailable == false  && sale.ticket.sinif.substring(0, 1).equals(item._class.substring(0, 1)) }">
+						<area class="area" data-info-data="${ item.description}" title="${ item.description}" id="${item.seat_number } ${item.seat_character} E ${item._class}"  shape="rect" coords="${item.coords }" alt="" >
 					</c:if>
-						
+					
+					<c:if test="${!sale.ticket.sinif.substring(0, 1).equals(item._class.substring(0, 1)) }">
+					
+						<area class="area" data-info-data="${ item.description}" title="${ item.description}" id="${item.seat_number } ${item.seat_character} N ${item._class}"  shape="rect" coords="${item.coords }" alt="" data-maphilight='{"stroke":false,"fillColor":"231F20","fillOpacity":0.8,"alwaysOn":true}'>
+					</c:if>
 					</c:forEach>
 				</map>
 			</div>
@@ -348,11 +362,16 @@
 					
 				});
                
-               
+               var data_TicketNumber = <% Data_Sale  sale = (Data_Sale) request.getAttribute("sale");
+				out.println("\""+sale.getUser().getSales_uuid()+"\"");  %>;
+              var data_seat ;
+              
                $(document).ready(function() {
             	    $("area").click(function(e) {
             	        
             	        var item_id = (event.target.id).split(" ");
+            	        var seat_class = item_id[3];
+            	        
             	        var seat_info = item_id[2];
             	       
             	        var seat_name = item_id[1];
@@ -360,6 +379,7 @@
             	        console.log(seat_info+" "+ seat_name+ " "+seat_number);
             	        
             	        if(seat_info == "E"){
+            	        	data_seat = seat_number +""+seat_name;
             	        	 $(".alert").addClass("is-visible");
                        	   $(".alert .alert-confirm")
                        	     .attr("data-action", $(this).attr("data-action"))
@@ -390,6 +410,32 @@
             	     .remove();
             	   $(".alert").removeClass("is-visible");
             	   console.log("OK");
+            	   
+            	   
+            	   $.ajax({
+            	        url:<%
+            	        String contextPath = request.getContextPath();
+            	  		 out.println("\""+contextPath+"/plane/check-in/me"+"\"");
+            	        %>
+            	        ,
+            	        method:"POST", 
+
+            	        data:{
+            	        	TicketKey: data_TicketNumber, 
+            	          Seat: data_seat, 
+            	        },
+            	        success:function(response) {
+            	        	// var obj = jQuery.parseJSON(response);
+            	        	 
+            	        	 $(location).attr('href', '<% out.print(contextPath);%>/plane/check-in/ticket?Key='+ data_TicketNumber)
+            	        
+            	       },
+            	       error:function(e){
+            	        alert("error : "+e);
+            	       }
+
+            	      });
+            	   
             	   
             	 });
             	 $(".alert-close, .alert-cancel , .alert").on("click", e => {

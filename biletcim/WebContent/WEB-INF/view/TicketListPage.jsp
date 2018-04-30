@@ -160,9 +160,7 @@
   
   $(function() {
 	$(".TicketBuyButton").click(function() {
-		
-		  
-		  window.location.replace("http://localhost:8080/biletcim/Buy/"+$(this).data('ticket-number'));
+		  window.location.replace(<% String contextPath = request.getContextPath(); out.print("\""+contextPath);%>/Buy/"+$(this).data('ticket-number'));
 	});
 	
 	
@@ -170,6 +168,7 @@
   
   </script>
   
-  <jsp:include page="/WEB-INF/view/include/Loader.jsp" />
+  <!--<jsp:include page="/WEB-INF/view/include/Loader.jsp" /> !-->
+ 
 </body>
 </html>

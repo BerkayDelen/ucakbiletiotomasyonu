@@ -37,11 +37,17 @@ import com.biletcim.entities.Data_TicketsSaveDate;
 import com.biletcim.entities.Plane;
 import com.biletcim.entities.Port;
 import com.biletcim.entities.Ticket;
+import com.biletcim.entities.json.BookingPriceInfoType;
 import com.biletcim.entities.json.ExtraOTAFlightInfoList;
+import com.biletcim.entities.json.FareBasisCodes;
 import com.biletcim.entities.json.FareInfo;
+import com.biletcim.entities.json.FareInfoL;
 import com.biletcim.entities.json.FlightSegment;
 import com.biletcim.entities.json.OriginDestinationOption;
+import com.biletcim.entities.json.PTC_FareBreakdown;
 import com.biletcim.entities.json.PTC_FareBreakdowns;
+import com.biletcim.entities.json.PassengerFare;
+import com.biletcim.entities.json.PassengerTypeQuantity;
 import com.biletcim.entities.json.TRAirline;
 import com.biletcim.helpers.FareInfoDeserializer;
 import com.biletcim.helpers.OriginDestinationOptionDeserializer;
@@ -113,6 +119,10 @@ public class TicketListController {
 		
 		List<Ticket> Tickets = new ArrayList<Ticket>();
 		
+		List<Ticket> BUTickets = new ArrayList<Ticket>();
+		List<Ticket> EUTickets = new ArrayList<Ticket>();
+		List<Ticket> ERTickets = new ArrayList<Ticket>();
+		
 		 int ticketID = 0;
 		 String ticketNumber = null;
 		
@@ -126,7 +136,7 @@ public class TicketListController {
 
 		 String KalkisYeri = null;
 		 String VarisYeri = null;
-		 double Fiyat = 0;
+		 
 		
 		//Ticket ticket FlyDate = 
 		
@@ -139,6 +149,8 @@ public class TicketListController {
 		
 		String LFromLocationCodes = portService.getPortByShortName(FromLocationCodes).getCity();
 		String LToLocationCodes = portService.getPortByShortName(ToLocationCodes).getCity();
+		KalkisYeri = LFromLocationCodes;
+		VarisYeri = LToLocationCodes;
 		Data_TicketsSaveDate data_TicketsSaveDate = new Data_TicketsSaveDate(FromLocationCodes, ToLocationCodes);
 		ticketService.AddTicketSaveDate(data_TicketsSaveDate);
 		
@@ -301,7 +313,12 @@ public class TicketListController {
 					String Sure_NW=JourneyDuration.substring(JourneyDuration.indexOf("T")+1, JourneyDuration.indexOf("M")+1);
 					String Sure_Saat = Sure_NW.substring(0,Sure_NW.indexOf("H"));
 					String Sure_Dakika = Sure_NW.substring(Sure_NW.indexOf("H")+1,Sure_NW.indexOf("M"));
-					Sure=Sure_Saat+" Saat "+Sure_Dakika+" Dakika";
+					if(Sure_Saat.equals("0")) {
+						Sure=Sure_Dakika+" Dakika";
+					}else {
+						Sure=Sure_Saat+" Saat "+Sure_Dakika+" Dakika";
+					}
+					
 					
 					//UcakModelName = Equipment_Value;
 					//UcakModelType = Equipment_AirEquipType;
@@ -310,10 +327,10 @@ public class TicketListController {
 					System.out.println("Varýþ Zamaný:"+ArrivalDateTime);
 					System.out.println("Süresi Zamaný:"+JourneyDuration);
 					
-					//System.out.println("Uçak Model:"+Equipment_Value);
-					//System.out.println("Uçak Type:"+Equipment_AirEquipType);
-					
-					
+					BookingPriceInfoType bookingPriceInfoType = flightInfo.getBookingPriceInfoType();
+					PTC_FareBreakdowns ptc_FareBreakdowns = bookingPriceInfoType.getPTC_FareBreakdowns();
+					List<PTC_FareBreakdown> ptc_FareBreakdown = ptc_FareBreakdowns.getPTC_FareBreakdown();
+
 					int havalimanýCompany = 0;
 					if(isPureAnadoluJetFlight) {
 						havalimanýCompany = 2;
@@ -327,24 +344,84 @@ public class TicketListController {
 						}
 					}
 					
+					for (PTC_FareBreakdown ptc_item : ptc_FareBreakdown) {
+						FareBasisCodes fareBasisCodes = ptc_item.getFareBasisCodes();
+						PassengerTypeQuantity passengerTypeQuantity = ptc_item.getPassengerTypeQuantity();
+						//FareInfo fareInfoL = ptc_item.getFareInfo();
+						PassengerFare passengerFare = ptc_item.getPassengerFare(); 
+						String _Class = fareBasisCodes.getFareBasisCode();
+						double Fiyat = passengerFare.getTotalFare().getAmount();
+						System.out.println("Class:-> "+fareBasisCodes.getFareBasisCode());
+						System.out.println("Money:-> "+Fiyat);
+						
+						Ticket bilet = new Ticket(
+								ticketID,
+								ticketNumber,
+								dateInString,
+								KalkisZamani,
+								VarisZamani,
+								Sure,
+								UcakModelName,
+								UcakModelType,
+								wu.FirstUpper(LFromLocationCodes)+" "+FromLocationCodes,
+								wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes,
+								Fiyat,
+								_Class,
+								company);
+						
+						String sql = "INSERT INTO `tickets` "+
+								"( `ticketNumber`,"
+								+ "`ticketDate`,"
+								+ " `kalkisZamani`,"
+								+ " `varisZamani`,"
+								+ " `sure`,"
+								+ "  `Plane_Name`,"
+								+ " `Plane_Model`,"
+								+ " `kalkisYeri`,"
+								+ " `varisYeri`,"
+								+ " `fiyat`,"
+								+ " `sinif`,"
+								+ " `companyID`,"
+								+ " `save_date`)"+
+							" VALUES ( "
+							+ "'"+ticketNumber+"',"
+							+ "'"+dateInString+"',"
+							+ " '"+KalkisZamani+"',"
+							+ " '"+VarisZamani+"',"
+							+ " '"+Sure+"',"
+							+ "  '"+UcakModelName+"',"
+							+ " '"+UcakModelType+"',"
+							+ " '"+wu.FirstUpper(LFromLocationCodes)+" "+FromLocationCodes+"',"
+							+ " '"+wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes+"',"
+							+ " '"+Fiyat+"',"
+							+ " '"+_Class+"',"
+							+ " '"+company.getCompanyID()+"' ,"
+							+ " '"+data_TicketsSaveDate.getId()+"');";
+							System.out.println(sql);
+							stmt.executeUpdate(sql);
+						
+						if(fareBasisCodes.getFareBasisCode().equals("ER")) {
+							ERTickets.add(bilet);
+						}else if(fareBasisCodes.getFareBasisCode().equals("EU")) {
+							EUTickets.add(bilet);
+						}
+						else if(fareBasisCodes.getFareBasisCode().equals("BU")) {
+							BUTickets.add(bilet);
+						}
+					}
+					
+					
+					//System.out.println("Uçak Model:"+Equipment_Value);
+					//System.out.println("Uçak Type:"+Equipment_AirEquipType);
 					
 					
 					
-				/*	Ticket bilet = new Ticket(
-							ticketID,
-							ticketNumber,
-							dateInString,
-							KalkisZamani,
-							VarisZamani,
-							Sure,
-							UcakModelName,
-							UcakModelType,
-							wu.FirstUpper(LFromLocationCodes)+" "+FromLocationCodes,
-							wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes,
-							Fiyat,
-							_Class,
-							company);
-					*/
+					
+					
+					
+					
+					
+				
 				}
 	    		 
 	    	 }else {
@@ -376,294 +453,17 @@ public class TicketListController {
 			}
 			
 			
-
-			/*
-			try {
-			JSONObject obj = new JSONObject(json);
-			JSONObject data = obj.getJSONObject("data");
-			JSONObject data_availabilityOTAResponse = data.getJSONObject("availabilityOTAResponse");
-			JSONObject data_createOTAAirRoute = data_availabilityOTAResponse.getJSONObject("createOTAAirRoute");
-			JSONObject data_extraOTAAvailabilityInfoListType = data_createOTAAirRoute.getJSONObject("extraOTAAvailabilityInfoListType");//info getter
-			
-			JSONObject data_extraOTAAvailabilityInfoList = data_extraOTAAvailabilityInfoListType.getJSONObject("extraOTAAvailabilityInfoList");
-			JSONObject data_extraOTAFlightInfoListType = data_extraOTAAvailabilityInfoList.getJSONObject("extraOTAFlightInfoListType");
-			
-			JSONArray Flys = data_extraOTAFlightInfoListType.getJSONArray("extraOTAFlightInfoList");
-			
-			JSONObject data_OTA_AirAvailRS = data_createOTAAirRoute.getJSONObject("OTA_AirAvailRS");// getter
-			JSONObject data_OriginDestinationInformation = data_OTA_AirAvailRS.getJSONObject("OriginDestinationInformation");
-			JSONObject data_OriginDestinationOptions = data_OriginDestinationInformation.getJSONObject("OriginDestinationOptions");
-			JSONArray Flys_real = data_OriginDestinationOptions.getJSONArray("OriginDestinationOption");
-			
-			
-			
-			for (int i = 0; i < Flys.length(); i++)
-			{
-				String flightNumber = "";
-				String Amount = "";
-				String _Class = "";
-				
-				JSONObject fly = Flys.getJSONObject(i);
-				
-				JSONObject flys_real = Flys_real.getJSONObject(i);
-				//Get Fly Object Real
-				
-				JSONObject fly_real_FlightSegment = flys_real.getJSONObject("FlightSegment");
-				JSONObject fly_real_Equipment = fly_real_FlightSegment.getJSONObject("Equipment");
-				String Equipment_Value = fly_real_Equipment.getString("Value");
-				String Equipment_AirEquipType = fly_real_Equipment.getString("AirEquipType");
-				
-				
-				String DepartureDateTime 	= fly_real_FlightSegment.getString("DepartureDateTime");
-				String ArrivalDateTime 		= fly_real_FlightSegment.getString("ArrivalDateTime");
-				String JourneyDuration	 	= fly_real_FlightSegment.getString("JourneyDuration");
-				
-				String[] TDate = DepartureDateTime.split("-");
-		        
-		        
-		        
-		        
-		        modelVM.addAttribute("Date",TDate[2].substring(0, 2)+" "+convertDateTR(TDate[1])+" "+TDate[0]);
-		        
-				KalkisZamani=DepartureDateTime.substring(DepartureDateTime.indexOf("T")+1, DepartureDateTime.indexOf("T")+6);
-				VarisZamani=ArrivalDateTime.substring(ArrivalDateTime.indexOf("T")+1, ArrivalDateTime.indexOf("T")+6);
-				String Sure_NW=JourneyDuration.substring(JourneyDuration.indexOf("T")+1, JourneyDuration.indexOf("M")+1);
-				String Sure_Saat = Sure_NW.substring(0,Sure_NW.indexOf("H"));
-				String Sure_Dakika = Sure_NW.substring(Sure_NW.indexOf("H")+1,Sure_NW.indexOf("M"));
-				Sure=Sure_Saat+" Saat "+Sure_Dakika+" Dakika";
-				UcakModelName = Equipment_Value;
-				UcakModelType = Equipment_AirEquipType;
-				
-				System.out.println("Kalkýþ Zamaný:"+DepartureDateTime);
-				System.out.println("Varýþ Zamaný:"+ArrivalDateTime);
-				System.out.println("Süresi Zamaný:"+JourneyDuration);
-				System.out.println("Uçak Model:"+Equipment_Value);
-				System.out.println("Uçak Type:"+Equipment_AirEquipType);
-				//End Get Fly Object Real
-				
-				
-				Boolean isPureAnadoluJetFlight = fly.getBoolean("isPureAnadoluJetFlight");
-				JSONObject fly_bookingPriceInfoType = fly.getJSONObject("bookingPriceInfoType");
-				JSONObject fly_PTC_FareBreakdowns = fly_bookingPriceInfoType.getJSONObject("PTC_FareBreakdowns");
-				JSONObject PTC_FareBreakdown_item = null;
-				try {
-				JSONArray fly_PTC_FareBreakdown = fly_PTC_FareBreakdowns.getJSONArray("PTC_FareBreakdown");
-				
-				//in price 1 -PassengerFare
-					for (int item_i = 0; item_i < fly_PTC_FareBreakdown.length(); item_i++)
-					{
-					 PTC_FareBreakdown_item = fly_PTC_FareBreakdown.getJSONObject(item_i);
-					 JSONObject FareBasisCodes = PTC_FareBreakdown_item.getJSONObject("FareBasisCodes");
-					 String FareBasisCode = FareBasisCodes.getString("FareBasisCode");
-					 if(FareBasisCode.equals("ER") ) {
-						 System.out.println("_AA_in_ER");
-						 JSONObject PassengerFare = PTC_FareBreakdown_item.getJSONObject("PassengerFare");
-							JSONObject TotalFare = PassengerFare.getJSONObject("TotalFare");
-							String TotalFare_Amount = "";
-							 TotalFare_Amount = TotalFare.getString("Amount");
-							 Amount = TotalFare_Amount;
-							 
-							 JSONObject FareInfo = PTC_FareBreakdown_item.getJSONObject("FareInfo");
-								JSONObject FareReference = FareInfo.getJSONObject("FareReference");
-								String FareReference_content = FareReference.getString("content");
-								_Class = FareReference_content;
-							 
-					 }
-					}
-					
-				}catch (Exception e) {
-					System.out.println(e.getMessage());
-					
-					JSONObject fly_PTC_FareBreakdown = fly_PTC_FareBreakdowns.getJSONObject("PTC_FareBreakdown");
-					
-					//in price 1 -PassengerFare
-					System.out.println("_AA_in_");
-					 PTC_FareBreakdown_item = fly_PTC_FareBreakdown;
-					 
-					 JSONObject PassengerFare = PTC_FareBreakdown_item.getJSONObject("PassengerFare");
-						JSONObject TotalFare = PassengerFare.getJSONObject("TotalFare");
-						String TotalFare_Amount = "";
-						 TotalFare_Amount = TotalFare.getString("Amount");
-						 Amount = TotalFare_Amount;
-						 
-						 
-						 JSONObject FareInfo = PTC_FareBreakdown_item.getJSONObject("FareInfo");
-							JSONObject FareReference = FareInfo.getJSONObject("FareReference");
-							String FareReference_content = FareReference.getString("content");
-							_Class = FareReference_content;
-				}
-				
-				
-				
-				
-				
-				
-				flightNumber = fly.getString("flightNumber");
-				ticketID=-1;
-				ticketNumber = flightNumber;
-				
-				//out price 1
-				try {
-					
-					Fiyat = Double.parseDouble(Amount);;
-				}
-				catch (Exception e) {
-					System.out.print("Hata in FN = "+e.getMessage());
-				}
-				
-				
-				
-				System.out.println("flightNumber_	:"+flightNumber);
-				System.out.println("Amount_			:"+Amount);
-				System.out.println("");
-				
-				int havalimanýCompany = 0;
-				if(isPureAnadoluJetFlight) {
-					havalimanýCompany = 2;
-				}else {
-					havalimanýCompany = 1;
-				}
-				Company company =null;
-				for (int company_id = 0; company_id < companies.size(); company_id++) {
-					if(companies.get(company_id).getCompanyID() == havalimanýCompany){
-						company = companies.get(company_id);
-					}
-				}
-				
-				
-				
-				
-				Ticket bilet = new Ticket(
-						ticketID,
-						ticketNumber,
-						dateInString,
-						KalkisZamani,
-						VarisZamani,
-						Sure,
-						UcakModelName,
-						UcakModelType,
-						wu.FirstUpper(LFromLocationCodes)+" "+FromLocationCodes,
-						wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes,
-						Fiyat,
-						_Class,
-						company);
-				
-				
-				KalkisYeri = LFromLocationCodes;
-				VarisYeri = LToLocationCodes;
-				
-				if(Fiyat !=0 && Fiyat!=0.0) {
-					Data_Company data_Company = new Data_Company(company.getCompanyID(),company.getCompanyName(),company.getCompanyImg());
-					
-					Data_Plane data_Plane = new Data_Plane(UcakModelName, UcakModelType);
-					//Data_Plane data_Plane_c = ticketService.getPlaneControl(data_Plane);
-					
-					//System.out.println(" data_Plane id:"+data_Plane_c.getId());
-					
-					/*if(data_Plane_c.getId() == 0) {
-						ticketService.addPlane(data_Plane);
-						
-					}else {
-						data_Plane = data_Plane_c;
-					}*/
-					
-					
-
-			        /*
-			        SimpleDateFormat sdf = 
-			                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			        
-
-			            Date ticketDate = (Date) formatter.parse(dateInString);
-			            System.out.println(date);
-			            System.out.println(formatter.format(date));
-
-			        
-			            java.util.Date dt = new java.util.Date();
-
-			            java.text.
-
-			            String currentTime = sdf.format(dt);*/
-			        	
-			      
-			      /*  
-					Data_Ticket data_Ticket = new Data_Ticket(
-							ticketNumber,
-							dateInString,
-							KalkisZamani,
-							VarisZamani,
-							Sure,
-							data_Plane,
-							wu.FirstUpper(LFromLocationCodes)+" "+FromLocationCodes,
-							wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes,
-							Fiyat,
-							data_TicketsSaveDate,
-							data_Company);
-					
-					
-					
-					String sql = "INSERT INTO `tickets` "+
-								"( `ticketNumber`,`ticketDate`, `kalkisZamani`, `varisZamani`, `sure`,  `Plane_Name`, `Plane_Model`, `kalkisYeri`, `varisYeri`, `fiyat`, `sinif`, `companyID`, `save_date`)"+
-							" VALUES ( '"+ticketNumber+"','"+dateInString+"', '"+KalkisZamani+"', '"+VarisZamani+"', '"+Sure+"',  '"+data_Plane.getPlane_Name()+"', '"+data_Plane.getPlane_Model()+"', '"+wu.FirstUpper(LFromLocationCodes)+" "+FromLocationCodes+"', '"+wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes+"', '"+Fiyat+"', '"+_Class+"', '"+data_Company.getCompanyID()+"' , '"+data_TicketsSaveDate.getId()+"');";
-					System.out.println(sql);
-							stmt.executeUpdate(sql);
-							
-					      System.out.println("Inserted records into the table...");
-					   
-					      
-					try {
-						
-						ticketService.AddTicket(data_Ticket);
-						
-						
-					}catch (Exception e) {
-						System.out.println("Hata: "+e.getMessage());
-					}
-					
-					
-					
-					
-					
-					
-					// bilet.setPlane(new Plane(UcakModelName,UcakModelType));
-					 //ticketService.AddTicket(bilet);
-					
-					//ticketService
-					Tickets.add(bilet);
-					
-				}
-				
-			}
-			}
-			catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}finally{
-			      //finally block used to close resources
-			      try{
-			         if(stmt!=null)
-			            conn.close();
-			      }catch(SQLException se){
-			      }// do nothing
-			      try{
-			         if(conn!=null)
-			            conn.close();
-			      }catch(SQLException se){
-			         se.printStackTrace();
-			      }//end finally try
-			   }//end try
-			   System.out.println("Goodbye!");
-			--E
-			*/
-			
-			//model.addObject("FlyList", "deneme");
 		}else {
 			//model.addObject("Error", "Lütfen Geçerli Bir Tarih Giriniz.");
 			//model.addObject("Error", "Lütfen Geçerli Bir Tarih Giriniz.");
 		}
-		System.out.println("Tickets Size:"+Tickets.size());
+		
+		System.out.println("Tickets ER Size:"+ERTickets.size());
+		System.out.println("Tickets EU Size:"+EUTickets.size());
+		System.out.println("Tickets BU Size:"+BUTickets.size());
+		
 		Map<String,Object> allObjectsMap = new HashMap<String,Object>();
-	    allObjectsMap.put("TicketsList", Tickets);
+	    allObjectsMap.put("TicketsList", EUTickets);
 	    
 	    model.addAllObjects(allObjectsMap);
 

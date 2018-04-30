@@ -39,12 +39,12 @@ public class PTC_FareBreakdown{
    return FareInfo;
   }
   */
-  /*
+  
   public void setPassengerFare(PassengerFare PassengerFare){
    this.PassengerFare=PassengerFare;
   }
   public PassengerFare getPassengerFare(){
    return PassengerFare;
   }
-  */
+  
 }

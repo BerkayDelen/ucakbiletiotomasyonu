@@ -30,6 +30,13 @@ public class BuyTicket {
 	@Column(name = "sales_ticket_id")
 	private int Ticket_id;
 	
+	@Column(name = "sales_uuid")
+	private String sales_uuid;
+	
+	@Column(name = "sales_salt")
+	private String sales_salt;
+	
+	
 	@Column(name = "sales_user_isLogin")
 	private Boolean User_isLogin;
 	
@@ -132,6 +139,22 @@ public class BuyTicket {
 
 	public void setUser_ticket_gender(Boolean user_ticket_gender) {
 		User_ticket_gender = user_ticket_gender;
+	}
+
+	public String getSales_uuid() {
+		return sales_uuid;
+	}
+
+	public void setSales_uuid(String sales_uuid) {
+		this.sales_uuid = sales_uuid;
+	}
+
+	public String getSales_salt() {
+		return sales_salt;
+	}
+
+	public void setSales_salt(String sales_salt) {
+		this.sales_salt = sales_salt;
 	}
 
 	

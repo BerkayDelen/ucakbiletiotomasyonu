@@ -1,10 +1,13 @@
 package com.biletcim.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.biletcim.entities.BuyTicket;
 import com.biletcim.entities.Data_Plane;
 import com.biletcim.entities.Data_Sale;
+import com.biletcim.entities.Data_Seat;
 import com.biletcim.entities.Data_Ticket;
 import com.biletcim.entities.Data_TicketsSaveDate;
 import com.biletcim.entities.Ticket;
@@ -25,5 +28,13 @@ public interface TicketDAO {
 	public Ticket getLastTicketByTicketNumber(String ticketNumber);
 
 	public Data_Sale getTicketByNumberANDFullName(String ticketNumber, String name, String surname);
+	
+	public List<Data_Seat> getTicketSeats(String ticketNumber);
+	
+	public Boolean TicketSeatSave(String TicketUniqNumber, String Seat);
+	
+	public Data_Seat getTicketByTicketKey(String TicketKey);
+
+	
 
 }

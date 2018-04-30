@@ -3,7 +3,9 @@ package com.biletcim.entities;
 public class Sale_User {
 	
 	
-
+	
+	private String sales_uuid;
+	private String sales_salt;
 
 	private Boolean sales_user_isLogin;
 	private int sales_user_id;
@@ -19,9 +21,16 @@ public class Sale_User {
 
 	
 	
-	public Sale_User(Boolean sales_user_isLogin, int sales_user_id, String sales_user_Name, String sales_user_Surname,
-			String sales_user_TC, String sales_user_Email, Boolean sales_user_gender) {
+	
+
+
+
+	public Sale_User(String sales_uuid, String sales_salt, Boolean sales_user_isLogin, int sales_user_id,
+			String sales_user_Name, String sales_user_Surname, String sales_user_TC, String sales_user_Email,
+			Boolean sales_user_gender) {
 		super();
+		this.sales_uuid = sales_uuid;
+		this.sales_salt = sales_salt;
 		this.sales_user_isLogin = sales_user_isLogin;
 		this.sales_user_id = sales_user_id;
 		this.sales_user_Name = sales_user_Name;
@@ -113,6 +122,30 @@ public class Sale_User {
 
 	public void setSales_user_gender(Boolean sales_user_gender) {
 		this.sales_user_gender = sales_user_gender;
+	}
+
+
+
+	public String getSales_uuid() {
+		return sales_uuid;
+	}
+
+
+
+	public void setSales_uuid(String sales_uuid) {
+		this.sales_uuid = sales_uuid;
+	}
+
+
+
+	public String getSales_salt() {
+		return sales_salt;
+	}
+
+
+
+	public void setSales_salt(String sales_salt) {
+		this.sales_salt = sales_salt;
 	}
 
 

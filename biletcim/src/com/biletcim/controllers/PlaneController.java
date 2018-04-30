@@ -17,13 +17,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.biletcim.entities.BuyTicket;
 import com.biletcim.entities.Data_Sale;
+import com.biletcim.entities.Data_Seat;
 import com.biletcim.entities.Seat;
+import com.biletcim.entities.json.OriginDestinationOption;
+import com.biletcim.entities.json.PTC_FareBreakdowns;
+import com.biletcim.entities.json.Status;
+import com.biletcim.helpers.OriginDestinationOptionDeserializer;
+import com.biletcim.helpers.PTC_FareBreakdownsDeserializer;
 import com.biletcim.helpers.WebUtils;
 import com.biletcim.services.TicketService;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 @RequestMapping(value={"/plane", "/Plane"})
@@ -68,8 +78,9 @@ public class PlaneController {
 		Data_Sale  sale =  ticketService.getTicketByNumberANDFullName(ticketNumber,name,surname);
 		System.out.println("0Name:"+sale.getUser().getSales_user_Name()+"\n surname : "+sale.getUser().getSales_user_Surname()+"\n ticketNumber:"+sale.getTicket().getTicketNumber());
 		
+		System.err.println("SÝNÝF:"+sale.getTicket().getSinif());
 		
-		model.addObject("sale",sale);
+		//model.addObject("sale",sale);
 		
 		 
 		 
@@ -87,9 +98,11 @@ public class PlaneController {
 				Elements el_seatMap = doc.select("#seatmap");
 				
 				System.out.println("Size:"+ el_seatMap.size());
+				List<Data_Seat> data_Seats = ticketService.getTicketSeats(ticketNumber);
+						
 				int  ks = 0;
 				for (Element element : el_seatMap) {
-					
+					System.out.println("DBSEAT SÝZE LÝST COUNT : "+data_Seats.size());
 					System.out.println("size :"+element.select("area").size());
 					
 					for (Element item : element.select("area")) {
@@ -119,9 +132,11 @@ public class PlaneController {
 						String item_description = obj.getString("description");
 						item_description = item_description.replaceAll("\\{SEATS\\}", item_seats_number+item_seats_character);
 						String item_class = obj.getJSONObject("class").getString("class");
+						Boolean isAvailable = data_Seats.stream().filter(o -> o.getSeat_Number().equals(item_seats_number+item_seats_character)).findFirst().isPresent();
 						
 						System.out.println("--------------------------------");
-						Seat seat = new Seat(ks,item_id,item_seats_character,item_seats_number,item_coords,item_description,item_class);
+						
+						Seat seat = new Seat(ks,item_id,item_seats_character,item_seats_number,item_coords,item_class+" "+item_description,item_class,isAvailable);
 						seats.add(seat);
 						
 					}
@@ -141,6 +156,7 @@ public class PlaneController {
 			System.out.println("Size L:"+seats.size());
 			Map<String,Object> allObjectsMap = new HashMap<String,Object>();
 		    allObjectsMap.put("SeatsList", seats);
+		    allObjectsMap.put("sale", sale);
 		    BuyTicket buyTicket = new BuyTicket();
 		    
 		    allObjectsMap.put("buyTicket", buyTicket);
@@ -159,10 +175,88 @@ public class PlaneController {
 				// TODO: handle exception
 			}
 			
-	       
+	}
+	
+	@RequestMapping(value = ("/check-in/me"),method=RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public String  checkInMe(
+			ModelAndView  model,
+			Model modelv,
+			HttpServletRequest request) {
+		
+		
+		
+		String TicketKey = request.getParameter("TicketKey");
+		String Seat = request.getParameter("Seat");
+		
+		final GsonBuilder gsonBuilder = new GsonBuilder();
+	    gsonBuilder.registerTypeAdapter(OriginDestinationOption.class, new OriginDestinationOptionDeserializer());
+	    gsonBuilder.registerTypeAdapter(PTC_FareBreakdowns.class, new  PTC_FareBreakdownsDeserializer());
+	   // gsonBuilder.registerTypeAdapter(FareInfo.class, new  FareInfoDeserializer());
+	    final Gson gson = gsonBuilder.setPrettyPrinting().serializeNulls().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+	   
+	    Status status = new Status();
+	   if(TicketKey != null && Seat != null) {
+		 Boolean Inserted =  ticketService.TicketSeatSave(TicketKey, Seat);
+		 if(Inserted) {
+			 status.setStatus("Success");
+			   status.setError("TicketKey : "+TicketKey+" / Seat : "+Seat);
+		 }else {
+			 status.setStatus("Fail");
+			   status.setError("Cannot Inserted Seat ");
+		 }
+		  
+		   
+	   }else if(TicketKey == null){
+		   status.setStatus("Fail");
+		   status.setError("TicketKey is null");
+	   } else if(Seat == null){
+		   status.setStatus("Fail");
+		   status.setError("Seat is null");
+	   }
+	    	
+	 	    
+	 	   
+	 	   
+	 	
+	 	 return gson.toJson(status);
+	    
+	   
 		
 		
 	}
+	
+	@RequestMapping(value = ("/check-in/ticket"),method=RequestMethod.GET)
+	public ModelAndView getTicket(
+			ModelAndView  model,
+			Model modelv,
+			HttpServletRequest request) {
+		
+		
+		String TicketKey = request.getParameter("Key");
+		
+		if(TicketKey != null) {
+			Data_Seat data_Seat = ticketService.getTicketByTicketKey(TicketKey);
+			Map<String,Object> allObjectsMap = new HashMap<String,Object>();
+		    
+		    allObjectsMap.put("data_Seat", data_Seat);
+		    
+		    model.addAllObjects(allObjectsMap);
+		    
+			model.setViewName("TicketPage");
+			return model;
+		}else {
+			 return new ModelAndView("redirect:/");
+		}
+		
+		
+		
+		
+		
+		
+	}
+	
+	
 	
 	@RequestMapping(value = ("/get"),method=RequestMethod.GET)
 	public ModelAndView getPlane(ModelAndView  model,Model modelv) {
@@ -210,7 +304,7 @@ public class PlaneController {
 					String item_class = obj.getJSONObject("class").getString("class");
 					
 					System.out.println("--------------------------------");
-					Seat seat = new Seat(ks,item_id,item_seats_character,item_seats_number,item_coords,item_description,item_class);
+					Seat seat = new Seat(ks,item_id,item_seats_character,item_seats_number,item_coords,item_description,item_class,false);
 					seats.add(seat);
 					
 				}

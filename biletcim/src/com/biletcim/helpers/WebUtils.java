@@ -1,5 +1,6 @@
 package com.biletcim.helpers;
-
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 import java.io.UnsupportedEncodingException;
@@ -16,7 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import com.biletcim.entities.Ticket;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -570,7 +575,7 @@ public class WebUtils {
 				"            </tbody></table>\r\n" + 
 				"            <table align=\"center\" class=\"nomob\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"600\" bgcolor=\"#ffffff\">\r\n" + 
 				"              <tbody><tr>\r\n" + 
-				"                <td class=\"resizeimageto320\" align=\"center\" width=\"600\"><a href=\"http://localhost:8080/biletcim/plane/check-in/control\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_600_desktop.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" class=\"nomob\" width=\"600\" height=\"166\"></a></td>\r\n" + 
+				"                <td class=\"resizeimageto320\" align=\"center\" width=\"600\"><a href=\"http://localhost/biletcim/plane/check-in/control\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_600_desktop.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" class=\"nomob\" width=\"600\" height=\"166\"></a></td>\r\n" + 
 				"              </tr>\r\n" + 
 				"            </tbody></table>\r\n" + 
 				"            \r\n" + 
@@ -579,7 +584,7 @@ public class WebUtils {
 				"            <div align=\"center\" style=\"display:none; width:0px; max-height:0px; overflow:hidden;\" class=\"showmobile320\">\r\n" + 
 				"              <table align=\"center\" class=\"showmobile320\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"320\" bgcolor=\"#ffffff\">\r\n" + 
 				"                <tbody><tr>\r\n" + 
-				"                  <td align=\"center\" width=\"320\"><a href=\"http://localhost:8080/biletcim/plane/check-in/control\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_320_mobile.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" width=\"320\" height=\"135\"></a></td>\r\n" + 
+				"                  <td align=\"center\" width=\"320\"><a href=\"http://localhost/biletcim/plane/check-in/control\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_320_mobile.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" width=\"320\" height=\"135\"></a></td>\r\n" + 
 				"                </tr>\r\n" + 
 				"              </tbody></table>\r\n" + 
 				"            </div>\r\n" + 
@@ -598,7 +603,7 @@ public class WebUtils {
 				"            <table align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"375\" bgcolor=\"#ffffff\" class=\"nomob\">\r\n" + 
 				"              <tbody><tr>\r\n" + 
 				"                <td width=\"375\" height=\"86\" align=\"center\" bgcolor=\"#ffffff\" style=\"padding:0 0 36px 0;\" class=\"paddingB30px\">\r\n" + 
-				"                 <a href=\"http://localhost:8080/biletcim/plane/check-in/control\" class=\"\" target=\"_blank\"><input type=\"button\" class=\"btn_checkin\" value=\"Check-in Yap\" /></a>\r\n" + 
+				"                 <a href=\"http://localhost/biletcim/plane/check-in/control\" class=\"\" target=\"_blank\"><input type=\"button\" class=\"btn_checkin\" value=\"Check-in Yap\" /></a>\r\n" + 
 				"\r\n" + 
 				"                </td>\r\n" + 
 				"              </tr>\r\n" + 
@@ -609,7 +614,7 @@ public class WebUtils {
 				"            <table align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"280\"  class=\"showmobile280\">\r\n" + 
 				"              <tbody><tr>\r\n" + 
 				"                <td width=\"280\" height=\"65\" align=\"center\" style=\"padding:0 20px 30px 20px;\">\r\n" + 
-				"                 <a href=\"http://localhost:8080/biletcim/plane/check-in/control\" class=\"\" target=\"_blank\"><input type=\"button\" class=\"btn_checkin\" value=\"Check-in Yap\" /></a>\r\n" + 
+				"                 <a href=\"http://localhost/biletcim/plane/check-in/control\" class=\"\" target=\"_blank\"><input type=\"button\" class=\"btn_checkin\" value=\"Check-in Yap\" /></a>\r\n" + 
 				"\r\n" + 
 				"                </td>\r\n" + 
 				"              </tr>\r\n" + 
@@ -720,7 +725,7 @@ public class WebUtils {
 				"            \r\n" + 
 				"            <table class=\"emailphoneresize\" align=\"center\" width=\"600\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
 				"              <tbody><tr>\r\n" + 
-				"                <td style=\"font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#0078D2; padding:36px 0 36px 0;\" align=\"center\" bgcolor=\"#ffffff\"><a href=\"http://localhost:8080/biletcim/\" style=\"color:#137acf; text-decoration:underline;\" target=\"_blank\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">Destek</span></a> &nbsp;&nbsp;<span style=\"color:#36495A; text-decoration:none;\">|</span>&nbsp;&nbsp; <a href=\"http://localhost:8080/biletcim/\" style=\"color:#0078D2; text-decoration:underline;\" target=\"_blank\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">Gizlilik&nbsp;Politikasý</span></a></td>\r\n" + 
+				"                <td style=\"font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#0078D2; padding:36px 0 36px 0;\" align=\"center\" bgcolor=\"#ffffff\"><a href=\"http://localhost:/biletcim/\" style=\"color:#137acf; text-decoration:underline;\" target=\"_blank\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">Destek</span></a> &nbsp;&nbsp;<span style=\"color:#36495A; text-decoration:none;\">|</span>&nbsp;&nbsp; <a href=\"http://localhost:/biletcim/\" style=\"color:#0078D2; text-decoration:underline;\" target=\"_blank\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">Gizlilik&nbsp;Politikasý</span></a></td>\r\n" + 
 				"              </tr>\r\n" + 
 				"            </tbody></table>\r\n" + 
 				"            <table class=\"emailphoneresize\" align=\"center\" width=\"600\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
@@ -861,13 +866,41 @@ public String convertDateTR(String date) {
 			Hata = "Lütfen Kalkýþ veya Varýþ Havalimanýný Kontol Edip Düzgün Giriniz.";
 			System.err.println(Hata);
 			model.addObject("Error", Hata);
+		}else if(ErrorCode.equals("TK-BWS-10008")) {
+			Hata = "Aradýðýnýz Uçuþ Bulunamadý. (JP08)";
+			System.err.println(Hata);
+			model.addObject("Error", Hata);
 		}else {
-			Hata = "Bilinmeyen Bir Hata Oluþtu  (JP04)";
+			Hata = "Aradýðýnýz Uçuþ Bulunamadý. (JP04)";
 			System.err.println(Hata);
 			model.addObject("Error", Hata);
 		}
 		
 		return model;
+	}
+	
+	public String MD5E(String veri) {
+		try{
+	        MessageDigest messageDigestNesnesi = MessageDigest.getInstance("MD5");
+	        
+	        messageDigestNesnesi.update(veri.getBytes());
+	        
+	        byte messageDigestDizisi[] = messageDigestNesnesi.digest();
+	        
+	        StringBuffer sb32 = new StringBuffer();
+	        for (int i = 0; i < messageDigestDizisi.length; i++) {
+	        sb32.append(Integer.toString((messageDigestDizisi[i] & 0xff) + 0x100, 32));
+	        }
+	        
+	        return sb32.toString();
+	
+	 
+	    
+		}catch(NoSuchAlgorithmException ex){
+	        System.err.println(ex);
+	        return "ERROR";
+	    }
+	
 	}
 
 }

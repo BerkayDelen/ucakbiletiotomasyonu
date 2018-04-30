@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.crypto.Data;
@@ -125,6 +126,7 @@ public class BuyTicketController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
+		WebUtils utils = new WebUtils();
 		
 	    
 		BuyTicket buyTicket = new BuyTicket();
@@ -134,15 +136,19 @@ public class BuyTicketController {
 		buyTicket.setUser_ticket_Surname(surname);
 		buyTicket.setUser_isLogin(true);
 		
+		
+		String UniqId = UUID.randomUUID().toString();
+		buyTicket.setSales_uuid(utils.MD5E(bilet.getTicketID()+name.toString()+surname.toString()+UniqId));
+		buyTicket.setSales_salt(UniqId);
 		buyTicket.setUser_ticket_Birthday(date1);
 		buyTicket.setUser_ticket_Email(Email);
-		
+		//TODO - Düzelt
 		buyTicket.setUser_ticket_gender(true);//düzenlt
 		buyTicket.setUser_ticket_TC(tcNo);
 		
 		ticketService.AddBuyTicket(buyTicket);
 		
-		WebUtils utils = new WebUtils();
+		
 		  utils.MailSender(bilet,"Berkay Delen",Email);
 		
 		model.addObject("biletim",bilet);

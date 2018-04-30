@@ -165,7 +165,7 @@ svg {
 					mainTl.timeScale(0.7);
 
 					$(window).on('load', function() { // makes sure the whole site is loaded 
-						  $('#loader').delay(150).fadeOut('slow'); // will first fade out the loading animation 
+						  $('#loader').delay(75).fadeOut('slow'); // will first fade out the loading animation 
 						  
 						})
 					

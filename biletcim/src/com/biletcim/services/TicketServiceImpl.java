@@ -1,5 +1,7 @@
 package com.biletcim.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +10,7 @@ import com.biletcim.dao.TicketDAO;
 import com.biletcim.entities.BuyTicket;
 import com.biletcim.entities.Data_Plane;
 import com.biletcim.entities.Data_Sale;
+import com.biletcim.entities.Data_Seat;
 import com.biletcim.entities.Data_Ticket;
 import com.biletcim.entities.Data_TicketsSaveDate;
 import com.biletcim.entities.Ticket;
@@ -76,6 +79,27 @@ public class TicketServiceImpl implements TicketService {
 	public Data_Sale getTicketByNumberANDFullName(String ticketNumber, String name, String surname) {
 		return ticketDAO.getTicketByNumberANDFullName(ticketNumber,name,surname);
 		
+	}
+
+	@Override
+	public List<Data_Seat> getTicketSeats(String ticketNumber) {
+		return ticketDAO.getTicketSeats(ticketNumber);
+	}
+
+
+
+
+	@Override
+	public Boolean TicketSeatSave(String TicketUniqNumber, String Seat) {
+		return ticketDAO.TicketSeatSave(TicketUniqNumber, Seat);
+	}
+
+
+
+
+	@Override
+	public Data_Seat getTicketByTicketKey(String TicketKey) {
+		return ticketDAO.getTicketByTicketKey(TicketKey);
 	}
 
 }
