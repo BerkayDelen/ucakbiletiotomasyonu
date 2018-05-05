@@ -33,7 +33,6 @@
 
  
   
-  
   <style type="text/css">
 
   
@@ -55,7 +54,7 @@
 
 		
 <div class="container p-0 m-t-15">
-<form action="" method="post">
+<form action="" method="post" id="BuyTicket">
 <input type="hidden" name="ticketNumber" value="${biletim.ticketNumber }">
 <div class="row">
 
@@ -356,7 +355,7 @@
 					
 				</div>
 				<div class="form-group">
-  					<input type="submit" value="Satın Al" class="login100-form-btn form-control" id="btn_Buy">
+  					<input type="button" value="Satın Al" class="login100-form-btn form-control" id="btn_Buy">
  					<!--<button class="login100-form-btn form-control">
 							<div clas="row">
 							<div class="col-md-3">
@@ -443,6 +442,9 @@
 	
 	
 	<script>
+	
+		
+	
         new Card({
             form: document.querySelector('form'),
             container: '.card-wrapper',
@@ -695,11 +697,12 @@
         	$("input[name=Cardcvc]").val( "123");
         	*/
         	$( "form" ).submit(function( event ) {
+        		return;/*
         		if($("input[name=tcNo]").val().trim() != ""){
         			$("input[name=tcNo]").css("border","red solid 1px");
             		return;
         			
-            	}
+            	}*/
         		event.preventDefault();
             		
             	
@@ -723,7 +726,40 @@
             	validationControler("Cardcvc");
             	
             	if(controlAll()){
-            		$("#btn_Buy").submit();
+            		//$("#btn_Buy").submit();
+            		
+            		var result_b = false;
+            		swal({
+		  title: 'Bilet Satın Alınıyor',
+		  text: 'Lütfen Bekleyiniz',
+		  timer: 15000,
+		  onOpen: () => {
+		    swal.showLoading()
+		  }
+		  
+		}).then((result) => {
+		 
+		})
+            		$.ajax({
+            		      type: "POST",
+            		      url: $('form').attr("action"),   
+            		      data: $('#BuyTicket').serialize(),
+            		      success: function (result) {
+            		    	  result_b = true;
+            		    	  
+            		    	  swal({
+            					  type: 'success',
+            					  title: 'Satın Alma İşlemi Başarılı',
+            					  text: 'Bilet '+$("input[name=Email]").val()+' Adresine E-mail olarak Gönderildi.',
+            					  confirmButtonText : "AnaSayfa >"
+            					}).then((result) => {
+            						  if (result.value) {
+            							  window.location.href = '<% String contextPath = request.getContextPath(); out.print(contextPath);%>';
+            							  }
+            							})
+            					
+            		      }
+            		 });
         		}
             	
             	

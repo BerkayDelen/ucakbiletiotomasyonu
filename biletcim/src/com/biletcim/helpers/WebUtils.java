@@ -5,6 +5,8 @@ import java.security.NoSuchAlgorithmException;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import java.util.Random;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -60,7 +62,9 @@ public class WebUtils {
     
     }
     
-    public  void MailSender(Ticket bilet, String userFullName, String email) {
+    public  void MailSender(Ticket bilet, String Name,String Surname, String email) {
+    	
+    	String userFullName = Name+" "+Surname;
     	final String username = "biletcim.berkaydelen@gmail.com";
 	final String password = "Biletcim.123";
 
@@ -575,7 +579,7 @@ public class WebUtils {
 				"            </tbody></table>\r\n" + 
 				"            <table align=\"center\" class=\"nomob\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"600\" bgcolor=\"#ffffff\">\r\n" + 
 				"              <tbody><tr>\r\n" + 
-				"                <td class=\"resizeimageto320\" align=\"center\" width=\"600\"><a href=\"http://localhost/biletcim/plane/check-in/control\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_600_desktop.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" class=\"nomob\" width=\"600\" height=\"166\"></a></td>\r\n" + 
+				"                <td class=\"resizeimageto320\" align=\"center\" width=\"600\"><a href=\"http://localhost/biletcim/plane/check-in/control?Name="+Name+"&Surname="+Surname+"&PNR="+bilet.getSales_salt()+"\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_600_desktop.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" class=\"nomob\" width=\"600\" height=\"166\"></a></td>\r\n" + 
 				"              </tr>\r\n" + 
 				"            </tbody></table>\r\n" + 
 				"            \r\n" + 
@@ -584,7 +588,7 @@ public class WebUtils {
 				"            <div align=\"center\" style=\"display:none; width:0px; max-height:0px; overflow:hidden;\" class=\"showmobile320\">\r\n" + 
 				"              <table align=\"center\" class=\"showmobile320\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"320\" bgcolor=\"#ffffff\">\r\n" + 
 				"                <tbody><tr>\r\n" + 
-				"                  <td align=\"center\" width=\"320\"><a href=\"http://localhost/biletcim/plane/check-in/control\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_320_mobile.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" width=\"320\" height=\"135\"></a></td>\r\n" + 
+				"                  <td align=\"center\" width=\"320\"><a href=\"http://localhost/biletcim/plane/check-in/control?Name="+Name+"&Surname="+Surname+"&PNR="+bilet.getSales_salt()+"\" target=\"_blank\"><img style=\"display:block;\" src=\"http://www.aa.com/content/images/email/marketingOneOff/PDP/check_in_banner_320_mobile.png\" border=\"0\" alt=\"It's time to check in\" title=\"It's time to check in\" width=\"320\" height=\"135\"></a></td>\r\n" + 
 				"                </tr>\r\n" + 
 				"              </tbody></table>\r\n" + 
 				"            </div>\r\n" + 
@@ -603,7 +607,7 @@ public class WebUtils {
 				"            <table align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"375\" bgcolor=\"#ffffff\" class=\"nomob\">\r\n" + 
 				"              <tbody><tr>\r\n" + 
 				"                <td width=\"375\" height=\"86\" align=\"center\" bgcolor=\"#ffffff\" style=\"padding:0 0 36px 0;\" class=\"paddingB30px\">\r\n" + 
-				"                 <a href=\"http://localhost/biletcim/plane/check-in/control\" class=\"\" target=\"_blank\"><input type=\"button\" class=\"btn_checkin\" value=\"Check-in Yap\" /></a>\r\n" + 
+				"                 <a href=\"http://localhost/biletcim/plane/check-in/control?Name="+Name+"&Surname="+Surname+"&PNR="+bilet.getSales_salt()+"\" class=\"\" target=\"_blank\"><input type=\"button\" class=\"btn_checkin\" value=\"Check-in Yap\" /></a>\r\n" + 
 				"\r\n" + 
 				"                </td>\r\n" + 
 				"              </tr>\r\n" + 
@@ -634,7 +638,7 @@ public class WebUtils {
 				"    background-color:  #ffffff;\r\n" + 
 				"\" bgcolor=\"#ffffff\" class=\"emailphoneresize\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"600\" align=\"center\">\r\n" + 
 				"  <tbody><tr>\r\n" + 
-				"    <td bgcolor=\"#ffffff\" class=\"paddingB30pxLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; line-height:18px; color:#36495A; font-weight:bold;padding:30px 30px 34px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\"><!--Begin SPOTLIGHT HEADING--> Bilet Numarasý : "+bilet.getTicketNumber()+"</span></td>\r\n" + 
+				"    <td bgcolor=\"#ffffff\" class=\"paddingB30pxLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; line-height:18px; color:#36495A; font-weight:bold;padding:30px 30px 34px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\"><!--Begin SPOTLIGHT HEADING--> PNR Numarasý : "+bilet.getSales_salt()+"</span></td>\r\n" + 
 				"  </tr>\r\n" + 
 				"  <tr>\r\n" + 
 				"    <td bgcolor=\"#ffffff\" class=\"paddingLR20px\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:30px; line-height:30px; color:#0061AB; padding:0 30px 3px 30px;\" align=\"left\"><span style=\"font-family:'Helvetica Neue', Helvetica, Arial, sans-serif !important;mso-line-height-rule:exactly;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">"+bilet.getTicketDateMMMMTR()+"</span></td>\r\n" + 
@@ -902,5 +906,18 @@ public String convertDateTR(String date) {
 	    }
 	
 	}
+	
+	public String getSaltString() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 8) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
+
+    }
 
 }

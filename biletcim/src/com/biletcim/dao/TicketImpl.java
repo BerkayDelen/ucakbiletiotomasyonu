@@ -151,6 +151,7 @@ public class TicketImpl implements TicketDAO {
 				int save_date  = rs.getInt("save_date");
 				Company company = new Company(rs.getInt("companyID"), rs.getString("companyName"), rs.getString("companyImg"));
 				
+				
 				 ticket = new Ticket(
 						ticketID,
 						ticketNumber,
@@ -164,7 +165,7 @@ public class TicketImpl implements TicketDAO {
 						varisYeri,
 						fiyat,
 						sinif,
-						company);
+						company,"","");
    
 			}
 			rs.close();
@@ -197,10 +198,10 @@ public class TicketImpl implements TicketDAO {
 		String getSession = "SELECT company.*,tickets.*,sales.* FROM `sales` " + 
 				"INNER JOIN tickets ON tickets.ticketID = sales.sales_ticket_id " + 
 				"INNER JOIN company ON company.companyId = tickets.companyID"+
-				" where tickets.ticketNumber = ? and "+
+				" where sales.sales_salt = ? and "+
 				"sales.sales_user_Name = ? and "+
 				"sales.sales_user_Surname = ? limit 1";
-		
+		//
 		try {
 			
     			System.out.println(getSession);
@@ -210,6 +211,19 @@ public class TicketImpl implements TicketDAO {
 			Config.stmt.setString(2,name);
 			Config.stmt.setString(3,surname);
 		ResultSet rs =	Config.stmt.executeQuery();
+		int rowcount = 0;
+		if (rs.last()) {
+		  rowcount = rs.getRow();
+		  rs.beforeFirst(); 
+		}
+		if(rowcount == 0) {
+			System.err.println("COunt SELECT TÝCKET ->"+rowcount);
+			Data_Sale data_Sale = new Data_Sale(ticket, user);
+			
+			return data_Sale;
+		}
+		
+		
 			while(rs.next()){
 				System.out.print("Read:");
 				int ticketID  = rs.getInt("ticketID");
@@ -229,6 +243,9 @@ public class TicketImpl implements TicketDAO {
 				int save_date  = rs.getInt("save_date");
 				Company company = new Company(rs.getInt("companyID"), rs.getString("companyName"), rs.getString("companyImg"));
 				
+				String sales_uuid  = rs.getString("sales_uuid");
+				String sales_salt  = rs.getString("sales_salt");
+				
 				 ticket = new Ticket(
 						ticketID,
 						ticketNumber,
@@ -242,13 +259,12 @@ public class TicketImpl implements TicketDAO {
 						varisYeri,
 						fiyat,
 						sinif,
-						company);
+						company,sales_uuid,sales_salt);
 				 
 				 Boolean sales_user_isLogin  = false; //rs.getBoolean("sales_user_isLogin");
 				 int sales_user_id  = 0;//rs.getInt("sales_user_id");
 				 
-				 String sales_uuid  = rs.getString("sales_uuid");
-				 String sales_salt  = rs.getString("sales_salt");
+				
 				 
 				 String sales_user_Name  = rs.getString("sales_user_Name");
 				 String sales_user_Surname  = rs.getString("sales_user_Surname");
@@ -459,6 +475,9 @@ public class TicketImpl implements TicketDAO {
 				int save_date  = rs.getInt("save_date");
 				Company company = new Company(rs.getInt("companyID"), rs.getString("companyName"), rs.getString("companyImg"));
 				
+				String sales_uuid  = rs.getString("sales_uuid");
+				String sales_salt  = rs.getString("sales_salt");
+				
 				 ticket = new Ticket(
 						ticketID,
 						ticketNumber,
@@ -472,13 +491,14 @@ public class TicketImpl implements TicketDAO {
 						varisYeri,
 						fiyat,
 						sinif,
-						company);
+						company,
+						sales_uuid,
+						sales_salt);
 				 
 				 Boolean sales_user_isLogin  = false; //rs.getBoolean("sales_user_isLogin");
 				 int sales_user_id  = 0;//rs.getInt("sales_user_id");
 				 
-				 String sales_uuid  = rs.getString("sales_uuid");
-				 String sales_salt  = rs.getString("sales_salt");
+				
 				 
 				 String sales_user_Name  = rs.getString("sales_user_Name");
 				 String sales_user_Surname  = rs.getString("sales_user_Surname");

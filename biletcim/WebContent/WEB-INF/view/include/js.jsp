@@ -11,3 +11,5 @@
     <script src="${pageContext.request.contextPath }/resources/plugins/bower_components/typeahead.js-master/dist/typeahead.bundle.min.js"></script>
     <script src="${pageContext.request.contextPath }/resources/plugins/bower_components/typeahead.js-master/dist/typeahead-init.js"></script>
     
+    <script src="${pageContext.request.contextPath }/resources/js/sweetalert2.all.js"></script>
+    

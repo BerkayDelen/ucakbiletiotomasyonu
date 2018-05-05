@@ -137,7 +137,7 @@ public class BuyTicketController {
 		buyTicket.setUser_isLogin(true);
 		
 		
-		String UniqId = UUID.randomUUID().toString();
+		String UniqId = utils.getSaltString();
 		buyTicket.setSales_uuid(utils.MD5E(bilet.getTicketID()+name.toString()+surname.toString()+UniqId));
 		buyTicket.setSales_salt(UniqId);
 		buyTicket.setUser_ticket_Birthday(date1);
@@ -147,9 +147,9 @@ public class BuyTicketController {
 		buyTicket.setUser_ticket_TC(tcNo);
 		
 		ticketService.AddBuyTicket(buyTicket);
+		bilet.setSales_salt(UniqId);
 		
-		
-		  utils.MailSender(bilet,"Berkay Delen",Email);
+		  utils.MailSender(bilet,name,surname,Email);
 		
 		model.addObject("biletim",bilet);
 				model.setViewName("BuyTicket");

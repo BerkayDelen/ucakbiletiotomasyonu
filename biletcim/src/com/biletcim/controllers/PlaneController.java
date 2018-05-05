@@ -62,6 +62,20 @@ public class PlaneController {
 		
 	}
 	
+	@RequestMapping(value = ("/check-in/"),method=RequestMethod.GET)
+	public ModelAndView checkInC(
+			ModelAndView  model,
+			Model modelv,
+			HttpServletRequest request) {
+		
+		
+		
+		model.setViewName("CheckInOne");
+		 return model;
+		
+		
+	}
+	
 	@RequestMapping(value = ("/check-in"),method=RequestMethod.POST)
 	public ModelAndView checkInPlane(
 			ModelAndView  model,
@@ -76,6 +90,14 @@ public class PlaneController {
 		System.out.println("Name:"+name+"\n surname : "+surname+"\n ticketNumber:"+ticketNumber);
 		
 		Data_Sale  sale =  ticketService.getTicketByNumberANDFullName(ticketNumber,name,surname);
+		if(sale.getUser() == null) {
+			model.setViewName("CheckInOne");
+			model.addObject("Error","Girilen Bilgiler Yanlýþ , Lütfen Bilgileri Kontrol Edip Tekrar Deneyiniz!");
+			
+			return model;
+		}else {
+			
+		
 		System.out.println("0Name:"+sale.getUser().getSales_user_Name()+"\n surname : "+sale.getUser().getSales_user_Surname()+"\n ticketNumber:"+sale.getTicket().getTicketNumber());
 		
 		System.err.println("SÝNÝF:"+sale.getTicket().getSinif());
@@ -174,7 +196,7 @@ public class PlaneController {
 				 return model;
 				// TODO: handle exception
 			}
-			
+		}
 	}
 	
 	@RequestMapping(value = ("/check-in/me"),method=RequestMethod.POST , produces = "application/json")

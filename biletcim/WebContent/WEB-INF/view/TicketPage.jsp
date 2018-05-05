@@ -284,7 +284,7 @@ h5 > span {
 				    		<h5>Sınıf:</br><span>${data_Seat.ticket.sinif}</span></h5>
 			    		</div>
 			    		<div class="right-side">
-				    		<h5>Saat:</br><span>${data_Seat.ticket.kalkisZamani}</span></h5>
+				    		<h5>Kalkış Saati:</br><span>${data_Seat.ticket.kalkisZamani}</span></h5>
 				    		<h5>Koltuk:</br><span>${data_Seat.seat_Number}</span></h5>
 			    		</div>
 			    	</div>

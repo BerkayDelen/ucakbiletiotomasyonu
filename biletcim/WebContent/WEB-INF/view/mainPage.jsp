@@ -202,7 +202,7 @@
       	 		
       	 	</div>
       	 	<div class="mini-list-item-money">
-				<b>28 TL</b> 'den
+				<b>196 TL</b> 'den
       	 	</div>
       	 	
       	 	</div>
@@ -225,7 +225,7 @@
 				</div>
       	 	</div>
       	 	<div class="mini-list-item-money">
-      	 		<b>50 TL</b> 'den
+      	 		<b>210 TL</b> 'den
       	 	</div>
       	 	
       	 	</div>
@@ -248,7 +248,7 @@
 				</div>
       	 	</div>
       	 	<div class="mini-list-item-money">
-      	 		<b>40 TL</b> 'den
+      	 		<b>196 TL</b> 'den
       	 	</div>
       	 	
       	 	</div>
@@ -276,7 +276,7 @@
 				</div>
       	 	</div>
       	 	<div class="mini-list-item-money">
-				<b>28 TL</b> 'den
+				<b>196 TL</b> 'den
       	 	</div>
       	 	
       	 	</div>
@@ -299,7 +299,7 @@
 				</div>
       	 	</div>
       	 	<div class="mini-list-item-money">
-      	 		<b>50 TL</b> 'den
+      	 		<b>210 TL</b> 'den
       	 	</div>
       	 	
       	 	</div>
@@ -322,7 +322,7 @@
 				</div>
       	 	</div>
       	 	<div class="mini-list-item-money">
-      	 		<b>40 TL</b> 'den
+      	 		<b>196 TL</b> 'den
       	 	</div>
       	 	
       	 	</div>
@@ -350,7 +350,7 @@
 				</div>
       	 	</div>
       	 	<div class="mini-list-item-money">
-				<b>28 TL</b> 'den
+				<b>196 TL</b> 'den
       	 	</div>
       	 	
       	 	</div>
@@ -373,7 +373,7 @@
 				</div>
       	 	</div>
       	 	<div class="mini-list-item-money">
-      	 		<b>50 TL</b> 'den
+      	 		<b>210 TL</b> 'den
       	 	</div>
       	 	
       	 	</div>
@@ -396,7 +396,7 @@
 				</div>
       	 	</div>
       	 	<div class="mini-list-item-money">
-      	 		<b>40 TL</b> 'den
+      	 		<b>196 TL</b> 'den
       	 	</div>
       	 	
       	 	</div>

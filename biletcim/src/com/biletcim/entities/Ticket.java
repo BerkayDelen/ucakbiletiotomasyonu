@@ -1,5 +1,7 @@
 package com.biletcim.entities;
 
+import javax.persistence.Column;
+
 import org.springframework.lang.Nullable;
 
 import com.biletcim.helpers.WebUtils;
@@ -32,7 +34,10 @@ public class Ticket {
 	private Company company;
 	
 	
-
+	private String sales_uuid;
+	
+	
+	private String sales_salt;
 
 	
 
@@ -60,20 +65,11 @@ public class Ticket {
 		this.ticketDate = ticketDate;
 	}
 
-	public Ticket(
-			int ticketID,
-			String ticketNumber,
-			String ticketDate,
-			String kalkisZamani,
-			String varisZamani,
-			String sure,
-			String ucakModelName,
-			String ucakModelType,
-			String kalkisYeri,
-			String varisYeri,
-			double fiyat,
-			String sinif,
-			Company company) {
+	
+	
+	public Ticket(int ticketID, String ticketNumber, String ticketDate, String kalkisZamani, String varisZamani,
+			String sure, String ucakModelName, String ucakModelType, String kalkisYeri, String varisYeri, double fiyat,
+			String sinif, Company company, String sales_uuid, String sales_salt) {
 		super();
 		this.ticketID = ticketID;
 		this.ticketNumber = ticketNumber;
@@ -88,8 +84,9 @@ public class Ticket {
 		this.fiyat = fiyat;
 		this.sinif = sinif;
 		this.company = company;
+		this.sales_uuid = sales_uuid;
+		this.sales_salt = sales_salt;
 	}
-	
 	public String getSinif() {
 		return sinif;
 	}
@@ -186,6 +183,18 @@ public class Ticket {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+	public String getSales_uuid() {
+		return sales_uuid;
+	}
+	public void setSales_uuid(String sales_uuid) {
+		this.sales_uuid = sales_uuid;
+	}
+	public String getSales_salt() {
+		return sales_salt;
+	}
+	public void setSales_salt(String sales_salt) {
+		this.sales_salt = sales_salt;
 	}
 
 	

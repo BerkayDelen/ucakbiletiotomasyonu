@@ -367,7 +367,7 @@ public class TicketListController {
 								wu.FirstUpper(LToLocationCodes)+" "+ToLocationCodes,
 								Fiyat,
 								_Class,
-								company);
+								company,"","");
 						
 						String sql = "INSERT INTO `tickets` "+
 								"( `ticketNumber`,"

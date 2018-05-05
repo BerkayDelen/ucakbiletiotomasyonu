@@ -327,7 +327,48 @@ border: 1px solid rgba(119,188,31,1) !important;
                
               
              <!--  <jsp:include page="/WEB-INF/view/include/Loader.jsp" /> -->
+  <script type="text/javascript">
+	<%
+	
+	String Error =(String) request.getAttribute("Error");
+	
+	if(Error !=null){
+		
+	
+	%>
+	swal({
+		  type: 'error',
+		  title: 'Oops...',
+		  text: '<%  out.print(Error);%>',
+		  confirmButtonText : "Tamam"
+		})
+  		
   
+	<%} %>
+  function $_GET(param) {
+		var vars = {};
+		window.location.href.replace( location.hash, '' ).replace( 
+			/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+			function( m, key, value ) { // callback
+				vars[key] = value !== undefined ? value : '';
+			}
+		);
+
+		if ( param ) {
+			return vars[param] ? vars[param] : null;	
+		}
+		return vars;
+	}
+  var PNR = $_GET('PNR');
+  var Name = $_GET('Name');
+  var Surname = $_GET('Surname');
+  if(PNR != null && Name != null && Surname != null ){
+	  $('#JName').val(Name);
+	  $('#Surname').val(Surname);
+	  $('#tcNo').val(PNR);
+  }
+  
+  </script>
 </body>
 </html>
 

@@ -105,11 +105,11 @@
 			</div>
 		</div>
 	 
-<div class="social-networks m-b-50">
+<div class="social-networks m-t-50">
 <div class="row">
 	
 	<span class="register-tittle p-b-50">
-						<center>Hesabınız Varmı ? <a href="./Login">Giriş Yap</a></center>
+						<center class="m-b-50">Hesabınız Varmı ? <a href="./Login">Giriş Yap</a></center>
 					</span>
 </div>
 <!--
