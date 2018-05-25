@@ -38,5 +38,10 @@ public class UserServiceImpl implements UserService {
 		
 		return userDAO.login(user);
 	}
+	
+	@Override
+	public com.biletcim.entities.User User(String uuid) {
+		return userDAO.User(uuid);
+	}
 
 }

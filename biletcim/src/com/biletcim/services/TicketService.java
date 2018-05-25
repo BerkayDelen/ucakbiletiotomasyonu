@@ -34,4 +34,8 @@ public interface TicketService {
 	public Boolean TicketSeatSave(String TicketUniqNumber,String Seat);
 	
 	public Data_Seat getTicketByTicketKey(String TicketKey);
+	
+	public Boolean TicketControlisAlreadySelectSeat(String TicketUniqNumber);
+	
+	public List<Data_Seat> getTicketByUser(String UserId);
 }

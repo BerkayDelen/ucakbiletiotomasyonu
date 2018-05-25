@@ -1,5 +1,6 @@
 package com.biletcim.controllers;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,6 +87,14 @@ public class PlaneController {
 		String surname = request.getParameter("surname");
 		String ticketNumber = request.getParameter("ticketNumber");
 		
+		byte[] bytes = name.getBytes(StandardCharsets.ISO_8859_1);
+		name = new String(bytes, StandardCharsets.UTF_8);
+		
+		byte[] bytes2 = surname.getBytes(StandardCharsets.ISO_8859_1);
+		surname = new String(bytes2, StandardCharsets.UTF_8);
+		
+		
+		
 		
 		System.out.println("Name:"+name+"\n surname : "+surname+"\n ticketNumber:"+ticketNumber);
 		
@@ -96,7 +105,8 @@ public class PlaneController {
 			
 			return model;
 		}else {
-			
+		if (ticketService.TicketControlisAlreadySelectSeat(ticketNumber))
+		{
 		
 		System.out.println("0Name:"+sale.getUser().getSales_user_Name()+"\n surname : "+sale.getUser().getSales_user_Surname()+"\n ticketNumber:"+sale.getTicket().getTicketNumber());
 		
@@ -196,6 +206,12 @@ public class PlaneController {
 				 return model;
 				// TODO: handle exception
 			}
+		}else {
+			model.setViewName("CheckInOne");
+			model.addObject("Error","Daha Önceden Koltuk Seçimi Yaptýnýz");
+			
+			return model;
+		}
 		}
 	}
 	
@@ -300,9 +316,9 @@ public class PlaneController {
 				for (Element item : element.select("area")) {
 					System.out.println("--------------------------------");
 					ks++;
-					System.out.println("id :"+ks);
+					//System.out.println("id :"+ks);
 					
-					System.out.println("item title :"+item.attr("title"));
+					//System.out.println("item title :"+item.attr("title"));
 					
 					JSONObject obj = new JSONObject(item.attr("title"));
 					

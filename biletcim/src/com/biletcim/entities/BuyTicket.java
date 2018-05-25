@@ -41,6 +41,10 @@ public class BuyTicket {
 	private Boolean User_isLogin;
 	
 	
+	@Column(name = "sales_user_id")
+	private int sales_user_id;
+	
+	
 	@Column(name = "sales_user_Name")
 	private String User_ticket_Name;
 	
@@ -157,6 +161,15 @@ public class BuyTicket {
 		this.sales_salt = sales_salt;
 	}
 
+	public int getSales_user_id() {
+		return sales_user_id;
+	}
+
+	public void setSales_user_id(int sales_user_id) {
+		this.sales_user_id = sales_user_id;
+	}
+
+	
 	
 	
 	

@@ -54,13 +54,13 @@
 					try{
 						if(action >= 1){
 	    			    	 out.println("<li><a href='"+contextPath+"/Logout'><i class='fas fa-times-circle'></i> Çıkış</a></li>");
-	    			    	 out.println("<li><a href='/'><i class='fas fa-ticket-alt'></i> Biletlerim</a></li>");
-	    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
+	    			    	 out.println("<li><a href='"+contextPath+"/biletlerim'	><i class='fas fa-ticket-alt'></i> Biletlerim</a></li>");
+	    			    	 out.println("<li><a href='"+contextPath+"/biletSorgula' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
 	    			    	 out.println("<li><a href='"+contextPath+"/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 	    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 	    			     }else{
 	    					 out.println("<li><a href='"+contextPath+"/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
-	    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
+	    			    	 out.println("<li><a href='"+contextPath+"/biletSorgula' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
 	    			    	 out.println("<li><a href='"+contextPath+"/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 	    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 	    				}
@@ -99,13 +99,13 @@
 					try{
 		    			     if(action >= 1){
 		    			    	 out.println("<li><a href='"+contextPath+"/Logout'><i class='fas fa-times-circle'></i> Çıkış</a></li>");
-		    			    	 out.println("<li><a href='/'><i class='fas fa-ticket-alt'></i> Biletlerim</a></li>");
-		    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
+		    			    	 out.println("<li><a href='"+contextPath+"/biletlerim'><i class='fas fa-ticket-alt'></i> Biletlerim</a></li>");
+		    			    	 out.println("<li><a href='"+contextPath+"/biletSorgula' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
 		    			    	 out.println("<li><a href='"+contextPath+"/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 		    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 		    			     }else{
 		    					 out.println("<li><a href='"+contextPath+"/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
-		    			    	 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
+		    			    	 out.println("<li><a href='"+contextPath+"/biletSorgula' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
 		    			    	 out.println("<li><a href='"+contextPath+"/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 		    			    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 		    				}
@@ -159,7 +159,7 @@
 			
 			
 			 out.println("<li><a href='"+contextPath+"/Login'><i class='fas fa-user'></i> Üye Girişi</a></li>");
-			 out.println("<li><a href='#' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
+			 out.println("<li><a href='"+contextPath+"/biletSorgula' ><i class='fas fa-hourglass'></i> Bilet Sorgula</a></li>");
 	    	 out.println("<li><a href='"+contextPath+"/plane/check-in/control' ><i class='fas fa-calendar-check'></i> Check-in</a></li>");
 	    			 out.println("<li><a href='#' ><i class='fas fa-info-circle'></i> Yardım</a></li>");
 		}

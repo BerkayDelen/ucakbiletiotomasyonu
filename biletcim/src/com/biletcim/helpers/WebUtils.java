@@ -4,6 +4,8 @@ import java.security.NoSuchAlgorithmException;
 
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Properties;
 import java.util.Random;
 
@@ -83,6 +85,17 @@ public class WebUtils {
 
 	try {
 
+		try {
+			Name= URLEncoder.encode(Name, "UTF-8");
+		
+		Surname= URLEncoder.encode(Surname, "UTF-8");
+		System.err.println("Name="+Name+"Surname="+Surname);
+		//System.err.println(URLDecoder.decode(Name, "UTF-8")+"&Surname="+URLDecoder.decode(Surname, "UTF-8"));
+		
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		MimeMessage  message = new MimeMessage(session);
 		message.setFrom(new InternetAddress("biletcim.berkaydelen@gmail.com"));
 		message.setRecipients(Message.RecipientType.TO,

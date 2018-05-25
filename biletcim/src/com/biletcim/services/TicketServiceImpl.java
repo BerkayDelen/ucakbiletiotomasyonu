@@ -102,4 +102,20 @@ public class TicketServiceImpl implements TicketService {
 		return ticketDAO.getTicketByTicketKey(TicketKey);
 	}
 
+
+
+
+	@Override
+	public Boolean TicketControlisAlreadySelectSeat(String TicketUniqNumber) {
+		return ticketDAO.TicketControlisAlreadySelectSeat(TicketUniqNumber);
+	}
+
+
+
+
+	@Override
+	public List<Data_Seat> getTicketByUser(String UserId) {
+		return ticketDAO.getTicketByUser(UserId);
+	}
+
 }

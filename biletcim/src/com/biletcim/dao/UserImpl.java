@@ -80,6 +80,51 @@ public class UserImpl implements UserDAO {
 					return durum;
 		
 	}
+	
+	@Override
+	public com.biletcim.entities.User User(String uuid) {
+
+		com.biletcim.entities.User user = new com.biletcim.entities.User();
+		String sql = "SELECT * from users where User_UniqID = ?";
+		
+					try {
+						Config.OpenDB(sql);
+					Config.stmt.setString(1,uuid);
+					
+					
+					ResultSet rs =	Config.stmt.executeQuery();
+			   while(rs.next()){
+			      //Retrieve by column name
+				   System.out.println("Id ->"+rs.getInt("Id"));
+				   System.out.println("Name ->"+rs.getString("User_Name"));
+				   System.out.println("Surname ->"+rs.getString("User_Surname"));
+				   System.out.println("Email ->"+rs.getString("User_Email"));
+				   System.out.println("Uniq Id ->"+uuid);
+				   
+				   
+				   
+				   
+					user.setId(rs.getInt("Id"));
+					user.setName(rs.getString("User_Name"));
+					user.setSurname(rs.getString("User_Surname"));
+					user.setEmail(rs.getString("User_Email"));
+					user.setUniqID(uuid);
+					
+			     
+			   }
+			   rs.close();
+				
+			   Config.CloseDB();
+					} catch (SQLException e) {
+						
+						e.printStackTrace();
+						
+					}
+					
+					
+				
+			return user;
+	}
 
 	
 

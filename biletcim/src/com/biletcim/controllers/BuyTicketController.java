@@ -1,5 +1,7 @@
 package com.biletcim.controllers;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,7 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.xml.crypto.Data;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.biletcim.configs.Config;
 import com.biletcim.entities.BuyTicket;
 import com.biletcim.entities.Company;
 import com.biletcim.entities.Login_User;
 import com.biletcim.entities.Ticket;
+import com.biletcim.entities.User;
 import com.biletcim.helpers.WebUtils;
 import com.biletcim.services.TicketService;
+import com.biletcim.services.UserService;
 
 @RequestMapping(value={"/BuyTicket", "/Buy","/Buyticket"})
 
@@ -32,6 +39,9 @@ public class BuyTicketController {
 	
 	@Autowired
 	private TicketService ticketService;
+	
+	@Autowired
+	private UserService userService;
 
 	
 	@RequestMapping(value = ("/{ticketNumber}"),method=RequestMethod.GET)
@@ -72,7 +82,8 @@ public class BuyTicketController {
 			@PathVariable(value="ticketNumber") String ticketNumber,
 			ModelAndView  model,
 			Model modelVM,
-			HttpServletRequest request) {
+			HttpServletRequest request,
+			HttpSession session) {
 		
 		Ticket bilet = ticketService.getLastTicketByTicketNumber(ticketNumber);
 		
@@ -128,13 +139,136 @@ public class BuyTicketController {
 		}  
 		WebUtils utils = new WebUtils();
 		
+		User user = null;
+		String contextPath = request.getContextPath();
+	    String Cookie_ID = "";
+	     
+	     Cookie[] cookies = request.getCookies();
+			
+			for (Cookie c : cookies) {
+				//Cookie_ID = c.getValue();
+				System.out.println(c.getName() + "=" + c.getValue());
+				/*if(c.getName().equals("Login_ID")){
+					Cookie_ID = c.getValue();
+					System.out.println(c.getName() + "=" + c.getValue());
+					break;
+				}*/
+				
+				}
+			
+			if(!Cookie_ID.equals("")){
+				String getCookies = "Select count(*) as count from users  Inner JOIN logincookies  ON users.Id = logincookies.loginCookie_User_ID where loginCookie_Key = ?";
+				
+				try {
+					Config.OpenDB(getCookies);
+				
+					Config.stmt.setString(1,Cookie_ID);
+				ResultSet rs =	Config.stmt.executeQuery();
+					while(rs.next()){
+						int action  = rs.getInt("count");
+						try{
+							if(action >= 1){
+		    			    	//islogin
+								
+								user =  userService.User(session.getAttribute("Login_Session").toString());
+		    			    	System.out.println("User Id ->"+user.getId());
+		    			    	System.out.println("User Id ->"+user.getName());
+		    			    	System.out.println("User Id ->"+user.getSurname());
+		    			    	System.out.println("User Id ->"+user.getEmail());
+		    			    	System.out.println("User Id ->"+user.getUniqID());
+		    			    	
+								System.out.println("Kullanýcý Login Olmuþ ve var ");
+								
+		    			     }else{
+		    					//nlogin
+		    			    	 System.out.println("USer Not FOund ");
+		    				}
+			    			    		
+			    		}
+			    		catch (Exception e){
+			    			System.err.println("HATA:"+e.getMessage());
+			    		}
+		   
+					}
+					rs.close();
+			
+					Config.CloseDB();
+
+
+
+
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+					
+				}
+			}else if(session.getAttribute("Login_Session") !=null){
+				
+				String getSession = "Select count(*) as count from users  where User_UniqID = ?";
+				
+				try {
+					
+	        			//out.println(session.getAttribute("Login_Session"));
+					Config.OpenDB(getSession);
+				
+					Config.stmt.setString(1,session.getAttribute("Login_Session").toString());
+				ResultSet rs =	Config.stmt.executeQuery();
+					while(rs.next()){
+						int action  = rs.getInt("count");
+						try{
+			    			     if(action >= 1){
+			    			    	 
+			    			    	user =  userService.User(session.getAttribute("Login_Session").toString());
+			    			    	System.out.println("User Id ->"+user.getId());
+			    			    	System.out.println("User Id ->"+user.getName());
+			    			    	System.out.println("User Id ->"+user.getSurname());
+			    			    	System.out.println("User Id ->"+user.getEmail());
+			    			    	System.out.println("User Id ->"+user.getUniqID());
+			    			    	
+			    			    	 System.out.println("UserVar");
+			    			     }else{
+			    			    	 System.out.println("UserYok");
+			    				}
+			    			    		
+			    		}
+			    		catch (Exception e){
+			    			System.err.println("HATA Session in:"+e.getMessage());
+			    		}
+		   
+					}
+					rs.close();
+			
+					Config.CloseDB();
+
+
+
+
+				} catch (SQLException e) {
+					
+					System.err.println("HATA Session:"+e.getMessage());
+					
+				}
+				
+				
+			}else{
+				
+			//Hiç Yoksa
+				System.out.println("Hiç Yok");
+			}
+		
 	    
 		BuyTicket buyTicket = new BuyTicket();
 		buyTicket.setAmount(bilet.getFiyat());
 		buyTicket.setTicket_id(bilet.getTicketID());
 		buyTicket.setUser_ticket_Name(name);
 		buyTicket.setUser_ticket_Surname(surname);
-		buyTicket.setUser_isLogin(true);
+		if(user != null) {
+			buyTicket.setSales_user_id(user.getId());
+			buyTicket.setUser_isLogin(true);
+		}else {
+			
+			buyTicket.setUser_isLogin(false);
+		}
 		
 		
 		String UniqId = utils.getSaltString();
@@ -143,7 +277,15 @@ public class BuyTicketController {
 		buyTicket.setUser_ticket_Birthday(date1);
 		buyTicket.setUser_ticket_Email(Email);
 		//TODO - Düzelt
-		buyTicket.setUser_ticket_gender(true);//düzenlt
+		if(Cinsiyet != null) {
+			if(Cinsiyet == "1")
+				buyTicket.setUser_ticket_gender(true);
+			else if(Cinsiyet == "0")
+				buyTicket.setUser_ticket_gender(false);
+		}else {
+			buyTicket.setUser_ticket_gender(false);//düzenlt
+		}
+		
 		buyTicket.setUser_ticket_TC(tcNo);
 		
 		ticketService.AddBuyTicket(buyTicket);

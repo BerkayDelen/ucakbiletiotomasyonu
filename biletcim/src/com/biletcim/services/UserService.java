@@ -17,5 +17,6 @@ public interface UserService {
 		
 		public Boolean login(Login_User user);
 
+		public User User(String uuid);
 	
 }

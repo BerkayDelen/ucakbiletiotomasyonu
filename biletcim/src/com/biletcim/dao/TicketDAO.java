@@ -35,6 +35,10 @@ public interface TicketDAO {
 	
 	public Data_Seat getTicketByTicketKey(String TicketKey);
 
+	public Boolean TicketControlisAlreadySelectSeat(String TicketUniqNumber);
+
+	public List<Data_Seat> getTicketByUser(String UserId);
+
 	
 
 }

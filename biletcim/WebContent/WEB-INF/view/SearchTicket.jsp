@@ -1,16 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <title>Üye Giriri | Biletcim </title>
+  <title>Bilet Ara | Biletcim </title>
   
   <jsp:include page="/WEB-INF/view/include/header.jsp" />
   
-   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/style.css">
-   <link href="${pageContext.request.contextPath }css/colors/default.css" id="theme"  rel="stylesheet">
   
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
 <!--===============================================================================================-->
@@ -26,14 +24,10 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/util.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/main.css">
-	
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/jquery.qtip.min.css">
-	
   
   
   
   <!--Date Time Picker Css-->
-  
   <style type="text/css">
 
 .item-list {
@@ -195,6 +189,7 @@ border: 1px solid rgba(119,188,31,1) !important;
 }
 </style>
   
+  
 </head>
 <body class="container-fluid">
 
@@ -203,28 +198,12 @@ border: 1px solid rgba(119,188,31,1) !important;
 
 		
 <div class="container p-0 ">
-<form action="./" method="post">
+	
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+		<form action="" method="post"> 
+			<div>
 			<div class="row ">
-					<div class="col-md-12  m-t-15">
-						<div class="white-box">
-                           
-                            <div class="row thin-steps">
-                                <div class="col-md-6 column-step active">
-                                    <div class="step-number">1</div>
-                                    <div class="step-title">Kontrol</div>
-                                    <div class="step-info">Yolcu Bilgilerini Doğrulama</div>
-                                </div>
-                                <div class="col-md-6 column-step">
-                                    <div class="step-number">2</div>
-                                    <div class="step-title">Check-in</div>
-                                    <div class="step-info">Koltuk Seçimi</div>
-                                </div>
-                                
-                            </div>
-                        </div>
-					</div>
-			</div>		
-				<div class="row ">
 					<div class="col-md-12  m-t-15">
 					<div class="panel panel-default block1">
                             <div class="panel-heading panel1"><b><p class="f-s-20 m-t-10">Yolcunun Bilgileri</p></b></div>
@@ -266,7 +245,7 @@ border: 1px solid rgba(119,188,31,1) !important;
 	                 			<div class="col-md-6  p-l-10 p-r-10">
 	                 				<div class="form-group">
 					  					<label for="bdate">&nbsp</label>
-					  					<input  type="submit" name="btn_checkinControl" class="form-control btn_checkin" id="btn_checkinControl"  value="Check-in Yap" >
+					  					<input  type="submit" name="btn_checkinControl" class="form-control btn_checkin" id="btn_checkinControl"  value="Bilet Sorgula" >
 					 					
 									</div>
 	                 			</div>
@@ -276,7 +255,7 @@ border: 1px solid rgba(119,188,31,1) !important;
                  </div>
                  <div class="row">
                  	<div class="col-md-12">
-                 		<img  src="${pageContext.request.contextPath }/resources/img/persons/persons.png" class="img-responsive" >
+                 		<img  src="${pageContext.request.contextPath }/resources/img/biletsorgula.png" class="img-responsive"  height="550px"">
                  		
                  	</div>
                  </div>
@@ -296,9 +275,10 @@ border: 1px solid rgba(119,188,31,1) !important;
                         </div>
 					</div>
 			</div>
-
-	
-	</form>
+			</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 
@@ -320,14 +300,10 @@ border: 1px solid rgba(119,188,31,1) !important;
 	<script src="${pageContext.request.contextPath }/resources/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="${pageContext.request.contextPath }/resources/js/main.js"></script>
-	<script src="${pageContext.request.contextPath }/resources/js/jquery.qtip.min.js"></script>
   
   
-  <script src="${pageContext.request.contextPath }/resources/js/jquery.maphilight.min.js"></script>
-               
-              
-             <!--  <jsp:include page="/WEB-INF/view/include/Loader.jsp" /> -->
-  <script type="text/javascript">
+   <script type="text/javascript">
+   
 	<%
 	
 	String Error =(String) request.getAttribute("Error");
@@ -345,36 +321,8 @@ border: 1px solid rgba(119,188,31,1) !important;
   		
   
 	<%} %>
-  function $_GET(param) {
-		var vars = {};
-		window.location.href.replace( location.hash, '' ).replace( 
-			/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-			function( m, key, value ) { // callback
-				vars[key] = value !== undefined ? value : '';
-			}
-		);
-
-		if ( param ) {
-			return vars[param] ? vars[param] : null;	
-		}
-		return vars;
-	}
-  var PNR = decodeURI($_GET('PNR'));
-  var Name = decodeURI($_GET('Name'));
-  var Surname = decodeURI($_GET('Surname'));
-  
-  var encodedUrl = encodeURIComponent(Name);
-  console.log(decodeURIComponent(encodedUrl));
-  
-  var encodedUrl2 = encodeURIComponent(Surname);
-  console.log(decodeURIComponent(encodedUrl2));
-  if(PNR != null && Name != null && Surname != null ){
-	  $('#JName').val(Name);
-	  $('#Surname').val(Surname);
-	  $('#tcNo').val(PNR);
-  }
-  
+	
   </script>
+  
 </body>
 </html>
-

@@ -31,7 +31,7 @@
                        			<div>
                        				<input type="button" class="search-select-btn focus-none serch-over-button" id="ticket-1" value="Tek Yön">
                        				<!--<input type="button" class="search-select-btn focus-none serch-over-button-deactive-center" id="ticket-2" value="Gidiş - Dönüş">-->
-                       				<input type="button" class="search-select-btn focus-none serch-over-button-deactive-end" id="ticket-3" value="Gidiş - Dönüş">
+                       				<!--<input type="button" class="search-select-btn focus-none serch-over-button-deactive-end" id="ticket-3" value="Gidiş - Dönüş">!-->
                        			</div>
                        		</div>
                         	<div class="search-left">
