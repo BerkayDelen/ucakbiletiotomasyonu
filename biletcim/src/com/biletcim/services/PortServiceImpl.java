@@ -32,4 +32,10 @@ public class PortServiceImpl implements PortService {
 		return portsDAO.getPortByShortName(ShortName);
 	}
 
+
+	@Override
+	public List<Port> getPorts() {
+		return portsDAO.getPorts();
+	}
+
 }

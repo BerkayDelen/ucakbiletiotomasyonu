@@ -404,8 +404,7 @@ public class TicketListController {
 							ERTickets.add(bilet);
 						}else if(fareBasisCodes.getFareBasisCode().equals("EU")) {
 							EUTickets.add(bilet);
-						}
-						else if(fareBasisCodes.getFareBasisCode().equals("BU")) {
+						}else if(fareBasisCodes.getFareBasisCode().equals("BU")) {
 							BUTickets.add(bilet);
 						}
 					}

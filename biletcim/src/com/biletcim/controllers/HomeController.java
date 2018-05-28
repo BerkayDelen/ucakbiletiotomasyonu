@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,12 +25,17 @@ import com.biletcim.configs.Config;
 import com.biletcim.entities.Login_User;
 import com.biletcim.entities.Port;
 import com.biletcim.helpers.WebUtils;
+import com.biletcim.services.PortService;
+import com.biletcim.services.TicketService;
 
 
 
 @RequestMapping(value={"/", "/AnaSayfa"})
 @Controller
 public class HomeController {
+	
+	@Autowired
+	private PortService portService;
 	
 	@RequestMapping()
 	public ModelAndView Index(ModelAndView  model) {
@@ -38,7 +44,7 @@ public class HomeController {
 		List<Port> Ports = new ArrayList<Port>();
 		
 		
-
+/*
 		
 		String sql = "SELECT * from ports where portName <>''  order by PortName ASC";
 		
@@ -117,7 +123,7 @@ public class HomeController {
 					    System.out.println("Failed to make connection!");
 					  }
 					
-					
+					*/
 					
 		
 					//Mail test
@@ -126,7 +132,7 @@ public class HomeController {
 					 
 					//Mail test
 					  
-					  
+		Ports=portService.getPorts();
 		model.addObject("Ports", Ports);
 		model.addObject("trys", "deneme");
         model.setViewName("mainPage");

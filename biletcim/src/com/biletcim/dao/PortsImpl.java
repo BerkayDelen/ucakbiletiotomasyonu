@@ -10,7 +10,9 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.biletcim.configs.Config;
+import com.biletcim.entities.Company;
 import com.biletcim.entities.Port;
+import com.biletcim.entities.Ticket;
 import com.biletcim.entities.User;
 
 @Repository
@@ -91,5 +93,50 @@ public class PortsImpl implements PortsDAO {
 		
 
 		return port;
+	}
+
+	@Override
+	public List<Port> getPorts() {
+		List<Port> Ports = new ArrayList<Port>();
+		
+		String getSession = "SELECT * from ports where portName <>''  order by PortName ASC";
+
+		try {
+
+			Config.OpenDB(getSession);
+
+			
+			ResultSet rs = Config.stmt.executeQuery();
+			while (rs.next()) { 
+			      String portName = "";
+			      String code = "";
+			      String city = "";
+			      String country = "";
+			      double coordinateLatitude = 0;
+			      double coordinateLongitude= 0;
+			      
+			      portName = rs.getString("PortName");
+			      code = rs.getString("Code");
+			      city = rs.getString("City");
+			      country = rs.getString("Country");
+			      
+			      
+			      coordinateLatitude = Double.parseDouble(rs.getString("coordinateLatitude"));
+			      coordinateLongitude = Double.parseDouble(rs.getString("coordinateLongitude"));
+			      Port port = new Port(portName, code, city, country, coordinateLatitude, coordinateLongitude);
+			      Ports.add(port);
+
+			}
+			rs.close();
+
+			Config.CloseDB();
+
+		} catch (SQLException e) {
+
+			System.out.println("HATA  Session Create Read Data in:" + e.getMessage());
+
+		}
+		
+		return Ports;
 	}
 }
