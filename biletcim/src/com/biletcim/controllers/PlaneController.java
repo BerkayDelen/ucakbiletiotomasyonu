@@ -130,7 +130,8 @@ public class PlaneController {
 				Elements el_seatMap = doc.select("#seatmap");
 				
 				System.out.println("Size:"+ el_seatMap.size());
-				List<Data_Seat> data_Seats = ticketService.getTicketSeats(ticketNumber);
+				System.out.println("TicketNumber->"+sale.getTicket().getTicketNumber());
+				List<Data_Seat> data_Seats = ticketService.getTicketSeats(sale.getTicket().getTicketNumber());
 						
 				int  ks = 0;
 				for (Element element : el_seatMap) {
@@ -138,11 +139,11 @@ public class PlaneController {
 					System.out.println("size :"+element.select("area").size());
 					
 					for (Element item : element.select("area")) {
-						System.out.println("--------------------------------");
+						//System.out.println("--------------------------------");
 						ks++;
-						System.out.println("id :"+ks);
+						//System.out.println("id :"+ks);
 						
-						System.out.println("item title :"+item.attr("title"));
+						//System.out.println("item title :"+item.attr("title"));
 						
 						JSONObject obj = new JSONObject(item.attr("title"));
 						
@@ -152,7 +153,7 @@ public class PlaneController {
 						System.out.println("item seats :"+obj.getString("seats"));
 						System.out.println("item coords :"+obj.getString("coords"));
 						System.out.println("item description :"+obj.getString("description"));*/
-						System.out.println();
+						//System.out.println();
 						//JSONObject obj_class = new JSONObject();
 						//System.out.println("item class :"+obj_class.getString("class"));
 						
@@ -166,7 +167,7 @@ public class PlaneController {
 						String item_class = obj.getJSONObject("class").getString("class");
 						Boolean isAvailable = data_Seats.stream().filter(o -> o.getSeat_Number().equals(item_seats_number+item_seats_character)).findFirst().isPresent();
 						
-						System.out.println("--------------------------------");
+						//System.out.println("--------------------------------");
 						
 						Seat seat = new Seat(ks,item_id,item_seats_character,item_seats_number,item_coords,item_class+" "+item_description,item_class,isAvailable);
 						seats.add(seat);

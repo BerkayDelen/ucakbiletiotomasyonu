@@ -163,11 +163,25 @@
                                    	
                                    	<div class="col-md-4">
                                    			<p><b>Ücret Kuralları</b></p>
+                                   			<c:if test="${biletim.sinif == 'EU' }">
                                    			<p><i class="fas fa-times" style="color:Tomato"></i> Değişiklik yapılamaz</p>
 											<p><i class="fas fa-times" style="color:Tomato"></i> İade edilemez</p>
 											
-											<p><i class="fas fa-check" style=" color: #53c172;"></i> Uçulabilir</p>
+											</c:if>
 											
+											<c:if test="${biletim.sinif == 'ER' }">
+											
+											<p><i class="fas fa-check" style=" color: #53c172;"></i> Değişiklik yapılabilir</p>
+											<p><i class="fas fa-check" style=" color: #53c172;"></i> İade edilebilir</p>
+											
+											</c:if>
+											
+											<c:if test="${biletim.sinif == 'BU' }">
+                                   			
+                                   			<p><i class="fas fa-check" style=" color: #53c172;"></i> VIP Sınıfda Uçuş imkanı</p>
+                                   			<p><i class="fas fa-check" style=" color: #53c172;"></i> Değişiklik yapılabilir</p>
+											<p><i class="fas fa-check" style=" color: #53c172;"></i> İade edilebilir</p>
+											</c:if>
 											
 				
                                    	</div>
@@ -759,7 +773,9 @@
             							})
             					
             		      }
-            		 });
+            		 }).fail( function(xhr, textStatus, errorThrown) {
+            		        console.log(xhr.responseText);
+            		    });
         		}
             	
             	

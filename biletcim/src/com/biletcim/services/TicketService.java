@@ -23,7 +23,7 @@ public interface TicketService {
 	
 	public Data_Plane getPlaneControl(Data_Plane data_Plane);
 
-	public Ticket getLastTicketByTicketNumber(String TicketNumber);
+	public Ticket getLastTicketByTicketNumber(String TicketNumber,String _Class);
 	
 	public void AddBuyTicket(BuyTicket buyTicket);
 
@@ -38,4 +38,6 @@ public interface TicketService {
 	public Boolean TicketControlisAlreadySelectSeat(String TicketUniqNumber);
 	
 	public List<Data_Seat> getTicketByUser(String UserId);
+	
+	public List<Ticket> getMostPopularTicket();
 }

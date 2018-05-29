@@ -49,11 +49,13 @@ public class BuyTicketController {
 			@PathVariable(value="ticketNumber") String ticketNumber,
 			ModelAndView  model,
 			Model modelVM) {
-		System.out.println("Bilet Numarasý : "+ticketNumber);
+		String[] data = null;
+		data = ticketNumber.split("_"); 
+		System.out.println("Bilet Numarasý : "+data[0]);
 		
 		
 		
-		Ticket bilet = ticketService.getLastTicketByTicketNumber(ticketNumber);
+		Ticket bilet = ticketService.getLastTicketByTicketNumber(data[0],data[1]);
 		
 		/*Ticket bilet = new Ticket(
 				10,
@@ -84,8 +86,13 @@ public class BuyTicketController {
 			Model modelVM,
 			HttpServletRequest request,
 			HttpSession session) {
+		String[] data = null;
+		data = ticketNumber.split("_"); 
+		System.out.println("Bilet Numarasý : "+data[0]);
 		
-		Ticket bilet = ticketService.getLastTicketByTicketNumber(ticketNumber);
+		
+		
+		Ticket bilet = ticketService.getLastTicketByTicketNumber(data[0],data[1]);
 		
 		/*Ticket bilet = new Ticket(
 				10,
@@ -277,19 +284,24 @@ public class BuyTicketController {
 		buyTicket.setUser_ticket_Birthday(date1);
 		buyTicket.setUser_ticket_Email(Email);
 		//TODO - Düzelt
-		if(Cinsiyet != null) {
-			if(Cinsiyet == "1")
-				buyTicket.setUser_ticket_gender(true);
-			else if(Cinsiyet == "0")
-				buyTicket.setUser_ticket_gender(false);
-		}else {
-			buyTicket.setUser_ticket_gender(false);//düzenlt
-		}
+		if(Cinsiyet.equals("1"))
+			buyTicket.setUser_ticket_gender(true);
+		else if(Cinsiyet.equals("0"))
+			buyTicket.setUser_ticket_gender(false);
+		else
+			buyTicket.setUser_ticket_gender(true);
+		
 		
 		buyTicket.setUser_ticket_TC(tcNo);
+		System.out.println("cinsiyet->"+buyTicket.getUser_ticket_gender());
+		try {
+			ticketService.AddBuyTicket(buyTicket);
+		} catch (Exception e) {
+			
+			System.err.println("HATAAAAAA");
+		}
 		
-		ticketService.AddBuyTicket(buyTicket);
-		bilet.setSales_salt(UniqId);
+		bilet.setSales_salt(buyTicket.getSales_salt());
 		
 		  utils.MailSender(bilet,name,surname,Email);
 		

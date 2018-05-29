@@ -115,17 +115,18 @@ public class TicketImpl implements TicketDAO {
 	}
 
 	@Override
-	public Ticket getLastTicketByTicketNumber(String ticketNumber) {
+	public Ticket getLastTicketByTicketNumber(String ticketNumber,String _Class) {
 		// TODO Auto-generated method stub
 		Ticket ticket = null;
 
-		String getSession = "SELECT company.*,tickets.* FROM `tickets` INNER JOIN company ON company.companyId = tickets.companyID where ticketNumber = ? order by save_date DESC limit 1";
+		String getSession = "SELECT company.*,tickets.* FROM `tickets` INNER JOIN company ON company.companyId = tickets.companyID where ticketNumber = ? and sinif= ? order by save_date DESC limit 1";
 
 		try {
 
 			Config.OpenDB(getSession);
 
 			Config.stmt.setString(1, ticketNumber);
+			Config.stmt.setString(2, _Class);
 			ResultSet rs = Config.stmt.executeQuery();
 			while (rs.next()) {
 				int ticketID = rs.getInt("ticketID");
@@ -263,7 +264,8 @@ public class TicketImpl implements TicketDAO {
 
 		String getSession = "SELECT `seats`.* ,`sales`.* , `tickets`.*  FROM  `seats` "
 				+ "INNER JOIN `sales` ON seats.sales_id  = sales.sales_id "
-				+ "INNER JOIN `tickets` ON sales.sales_ticket_id = tickets.ticketID  " + "where sales.sales_salt =  ? ";
+				+ "INNER JOIN `tickets` ON sales.sales_ticket_id = tickets.ticketID  " 
+				+ "where tickets.ticketNumber =  (SELECT tickets.ticketNumber FROM sales INNER JOIN tickets ON tickets.ticketID = sales.sales_ticket_id where sales.sales_salt = ? ) ";
 
 		try {
 
@@ -520,8 +522,8 @@ public class TicketImpl implements TicketDAO {
 				String sure = rs.getString("sure");
 				String Plane_Name = rs.getString("Plane_Name");
 				String Plane_Model = rs.getString("Plane_Model");
-				String kalkisYeri = rs.getString("kalkisYeri");
-				String varisYeri = rs.getString("varisYeri");
+				String kalkisYeri = rs.getString("kalkisYeri").substring(rs.getString("kalkisYeri").length() - 3);
+				String varisYeri = rs.getString("varisYeri").substring(rs.getString("varisYeri").length() - 3);;
 				double fiyat = rs.getDouble("fiyat");
 				String sinif = rs.getString("sinif");
 				int companyID = rs.getInt("companyID");
@@ -571,6 +573,58 @@ public class TicketImpl implements TicketDAO {
 		}
 
 		
+
+		return tickets;
+	}
+
+	@Override
+	public List<Ticket> getMostPopularTicket() {
+		List<Ticket> tickets = new ArrayList<Ticket>();
+		
+		
+
+		String getSession = "SELECT MIN(tickets.fiyat) AS 'minFiyat',tickets.kalkisYeri,tickets.varisYeri FROM tickets " + 
+				"INNER JOIN ticketssavedate ON ticketssavedate.TicketGroup_id = tickets.save_date " + 
+				" GROUP BY ticketssavedate.kalkisYeri,ticketssavedate.varisYeri ORDER BY COUNT(*) DESC LIMIT 12";
+
+		try {
+
+			Config.OpenDB(getSession);
+
+			ResultSet rs = Config.stmt.executeQuery();
+			while (rs.next()) {
+				Ticket ticket = null;
+				int ticketID = -1;
+				// String ticketNumber = rs.getString("ticketNumber");
+				String ticketDate = "";
+				String kalkisZamani = "";
+				String varisZamani = "";
+
+				String sure = "";
+				String Plane_Name = "";
+				String Plane_Model = "";
+				String kalkisYeri = rs.getString("kalkisYeri").substring(rs.getString("kalkisYeri").length() - 3);;
+				String varisYeri = rs.getString("varisYeri").substring(rs.getString("varisYeri").length() - 3);;
+				double fiyat = rs.getDouble("minFiyat");
+				String sinif = "";
+				int companyID = -1;
+				int save_date = -1;
+				Company company = new Company(-1, "",
+						"");
+
+				ticket = new Ticket(ticketID, "", ticketDate, kalkisZamani, varisZamani, sure, Plane_Name,
+						Plane_Model, kalkisYeri, varisYeri, fiyat, sinif, company, "", "");
+				tickets.add(ticket);
+			}
+			rs.close();
+
+			Config.CloseDB();
+
+		} catch (SQLException e) {
+
+			System.out.println("HATA  getMostPopularTicket in:" + e.getMessage());
+
+		}
 
 		return tickets;
 	}

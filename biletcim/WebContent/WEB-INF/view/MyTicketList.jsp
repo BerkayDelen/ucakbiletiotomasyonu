@@ -53,13 +53,16 @@
 				<table class="table table-bordered m-t-5">
     <thead>
       <tr>
-      	
+      
+      	<th>Uçuş Yeri </th>
+      	<th>Uçuş  Günü - Saati</th>
         <th>Ad</th>
         <th>Soyad</th>
         <th>Email</th>
-        <th>TC</th>
         
+        <th>TC</th>
         <th>Cinsiyet</th>
+        
         <th></th>
       </tr>
     </thead>
@@ -67,9 +70,12 @@
       
       <c:forEach var="ticketItem" items="${TicketsList}">
       <tr>
+      <td>${ticketItem.ticket.kalkisYeri } > ${ticketItem.ticket.varisYeri }</td>
+      <td>${ticketItem.ticket.ticketDate } - ${ticketItem.ticket.kalkisZamani }</td>
         <td>${ticketItem.user.sales_user_Name }</td>
        	<td>${ticketItem.user.sales_user_Surname }</td>
        	<td>${ticketItem.user.sales_user_Email }</td>
+       	
        	<td>${ticketItem.user.sales_user_TC }</td>
        	<c:if test="${ticketItem.user.sales_user_gender == true }">
 					

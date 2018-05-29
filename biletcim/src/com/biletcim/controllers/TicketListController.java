@@ -11,6 +11,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.biletcim.configs.Config;
@@ -99,6 +101,7 @@ public class TicketListController {
 	
 	@RequestMapping(value = ("/{ports}/{date}"),method=RequestMethod.GET)
 	public ModelAndView getTickets(
+			@RequestParam(required=false,value = "order") String order,
 			@PathVariable(value="ports") String Ports,
 			@PathVariable(value="date") String FlyDate,
 			ModelAndView  model,
@@ -352,7 +355,7 @@ public class TicketListController {
 						String _Class = fareBasisCodes.getFareBasisCode();
 						double Fiyat = passengerFare.getTotalFare().getAmount();
 						System.out.println("Class:-> "+fareBasisCodes.getFareBasisCode());
-						System.out.println("Money:-> "+Fiyat);
+						
 						
 						Ticket bilet = new Ticket(
 								ticketID,
@@ -402,10 +405,16 @@ public class TicketListController {
 						
 						if(fareBasisCodes.getFareBasisCode().equals("ER")) {
 							ERTickets.add(bilet);
+							System.out.println("Money:ER-> "+Fiyat);
+							System.out.println("Money:ERbilet-> "+bilet.getFiyat());
 						}else if(fareBasisCodes.getFareBasisCode().equals("EU")) {
 							EUTickets.add(bilet);
+							System.out.println("Money:EU-> "+Fiyat);
+							System.out.println("Money:EUbilet-> "+bilet.getFiyat());
 						}else if(fareBasisCodes.getFareBasisCode().equals("BU")) {
 							BUTickets.add(bilet);
+							System.out.println("Money:BU-> "+Fiyat);
+							System.out.println("Money:BUbilet-> "+bilet.getFiyat());
 						}
 					}
 					
@@ -461,8 +470,28 @@ public class TicketListController {
 		System.out.println("Tickets EU Size:"+EUTickets.size());
 		System.out.println("Tickets BU Size:"+BUTickets.size());
 		
+		Tickets.addAll(EUTickets);
+		
+		Tickets.addAll(ERTickets);
+		
+		Tickets.addAll(BUTickets);
+		
+		if(order!=null) {
+			
+		
+		if(order.equals("time")){
+			Collections.sort(Tickets, Ticket.StuRollTime);
+		}else if(order.equals("price")){
+			Collections.sort(Tickets, Ticket.StuRollPrice);
+		}else {
+			Collections.sort(Tickets, Ticket.StuRollPrice);
+		}
+		}else {
+			Collections.sort(Tickets, Ticket.StuRollPrice);
+		}
+		
 		Map<String,Object> allObjectsMap = new HashMap<String,Object>();
-	    allObjectsMap.put("TicketsList", EUTickets);
+	    allObjectsMap.put("TicketsList", Tickets);
 	    
 	    model.addAllObjects(allObjectsMap);
 

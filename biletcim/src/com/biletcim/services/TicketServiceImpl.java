@@ -66,9 +66,9 @@ public class TicketServiceImpl implements TicketService {
 	
 	@Override
 	@Transactional
-	public Ticket getLastTicketByTicketNumber(String TicketNumber) {
+	public Ticket getLastTicketByTicketNumber(String TicketNumber,String _Class) {
 		
-		return ticketDAO.getLastTicketByTicketNumber(TicketNumber);
+		return ticketDAO.getLastTicketByTicketNumber(TicketNumber,_Class);
 	}
 
 
@@ -116,6 +116,14 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public List<Data_Seat> getTicketByUser(String UserId) {
 		return ticketDAO.getTicketByUser(UserId);
+	}
+
+
+
+
+	@Override
+	public List<Ticket> getMostPopularTicket() {
+		return ticketDAO.getMostPopularTicket();
 	}
 
 }

@@ -235,7 +235,7 @@ border: 1px solid rgba(119,188,31,1) !important;
 	                 		<div class="row">
 	                 			<div class="col-md-6 p-l-10 p-r-10" >
 	                 				<div class="form-group">
-					  					<label for="tcNo">Bilet Numarası</label>
+					  					<label for="tcNo">PNR  Numarası</label>
 					  					<input placeholder="" type="text" name="ticketNumber" class="form-control ckeck-in-text" id="tcNo" required>
 					 					
 									</div>

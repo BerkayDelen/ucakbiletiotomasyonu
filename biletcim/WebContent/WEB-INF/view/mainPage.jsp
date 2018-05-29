@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.biletcim.entities.Port"%>
-<%@page import="java.util.List"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.biletcim.entities.Port" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -181,13 +181,15 @@
 	 </div>
 	</div>
   <div class="row">
+    
+    <c:forEach var="Ticket" items="${Tickets}">
     <div class="col-md-4 p-0">
       <div class="mini-listview">
       <a href="#">
       	<div class="mini-listview-item row">
       	 <div class="col-md-6 col-sm-6 col-xs-6">
       	 	<div class="mini-list-item-title">
-      	 		İstanbul - İzmir
+      	 		${Ticket.kalkisYeri } - ${Ticket.varisYeri }
       	 	</div>
       	 	<div class="mini-list-item-info">
       	 		Uçak Bileti
@@ -201,60 +203,18 @@
       	 		
       	 	</div>
       	 	<div class="mini-list-item-money">
-				<b>196 TL</b> 'den
+				<b>${Ticket.fiyat } TL</b> 'den
       	 	</div>
       	 	
       	 	</div>
       	 </div>
       	 </a>
-      	 <a href="#">
-      	<div class="mini-listview-item row">
-      	 <div class="col-md-6 col-sm-6 col-xs-6">
-      	 	<div class="mini-list-item-title">
-      	 		Ankara - İzmir
-      	 	</div>
-      	 	<div class="mini-list-item-info">
-      	 		Uçak Bileti
-      	 	</div>
-      	 </div>
-      	 <div class="col-md-6 col-sm-6 col-xs-6">
-      	 <div class="mini-list-item-icon">
-      	 		<div style="font-size:2em; color:#77bc1f">
- 					 <i class="fas fa-angle-right"></i>
-				</div>
-      	 	</div>
-      	 	<div class="mini-list-item-money">
-      	 		<b>210 TL</b> 'den
-      	 	</div>
-      	 	
-      	 	</div>
-      	 </div>
-      	 </a>
-      	 <a href="#">
-      	<div class="mini-listview-item row">
-      	 <div class="col-md-6 col-sm-6 col-xs-6">
-      	 	<div class="mini-list-item-title">
-      	 		İstanbul - Ankara
-      	 	</div>
-      	 	<div class="mini-list-item-info">
-      	 		Uçak Bileti
-      	 	</div>
-      	 </div>
-      	 <div class="col-md-6 col-sm-6 col-xs-6">
-      	 <div class="mini-list-item-icon">
-      	 		<div style="font-size:2em; color:#77bc1f">
- 					 <i class="fas fa-angle-right"></i>
-				</div>
-      	 	</div>
-      	 	<div class="mini-list-item-money">
-      	 		<b>196 TL</b> 'den
-      	 	</div>
-      	 	
-      	 	</div>
-      	 </div>
-      	 </a>
+      	
       </div>
     </div>
+    </c:forEach>
+    
+    <!-- 
     
     <div class="col-md-4 p-0">
       <div class="mini-listview">
@@ -403,6 +363,8 @@
       	 </a>
       </div>
     </div>
+    
+     -->
     
   </div>
 </div>
@@ -689,8 +651,5 @@ svg {
 </body>
 </html>
 
-<c:forEach items="${Ports}" var="Port">
-${Port.PortName}<br>
-${Port.Code}<br>
-</c:forEach>
+
 

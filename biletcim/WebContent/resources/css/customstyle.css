@@ -1126,7 +1126,8 @@ a:hover, a:visited, a:link, a:active
 		}
 	  .TicketListHead{
 		  border-bottom: 1px solid #77bc1f;
-		  padding: 10px !important;
+		  padding-top:10px !important;
+		  padding-bottom: 10px !important;
 	  }
 	 
 	 .error{

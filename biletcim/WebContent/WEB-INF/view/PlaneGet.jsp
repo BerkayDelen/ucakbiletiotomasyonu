@@ -299,8 +299,11 @@
 			</div>
                 
             <div class="seat-wrapper">
-            
-                                <img  class="plane" src="${data}" usemap="#seatmap">
+            <div class="row">
+            	<div class="col-md-6"> <img  class="plane" src="${data}" usemap="#seatmap"></div>
+            	<div class="col-md-6"><img class="img-responsive" src="${pageContext.request.contextPath }/resources/img/Planeinfo.png"  ></div>
+            </div>
+                               
 
 
 

@@ -25,7 +25,7 @@ public interface TicketDAO {
 
 	public Data_Plane getPlaneControl(Data_Plane data_Plane);
 
-	public Ticket getLastTicketByTicketNumber(String ticketNumber);
+	public Ticket getLastTicketByTicketNumber(String ticketNumber,String _Class);
 
 	public Data_Sale getTicketByNumberANDFullName(String ticketNumber, String name, String surname);
 	
@@ -38,7 +38,8 @@ public interface TicketDAO {
 	public Boolean TicketControlisAlreadySelectSeat(String TicketUniqNumber);
 
 	public List<Data_Seat> getTicketByUser(String UserId);
-
+	
+	public List<Ticket> getMostPopularTicket();
 	
 
 }

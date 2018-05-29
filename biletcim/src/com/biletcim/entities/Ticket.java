@@ -1,5 +1,7 @@
 package com.biletcim.entities;
 
+import java.util.Comparator;
+
 import javax.persistence.Column;
 
 import org.springframework.lang.Nullable;
@@ -200,7 +202,34 @@ public class Ticket {
 	
 
 	
-	
+	 public static Comparator<Ticket> StuRollPrice = new Comparator<Ticket>() {
+
+			public int compare(Ticket s1, Ticket s2) {
+
+			   double rollno1 = s1.getFiyat();
+			   double rollno2 = s2.getFiyat();
+
+			   /*For ascending order*/
+			   return (int) (rollno1-rollno2);
+
+			   /*For descending order*/
+			   //rollno2-rollno1;
+		   }};
+		   
+		   public static Comparator<Ticket> StuRollTime = new Comparator<Ticket>() {
+
+				public int compare(Ticket s1, Ticket s2) {
+
+				   String rollno1 = s1.getKalkisZamani().toLowerCase();
+				   String rollno2 = s2.getKalkisZamani().toLowerCase();
+
+				   /*For ascending order*/
+				   return rollno1.compareTo(rollno2);
+				   
+
+				   /*For descending order*/
+				   //rollno2-rollno1;
+			   }};
 	
 	
 	

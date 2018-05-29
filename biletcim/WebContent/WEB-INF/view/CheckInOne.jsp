@@ -256,7 +256,7 @@ border: 1px solid rgba(119,188,31,1) !important;
 	                 		<div class="row">
 	                 			<div class="col-md-6 p-l-10 p-r-10" >
 	                 				<div class="form-group">
-					  					<label for="tcNo">Bilet Numarası</label>
+					  					<label for="tcNo">PNR Numarası</label>
 					  					<input placeholder="" type="text" name="ticketNumber" class="form-control ckeck-in-text" id="tcNo" required>
 					 					
 									</div>
@@ -368,7 +368,7 @@ border: 1px solid rgba(119,188,31,1) !important;
   
   var encodedUrl2 = encodeURIComponent(Surname);
   console.log(decodeURIComponent(encodedUrl2));
-  if(PNR != null && Name != null && Surname != null ){
+  if(PNR != "null" && Name != "null" && Surname != "null" ){
 	  $('#JName').val(Name);
 	  $('#Surname').val(Surname);
 	  $('#tcNo').val(PNR);

@@ -30,7 +30,54 @@
   <!--Date Time Picker Css-->
   
   
+  <style type="text/css">
+  	
+  	.btn_checkin {
+ 
+  cursor: pointer;
+ border: 1px solid rgba(119,188,31,1);
+  color: rgba(119,188,31,1);
+  background: #ffffff;
   
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  
+  
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  
+  
+  -webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  -moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  -o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  
+  padding:10px;
+  float:right;
+  margin-left:10px;
+  margin-top:25px;
+  
+  
+}
+
+.btn_checkin:hover {
+  border: 1px solid #ffffff;
+  color: rgba(255,255,255,0.9);
+  background: #77bc1f;
+  
+}
+.check-in-text{
+-webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+  -moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+  -o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+  transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+  }
+.ckeck-in-text:active{
+	border: 1px solid rgba(119,188,31,1) !important;
+  	color: rgba(119,188,31,1) !important;
+ 	 background: #ffffff !important;
+}
+  </style>
 </head>
 <body class="container-fluid">
 
@@ -44,21 +91,33 @@
 		<div class="col-md-12 col-sm-12">
 		<div class="TicketListHead row ">
 			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="text-center">
-					<c:choose>
-    <c:when test="${empty Error}">
-       <h3>${KalkisYeri} - ${VarisYeri} </h3>
-    </c:when>
-    <c:otherwise>
-        <h3>${Error}</h3>
-    </c:otherwise>
-</c:choose>
+				<div class="row">
+				<div class="col-md-4 col-sm-12 col-xs-12">
+				</div>
+					<div class="col-md-4 col-sm-12 col-xs-12">
 					
+							<div class="text-center">
+											<c:choose>
+						    <c:when test="${empty Error}">
+						       <h3>${KalkisYeri} - ${VarisYeri} </h3>
+						    </c:when>
+						    <c:otherwise>
+						        <h3>${Error}</h3>
+						    </c:otherwise>
+						</c:choose>
+											
+										
+										</div>
+										<div class="text-center">
+											<h4>${Date}</h4>
+										</div>
+					</div>
+					<div class="col-md-4 col-sm-12 col-xs-12 p-r-0">
+						<a href="?order=time"><input  type="submit" name="btn_checkinControl" class=" btn_checkin" id="btn_checkinControl"  value="Uçuş Saatine Göre Sırala" /></a>
+						<a href="?order=price"><input  type="submit" name="btn_checkinControl" class=" btn_checkin" id="btn_checkinControl"  value="Fiyata Göre Sırala" /></a>
+					</div>
+				</div>
 				
-				</div>
-				<div class="text-center">
-					<h4>${Date}</h4>
-				</div>
 			</div>
 		</div>
 			<div class="TicketList">
@@ -115,12 +174,13 @@
 								
 							</div>
 							<div class="col-md-7 p-0">
-								
+								<a href="${pageContext.request.contextPath }/Buy/${ticketItem.ticketNumber}_${ticketItem.sinif}">
 									<button type="button" class="TicketBuyButton float-r " data-ticket-number="${ticketItem.ticketNumber}">
 								
 										<i class="fas fa-shopping-cart hidden-md hidden-sm hidden-md  hidden-lg "></i>
 										<div class="hidden-xs"><span>Satın Al</span></div>
 									</button>
+									</a>
 								
 							</div>
 						</div>
@@ -157,7 +217,7 @@
 	<script src="${pageContext.request.contextPath }/resources/js/main.js"></script>
   
   <script type="text/javascript">
-  
+  /*
   $(function() {
 	$(".TicketBuyButton").click(function() {
 		  window.location.replace(<% String contextPath = request.getContextPath(); out.print("\""+contextPath);%>/Buy/"+$(this).data('ticket-number'));
@@ -165,7 +225,7 @@
 	
 	
 	});
-  
+  */
   </script>
   
   <!--<jsp:include page="/WEB-INF/view/include/Loader.jsp" /> !-->
